@@ -42,11 +42,11 @@ Serveur Discord
 
 ### Liste des frais
 
-Frais de déplacement : Location de véhicules, essence, péages
-Frais IKDO : Indemnité kilométriques liés à l’usage de la voiture perso pour déplacement pro
-Frais représentation : invitation de clients, costumes
-Frais de logement : Hôtel
-Frais d’alimentions : Restaurants, boissons, nourritures…
-Frais achats matériels
-Frais de maintenance ou réparation matériel
-Frais d’installation du matériel
+-Frais de déplacement : Location de véhicules, essence, péages
+-Frais IKDO : Indemnité kilométriques liés à l’usage de la voiture perso pour déplacement pro
+-Frais représentation : invitation de clients, costumes
+-Frais de logement : Hôtel
+-Frais d’alimentions : Restaurants, boissons, nourritures…
+-Frais achats matériels
+-Frais de maintenance ou réparation matériel
+-Frais d’installation du matériel

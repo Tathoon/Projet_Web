@@ -21,7 +21,7 @@
 - Doc Users
 - Doc Tech
 
-## Entreprise d'evenementiel dans l'audiovisuel (NOM : XXXX)
+## Entreprise d'evenementiel dans l'audiovisuel (NOM : EZlevent)
 
 ## Organisation
 

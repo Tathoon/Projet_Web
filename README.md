@@ -21,7 +21,7 @@
 - Doc Users
 - Doc Tech
 
-## Entreprise d'evenementiel dans l'audiovisuel (NOM : Elevent)
+## Entreprise d'evenementiel dans l'audiovisuel (NOM : E11event)
 
 ## Organisation
 

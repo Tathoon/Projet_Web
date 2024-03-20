@@ -7,5 +7,6 @@
 </head>
 <body>
     <h5>Hello world !</h5>
+    <h6>Hello EU ! </h6>
 </body>
 </html>

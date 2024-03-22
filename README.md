@@ -20,14 +20,14 @@
 
 ### Comptable :
 
+- Dashboard
 - Gestion de tickets (Comptable)
-- Infographie
 - Liste des frais
 
 ### Admin :
 
 - Dashboard
-- Gestion de tickets
+- Gestion de tickets (Admin)
 - Gestion d'utilisateurs
 
 ### Liste des frais

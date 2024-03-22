@@ -38,9 +38,9 @@
 
 ### Code
 
-Git  
-Maquette du site  
-Serveur Discord
+>Git
+>Maquette du site
+>Serveur Discord
 
 ### Liste des frais
 
@@ -52,3 +52,27 @@ Serveur Discord
 - Frais achats matériels
 - Frais de maintenance ou réparation matériel
 - Frais d’installation du matériel
+
+## Liste de pages Web
+
+### Général :
+
+- Settings
+- Notifications
+- Login
+
+### Commercial :
+
+- Gestion de tickets (Commercial)
+
+### Comptable :
+
+- Gestion de tickets (Comptable)
+- Infographie
+- Liste des frais
+
+### Admin :
+
+- Dashboard
+- Gestion de tickets
+- Gestion d'utilisateurs

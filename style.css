@@ -1,0 +1,115 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #0B43A4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.img-login {
+    width: 200px; /* Largeur de l'image ajustée */
+    position: absolute; /* Position absolue pour l'ajouter par-dessus le formulaire */
+    top: calc(50% - 150px); /* Position verticale ajustée */
+    left: calc(50% - 100px); /* Position horizontale ajustée */
+    top: 50px;
+}
+
+
+form {
+    padding: 1px;
+    border-radius: 10px;
+    text-align: center;
+    width: 20%;
+}
+
+form img {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    box-sizing: border-box;
+    background-color: #0B43A4;
+    outline: none;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #fff;
+    text-align: left;
+}
+
+.form-group input[type="submit"] {
+    background-color: #fff;
+    color: #0B43A4;
+    cursor: pointer;
+    text-align: center;
+}
+
+.form-group input[type="submit"]:hover {
+    background-color: #2980b9;
+    color: #fff;
+}
+
+
+.target {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: 740px;
+    right: 1700px;
+}
+
+.center {
+    width: 520px;
+    height: 520px;
+    background-color: #C8AD7F;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.outer-circle {
+    width: 720px;
+    height: 720px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.inner-circle {
+    width: 950px;
+    height: 950px;
+    background-color: #6D071A;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}

@@ -1,0 +1,189 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #0B43A4;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex; 
+}
+
+.img-login {
+    width: 500px; /* Largeur de l'image ajustée */
+    position: absolute; /* Position absolue pour l'ajouter par-dessus le formulaire */
+    top: 25%; /* Position verticale ajustée */
+    left: 50%; /* Position horizontale ajustée */
+    transform: translate(-50%, -50%); /* Centrage de l'image */
+}
+
+.placeholder-white::placeholder {
+    color: #fff; /* Couleur du placeholder */
+    opacity: 1; /* Opacité du placeholder */
+    font-weight: lighter; /* Réduire l'épaisseur des bordures */
+}
+
+form {
+    position: absolute;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    font-family: 'Roboto Thin', sans-serif;
+}
+
+form img {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    box-sizing: border-box;
+    background-color: #0B43A4;
+    outline: none;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #fff;
+    text-align: left;
+}
+
+.form-group input[type="submit"] {
+    background-color: #fff;
+    color: #0B43A4;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 24px;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: bold;
+}
+
+.form-group input[type="submit"]:hover {
+    background-color: #072d6d;
+    color: #fff;
+}
+
+.target {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: 740px;
+    right: 1700px;
+}
+
+.center {
+    width: 520px;
+    height: 520px;
+    background-color: #C8AD7F;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.outer-circle {
+    width: 720px;
+    height: 720px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.inner-circle {
+    width: 950px;
+    height: 950px;
+    background-color: #6D071A;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+#wave {
+    position: fixed; /* Position fixe pour que le SVG reste à la même position lors du défilement */
+    top: 20px; /* Ajustez la distance depuis le haut */
+    left: 600px; /* Ajustez la distance depuis la droite */
+    width: 2300px; /* Largeur souhaitée */
+    height: auto; /* Hauteur automatique pour conserver les proportions */
+    z-index: 9999; /* Assurez-vous que le SVG est au-dessus de tout autre contenu */
+    transform: rotate(220deg) !important; /* Rotation de 90 degrés */
+}
+
+/* ------------------*/
+/*                   */
+/*                   */
+/*    RESPONSIVE     */
+/*                   */
+/*                   */
+/*-------------------*/
+
+@media only screen and (min-width: 1200px) {
+    .img-login {
+        width: 500px;
+        top: 25%;
+    }
+
+    form {
+        width: 20%;
+    }
+
+    #wave {
+        left: 600px;
+    }
+}
+
+/* Styles pour les écrans moyens */
+@media only screen and (max-width: 1200px) {
+    .img-login {
+        width: 400px;
+        top: 20%;
+    }
+
+    form {
+        width: 30%;
+    }
+
+    #wave {
+        left: 400px;
+    }
+}
+
+/* Styles pour les petits écrans */
+@media only screen and (max-width: 768px) {
+    .img-login {
+        width: 300px;
+        top: 15%;
+    }
+
+    form {
+        width: 50%;
+    }
+
+    #wave {
+        display: none;
+    }
+}

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 </head>
-<body>
+<body class="body-login">
 <svg id="wave" viewBox="0 0 1440 480" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
@@ -40,6 +40,53 @@
         <div class="form-group">
             <input type="submit" value="LOGIN">
         </div>
+        <?php
+            session_start();
+
+            if (isset($_POST['email']) && isset($_POST['password'])) {
+            $usermail = $_POST['email'];
+            $userpasswd = $_POST['password'];
+
+                $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
+
+                $query = $db->query('SELECT * FROM utilisateur');
+                $data = $query->fetchAll();
+
+                $success = false;
+                $userRole = null;
+
+                foreach ($data as $row) {
+                    if ($row['mail'] == $usermail && $row['mdp'] == $userpasswd) {
+                        $success = true;
+                        $userRole = $row['role'];
+                        $_SESSION['role'] = $row['role'];
+                        $_SESSION['nom'] = $row['nom'];
+                        break;
+                    }
+                }
+
+                if ($success && $userRole){
+
+                    switch ($userRole) {
+                        case 1: 
+                            header('Location: admin.php');
+                            break;
+                        case 2: 
+                            header('Location: commercial.php');
+                            break;
+                        case 3:
+                            header('Location: comptable.php');
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    echo '<br><div class="error-alert" role="alert" style="color:white;">
+                        <strong>Erreur</strong> le mail ou le mot de passe est inccorect.
+                    </div>';
+                }
+            }
+        ?>
     </form>
     <div class="target">
         <div class="center"></div>

@@ -1,4 +1,13 @@
-body {
+/* ------------------*/
+/*                   */
+/*                   */
+/*    LOGIN PAGE     */
+/*                   */
+/*                   */
+/*-------------------*/
+
+
+.body-login {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
@@ -12,17 +21,33 @@ body {
 }
 
 .img-login {
-    width: 500px; /* Largeur de l'image ajustée */
-    position: absolute; /* Position absolue pour l'ajouter par-dessus le formulaire */
-    top: 25%; /* Position verticale ajustée */
-    left: 50%; /* Position horizontale ajustée */
-    transform: translate(-50%, -50%); /* Centrage de l'image */
+    width: 500px; 
+    position: absolute; 
+    top: 25%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
 }
 
 .placeholder-white::placeholder {
-    color: #fff; /* Couleur du placeholder */
-    opacity: 1; /* Opacité du placeholder */
-    font-weight: lighter; /* Réduire l'épaisseur des bordures */
+    color: #fff; 
+    opacity: 1; 
+    font-weight: lighter; 
+}
+
+.error-alert {
+    padding: 10px;
+    opacity: 1;
+    animation: fadeOut 10s forwards; 
+    white-space: nowrap;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
 
 form {
@@ -124,14 +149,15 @@ form img {
 }
 
 #wave {
-    position: fixed; /* Position fixe pour que le SVG reste à la même position lors du défilement */
-    top: 20px; /* Ajustez la distance depuis le haut */
-    left: 600px; /* Ajustez la distance depuis la droite */
-    width: 2300px; /* Largeur souhaitée */
-    height: auto; /* Hauteur automatique pour conserver les proportions */
-    z-index: 9999; /* Assurez-vous que le SVG est au-dessus de tout autre contenu */
-    transform: rotate(220deg) !important; /* Rotation de 90 degrés */
+    position: fixed; 
+    top: 20px; 
+    left: 600px; 
+    width: 2300px;
+    height: auto; 
+    z-index: 9999; 
+    transform: rotate(220deg) !important; 
 }
+
 
 /* ------------------*/
 /*                   */

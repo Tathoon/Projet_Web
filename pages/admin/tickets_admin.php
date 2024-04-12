@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gestion de Tickets - Admin</title>
+    <link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
 <?php
@@ -18,13 +19,14 @@
 
     if(isset($_POST['logout'])) {
         session_destroy();
-        header('Location: index.php');
+        header('Location: ../../index.php');
         exit();
     }
 ?>
 <form method="post">
     <button type="submit" name="logout" class="btn btn-warning" style="display: block; margin: auto;">Déconnecter</button>
 </form>
-    <h1>ADMIN</h1>
+    <h1 class="red">ADMIN</h1>
+    <script type="text/javascript" src="../../index.js"></script>
 </body>
 </html>

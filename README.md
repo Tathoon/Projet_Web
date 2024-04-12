@@ -10,25 +10,24 @@
 
 ### Général :
 
-- Settings
-- Notifications
-- Login
+- Settings -> Réglage avec le dark mode, changement langues, photo de profil
+- Notifications -> Notifications de tikets (créé, changement de status, supprimé), bonus chat privé
+- Login -> Page login
 
 ### Commercial :
 
-- Gestion de tickets (Commercial)
+- Gestion de tickets (Commercial) -> Créer un ticket, avec categorie, prix...
 
 ### Comptable :
 
-- Dashboard
-- Gestion de tickets (Comptable)
-- Liste des frais
+- Dashboard -> Argent depensé total, nombre de tickets reçus (par status), stats random, positif ou negatif...
+- Gestion de tickets (Comptable) -> Tous les tickets avec status (modifier status, accepter, refuser, supprimer, mettre en attente)
 
 ### Admin :
 
-- Dashboard
-- Gestion de tickets (Admin)
-- Gestion d'utilisateurs
+- Dashboard -> Stats random (tous les users, sur quoi les users se connectent (telephone, pc, tablette), nombre total de personnes connectés, moyenne de temps des utilisateurs sur le site)
+- Gestion de tickets (Admin) -> Tous les tickets avec status (modifier status, accepter, refuser, supprimer, mettre en attente)
+- Gestion d'utilisateurs -> Ajouter, supprimer, modifier utilisateurs
 
 ### Liste des frais
 

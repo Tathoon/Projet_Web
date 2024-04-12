@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page de Connexion</title>
+    <title>Connexion</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 </head>
@@ -69,13 +69,13 @@
 
                     switch ($userRole) {
                         case 1: 
-                            header('Location: admin.php');
+                            header('Location: pages/admin/dashboard_admin.php');
                             break;
                         case 2: 
-                            header('Location: commercial.php');
+                            header('Location: pages/commercial/tickets_commercial.php');
                             break;
                         case 3:
-                            header('Location: comptable.php');
+                            header('Location: pages/comptable/dashboard_comptable.php');
                             break;
                         default:
                             break;
@@ -93,5 +93,6 @@
         <div class="outer-circle"></div>
         <div class="inner-circle"></div>
     </div>
+    <script type="text/javascript" src="index.js"></script>
 </body>
 </html>

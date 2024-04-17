@@ -43,6 +43,8 @@
         <?php
             session_start();
 
+            echo ucfirst($_SESSION['nom']);
+
             if (isset($_POST['email']) && isset($_POST['password'])) {
             $usermail = $_POST['email'];
             $userpasswd = $_POST['password'];

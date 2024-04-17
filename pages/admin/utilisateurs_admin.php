@@ -7,10 +7,9 @@
     <link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
+
 <?php
     session_start();
-
-    echo $_SESSION['nom'];
 
     if (!isset($_SESSION['role']) || ($_SESSION['role'] != 1 )) {
         header('Location: index.php');
@@ -23,13 +22,6 @@
         exit();
     }
 ?>
-    <h1 class="red">ADMIN</h1>
-
-  <div style="margin-bottom: 30px;"></div>
-
-  <h2>Ajouter un utilisateur</h2>
-
-  <div style="margin-bottom: 30px;"></div>
 
   <form action="utilisateurs_admin.php" method="post">
 
@@ -166,12 +158,6 @@
 
   </div>
 </div>
-
-<div style="margin-bottom: 30px;"></div>
-
-<form method="post">
-    <button type="submit" name="logout" class="" style="display: block; margin: auto;">Déconnexion</button>
-</form>
 
 <script type="text/javascript" src="../../index.js"></script>
 </body>

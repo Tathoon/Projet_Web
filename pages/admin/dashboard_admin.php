@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Admin</title>
   <link rel="stylesheet" href="../../styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
 </head>
 <body>
@@ -18,11 +18,11 @@
       exit();
     }
 
-    if(isset($_POST['logout'])) {
+    if(isset($_GET['logout'])) {
       session_destroy();
       header('Location: ../../index.php');
       exit();
-    }
+     }
   ?>
 
   <input type="checkbox" id="check">
@@ -33,11 +33,6 @@
     <div class="left_area">
       <h3>E11<span>event</span></h3>
     </div>
-    <div class="right_area">
-      <form method="post" action="../../index.php">
-        <button type="submit" name="logout" class="logout_btn">Logout</button>
-      </form>
-    </div>
   </header>
 
   <div class="mobile_nav">
@@ -47,28 +42,27 @@
     </div>
     <div class="mobile_nav_items">
       <a href="#"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
-      <a href="#"><i class="fas fa-cogs"></i><span>Tickets</span></a>
-      <a href="#"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
-      <a href="#"><i class="fas fa-th"></i><span>Forms</span></a>
-      <a href="#"><i class="fas fa-info-circle"></i><span>About</span></a>
-      <a href="#"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+      <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
+      <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
+      <a href="../autres/notifications.php"><i class="fas fa-info-circle"></i><span>Notifications</span></a>
+      <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
     </div>
   </div>
 
   <div class="sidebar">
     <div class="profile_info">
-      <img src="1.png" class="profile_image" alt="">
-      <h4>Admin</h4>
+      <img src="../../images/Logo-Web.png" class="profile_image" alt="">
+      <h4><?php echo $_SESSION['nom']; ?></h4>
     </div>
     <a href="#"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
-    <a href="#"><i class="fas fa-cogs"></i><span>Components</span></a>
-    <a href="#"><i class="fas fa-table"></i><span>Tables</span></a>
-    <a href="#"><i class="fas fa-th"></i><span>Forms</span></a>
-    <a href="#"><i class="fas fa-info-circle"></i><span>About</span></a>
-    <a href="#"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+    <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
+    <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
+    <a href="../autres/notifications.php"><i class="fas fa-info-circle"></i><span>Notifications</span></a>
+    <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+    <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
-  <h1 class="red">ADMIN</h1>
   
   <script type="text/javascript" src="../../index.js"></script>
 </body>

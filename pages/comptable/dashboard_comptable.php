@@ -14,7 +14,8 @@
     echo $_SESSION['nom'];
 
     if (!isset($_SESSION['role']) || ($_SESSION['role'] != 3 && $_SESSION['role'] != 1)) {
-      header('Location: index.php');
+      header('Location: ../../index.php');
+      session_destroy();
       exit();
     }
 
@@ -41,7 +42,7 @@
       <i class="fa fa-bars nav_btn"></i>
     </div>
     <div class="mobile_nav_items">
-      <a href="#"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
+      <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
       <a href="tickets_comptable.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
       <a href="../autres/notifications.php"><i class="fas fa-info-circle"></i><span>Notifications</span></a>
       <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
@@ -51,14 +52,14 @@
 
   <div class="sidebar">
     <div class="profile_info">
-      <img src="../../images/Logo-Web.png" class="profile_image" alt="">
-      <h4><?php echo $_SESSION['nom']; ?></h4>
+      <img src="../../images/user-icon.png" class="profile_image" alt="">
+      <h4><?php echo ucfirst($_SESSION['nom']); ?></h4>
     </div>
-    <a href="#"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
+    <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
     <a href="tickets_comptable.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
     <a href="../autres/notifications.php"><i class="fas fa-info-circle"></i><span>Notifications</span></a>
     <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-    <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+    <a href="../../index.php?logout=true" class="logout-comptable" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
   

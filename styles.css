@@ -321,6 +321,12 @@ label #sidebar_btn:hover{
   display: none;
 }     
 
+.user-mobile {
+  color: white;
+  position: relative;
+  right: 25%;
+}
+
 /* ------------------*/
 /*                   */
 /*                   */
@@ -397,7 +403,7 @@ label #sidebar_btn:hover{
   .nav_bar{
     background: #222;
     width: (100% - 0px);
-    margin-top: 70px;
+    margin-top: 51px;
     display: flex;
     justify-content: space-between;
     align-items: center;

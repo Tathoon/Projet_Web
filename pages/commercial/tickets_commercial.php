@@ -44,7 +44,7 @@
     </div>
     <div class="mobile_nav_items">
       <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-      <a href="../autres/notifications.php"><i class="fas fa-info-circle"></i><span>Notifications</span></a>
+      <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
       <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
       <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
     </div>
@@ -56,7 +56,7 @@
       <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
     </div>
     <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-    <a href="../autres/notifications.php"><i class="fas fa-info-circle"></i><span>Notifications</span></a>
+    <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
     <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
     <a href="../../index.php?logout=true" class="logout-commercial" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>

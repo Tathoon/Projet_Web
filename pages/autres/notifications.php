@@ -43,7 +43,7 @@
       <i class="fa fa-bars nav_btn"></i>
     </div>
     <div class="mobile_nav_items">
-      <a href="#" class="active"><i class="fas fa-info-circle"></i><span>Notifications</span></a>
+      <a href="#" class="active"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
       <a href="settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
       <a href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i></i><span>Retour</span></a>
       <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
@@ -55,7 +55,7 @@
       <img src="../../images/user-icon.png" class="profile_image" alt="">
       <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
     </div>
-    <a href="#" class="active"><i class="fas fa-info-circle"></i><span>Notifications</span></a>
+    <a href="#" class="active"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
     <a href="settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
     <a href="javascript:history.go(-1)" class="back"><i class="fa-solid fa-arrow-left"></i></i><span>Retour</span></a>
     <a href="../../index.php?logout=true" class="logout-notif" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>

@@ -324,7 +324,7 @@ label #sidebar_btn:hover{
 .user-mobile {
   color: white;
   position: relative;
-  right: 25%;
+  text-align: center;
 }
 
 /* ------------------*/

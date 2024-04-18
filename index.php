@@ -43,7 +43,7 @@
         <?php
             session_start();
 
-            echo ucfirst($_SESSION['nom']);
+            echo ucfirst($_SESSION['role']);
 
             if (isset($_POST['email']) && isset($_POST['password'])) {
             $usermail = $_POST['email'];
@@ -63,6 +63,7 @@
                         $userRole = $row['role'];
                         $_SESSION['role'] = $row['role'];
                         $_SESSION['nom'] = $row['nom'];
+                        $_SESSION['prenom'] = $row['prenom'];
                         break;
                     }
                 }

@@ -39,7 +39,7 @@
   <div class="mobile_nav">
     <div class="nav_bar">
       <img src="../../images/user-icon.png" class="mobile_profile_image" alt="">
-      <h4 class="user-mobile"><?php echo ucfirst($_SESSION['nom']); ?></h4>
+      <h4 class="user-mobile"><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
       <i class="fa fa-bars nav_btn"></i>
     </div>
     <div class="mobile_nav_items">
@@ -55,7 +55,7 @@
   <div class="sidebar">
     <div class="profile_info">
       <img src="../../images/user-icon.png" class="profile_image" alt="">
-      <h4><?php echo ucfirst($_SESSION['nom']); ?></h4>
+      <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
     </div>
     <a href="dashboard_admin.php"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
     <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>

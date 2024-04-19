@@ -65,7 +65,83 @@
     <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
-  
+  <div class="content">
+      <main>
+        <div class="header">
+          <h1>Gestion de tickets</h1>
+        </div>
+        <div class="bottom_data">
+          <div class="orders">
+            <div class="header">
+              <h3>Recent Orders</h3>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>103326</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>John Doe</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td><span class="status completed">Complété</span></td>
+                </tr>
+                <tr>
+                  <td>103626</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>Jullee Smith</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td><span class="status pending">En attente</span></td>
+                </tr>
+                <tr>
+                  <td>103926</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>Willims</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td><span class="status processing">Rejeté</span></td>
+                </tr>
+                <tr>
+                  <td>103326</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>John Doe</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td><span class="status completed">Complété</span></td>
+                </tr>
+                <tr>
+                  <td>103626</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>Jullee Smith</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td><span class="status pending">En attente</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
   <script type="text/javascript" src="../../index.js"></script>
 </body>
 </html>

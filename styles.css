@@ -377,7 +377,7 @@ body.dark {
 
 .content {
   position: relative;
-  width: calc(100% - 260px);
+  width: calc(96% - 260px);
   left: 260px;
   transition: all 0.3s ease;
 }
@@ -420,6 +420,8 @@ main .cards {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   grid-gap: 1.5rem;
   margin-top: 3rem;
+  position: relative;
+  right: 1.2%;
 }
 
 main .cards li {
@@ -454,17 +456,17 @@ main .cards li:nth-child(1) .bx {
 
 main .cards li:nth-child(2) .bx {
   background-color: var(--light-warning);
-  color: var(--warning);
+  color: #6e6725;
 }
 
 main .cards li:nth-child(3) .bx {
   background-color: var(--light-danger);
-  color: var(--danger);
+  color: #ee6273;
 }
 
 main .cards li:nth-child(4) .bx {
   background-color: var(--light-success);
-  color: var(--success);
+  color: #658671;
 }
 
 main .cards li .info h3 {
@@ -485,6 +487,8 @@ main .cards li .info p {
   grid-gap: 24px;
   margin-top: 24px;
   color: var(--dark);
+  position: relative;
+  left: 0.4%;
 }
 
 .content main .bottom_data > div {

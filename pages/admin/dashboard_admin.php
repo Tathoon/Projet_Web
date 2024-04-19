@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.0/css/boxicons.min.css">
 </head>
 <body>
   <?php
@@ -65,7 +67,64 @@
     <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
-  
+
+  <div class="content">
+      <main>
+        <div class="header">
+          <h1>Dashboard</h1>
+        </div>
+        <ul class="cards">
+          <li>
+            <i class="bx bx-group"></i>
+            <span class="info">
+              <h3>7,373</h3>
+              <p>Total Utilisateurs</p>
+            </span>
+          </li>
+          <li>
+            <i class="bx bx-cart-add"></i>
+            <span class="info">
+              <h3>9,373</h3>
+              <p>Nombre Tickets</p>
+            </span>
+          </li>
+          <li>
+            <i class="bx bx-line-chart"></i>
+            <span class="info">
+              <h3>5,373</h3>
+              <p>Bénéfice</p>
+            </span>
+          </li>
+          <li>
+            <i class="bx bx-dollar-circle"></i>
+            <span class="info">
+              <h3>$6,373</h3>
+              <p>Dépense</p>
+            </span>
+          </li>
+        </ul>
+        <div class="bottom_data">
+          <div class="orders">
+            <div class="header">
+              <h3>Graphique</h3>
+            </div>
+            <canvas id="myChart" class="graph"></canvas>
+          </div>
+
+          <div class="reminders">
+            <div id="calendar">
+              <div id="calendar-header">
+                  <span id="month-prev" class="change-month">&lt;</span>
+                <h1 id="month"></h1>
+                <span id="month-next" class="change-month">&gt;</span>
+              </div>
+          <div id="days"></div>
+              <div id="calendar-body"></div>
+          </div>
+          </div>
+        </div>
+      </main>
+    </div>
   <script type="text/javascript" src="../../index.js"></script>
 </body>
 </html>

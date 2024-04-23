@@ -126,7 +126,7 @@ document.getElementById('month-next').addEventListener('click', () => {
 renderCalendar();
 
 
-/* GRAPHGIQUE */
+/* GRAPHIQUE */
 
 // Données pour le graphique
 const data = {
@@ -177,29 +177,32 @@ const myChart = new Chart(
 );
 
 
-// Utilisation de vos variables existantes pour les données et la configuration
 const myData = {
-  labels: ['Label 1', 'Label 2', 'Label 3'],
+  labels: categoryLabels, 
   datasets: [{
-    label: 'Camembert Example',
-    data: [30, 40, 30], // Exemple de données
+    label: 'Dépense total ',
+    data: pricesPerCategory,
     backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
+      'rgb(219, 88, 86)', 
+      'rgb(86, 180, 233)', 
+      'rgb(0, 158, 115)', 
+      'rgb(240, 228, 66)', 
+      'rgb(0, 114, 178)', 
+      'rgb(213, 94, 0)',  
+      'rgb(204, 121, 167)',
+      'rgba(157,134,146,255)' 
     ],
     hoverOffset: 4
   }]
 };
+
+var myChartCAM = new Chart(
+  document.getElementById('camembertChart'),
+  { type: 'pie', data: myData }
+);
 
 const myConfig = {
   type: 'pie',
   data: myData,
 };
 
-// Création du camembert avec vos variables existantes
-var myChartCAM = new Chart(
-  document.getElementById('camembertChart'),
-  myConfig
-);
-/*Tableau tickets*/

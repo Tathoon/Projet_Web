@@ -45,6 +45,7 @@
     $sql_user_by_number_tickets = "SELECT nom, prenom, COUNT(id_ticket) AS nombre_tickets FROM utilisateur JOIN ticket ON utilisateur.id_utilisateur = ticket.utilisateur GROUP BY utilisateur.id_utilisateur ORDER BY nombre_tickets DESC LIMIT 5";
     $result_user_by_number_tickets = $db->query($sql_user_by_number_tickets);
 
+
     if ($result_users !== false && $result_tickets !== false && $result_depense !== false && $result_tickets_attente !== false){
         $row_users = $result_users->fetch(PDO::FETCH_ASSOC);
         $row_tickets = $result_tickets->fetch(PDO::FETCH_ASSOC);
@@ -64,8 +65,29 @@
     } else {
         echo "Une erreur s'est produite lors de l'exécution de la requête.";
     }
+    
+    //  code PHP pour récupérer les noms de catégories depuis la base de données
+    $labels = array();
+    $sql_categories = "SELECT nom_categorie FROM ticket_categorie";
+    $result_categories = $db->query($sql_categories);
 
-  ?>
+    while ($row = $result_categories->fetch(PDO::FETCH_ASSOC)) {
+        $labels[] = $row['nom_categorie'];
+    }
+
+    $labelsJSON = json_encode($labels);
+
+    $sql_total_by_category = "SELECT categorie, SUM(prix) AS prix_total_par_categorie FROM ticket GROUP BY categorie";
+    $result_total_by_category = $db->query($sql_total_by_category);
+
+    $prices_per_category = array();
+
+    while ($row = $result_total_by_category->fetch(PDO::FETCH_ASSOC)) {
+        $prices_per_category[] = $row['prix_total_par_categorie'];
+    }
+
+    $prices_per_category_json = json_encode($prices_per_category);
+    ?>
 
   <input type="checkbox" id="check">
   <header>
@@ -194,6 +216,10 @@
       </div>
       </main>
     </div>
+    <script>
+    const categoryLabels = <?php echo $labelsJSON; ?>;
+    const pricesPerCategory = <?php echo $prices_per_category_json; ?>;
+  </script>
   <script type="text/javascript" src="../../index.js"></script>
 </body>
 </html>

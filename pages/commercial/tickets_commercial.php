@@ -61,9 +61,9 @@
     <a href="../../index.php?logout=true" class="logout-commercial" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
+  <h1 class="title">Formulaire de dépôt de note de frais</h1>
 
-  <div class="add-ticket">
-    <h1>Formulaire de dépôt de note de frais</h1>
+  <div class="box-general">
     <form action="tickets_commercial.php" method="post" enctype="multipart/form-data">
 
       <div class="mb-3">
@@ -100,7 +100,7 @@
       </div>
 
       <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Ajouter la note de frais</button>
+        <button type="submit" class="">Ajouter la note de frais</button>
       </div>
 
 
@@ -115,12 +115,15 @@
             $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
 
             // Préparation de la requête pour insérer le ticket
-            $stmt = $db->prepare("INSERT INTO ticket (categorie, prix, description, lieu, status, date) VALUES (:categorie, :cout, :description, :lieu, :status, NOW())");
+            $stmt = $db->prepare("INSERT INTO ticket (categorie, prix, description, lieu, status, date, utilisateur) VALUES (:categorie, :cout, :description, :lieu, :status, NOW(), :utilisateur)");
             $stmt->bindParam(':categorie', $categorie);
             $stmt->bindParam(':cout', $cout);
             $stmt->bindParam(':description', $description);
             $stmt->bindParam(':lieu', $lieu);
             $stmt->bindParam(':status', $id_status);
+
+            // ID de l'utilisateur connecté
+            $stmt->bindParam(':utilisateur', $_SESSION['utilisateur']);
 
             // ID du statut à insérer (dans cet exemple, 3)
             $id_status = 3;
@@ -132,7 +135,7 @@
             $id_ticket = $db->lastInsertId();
 
             // Traitement de l'image justificatif
-            $target_dir = "../../justificatifs/";
+            $target_dir = "../../images/justificatifs/";
             $extension = pathinfo($_FILES["justificatif"]["name"], PATHINFO_EXTENSION);
             $nouveau_nom_image = "justificatif$id_ticket.$extension";
             $target_file = $target_dir . $nouveau_nom_image;

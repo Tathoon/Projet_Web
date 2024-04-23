@@ -28,7 +28,7 @@
     </path>
 </svg>
 <img src="images/Logo-Web.png" alt="Logo" class="img-login">
-    <form action="#" method="post">
+    <form action="#" method="post" class="form-login">
         <div class="form-group">
             <label for="email" hidden></label>
             <input type="email" id="email" name="email" class="placeholder-white" placeholder="&#xf2c0;   E-mail" required style="font-family:Arial, FontAwesome"> 

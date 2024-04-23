@@ -82,11 +82,11 @@
     </div>
     <div class="mobile_nav_items">
       <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
-      <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-      <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
-      <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-      <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+      <a href="tickets_admin.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
+      <a href="utilisateurs_admin.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
+      <a href="../autres/notifications.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
+      <a href="../autres/settings.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+      <a href="../../index.php?logout=true&menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
     </div>
   </div>
 
@@ -95,12 +95,12 @@
       <img src="../../images/user-icon.png" class="profile_image" alt="">
       <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
     </div>
-    <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
-    <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-    <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
-    <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i></i><span>Notifications</span></a>
-    <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-    <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+      <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
+      <a href="tickets_admin.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
+      <a href="utilisateurs_admin.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
+      <a href="../autres/notifications.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
+      <a href="../autres/settings.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+      <a href="../../index.php?logout=true&menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
 

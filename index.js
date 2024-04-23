@@ -7,10 +7,47 @@
 /*-------------------*/
 
 $(document).ready(function(){
-    $('.nav_btn').click(function(){
-      $('.mobile_nav_items').toggleClass('active');
-    });
+  console.log("Document ready");
+  
+  // Vérifie l'URL pour l'état du menu et applique l'état en conséquence
+  var urlParams = new URLSearchParams(window.location.search);
+  var menuState = urlParams.get('menu');
+  if (menuState === 'active') {
+      $('.sidebar').addClass('active');
+  }
+  
+  $('#sidebar_btn').click(function(){
+      console.log("Bouton du menu cliqué");
+      
+      // Toggle class 'active' sur '.sidebar'
+      $('.sidebar').toggleClass('active');
+      
+      // Récupère le nouvel état du menu
+      var newState = $('.sidebar').hasClass('active') ? 'active' : 'inactive';
+      console.log("Nouvel état du menu:", newState);
+      
+      // Met à jour l'URL avec le nouvel état du menu
+      var newUrl = updateQueryStringParameter(window.location.href, 'menu', newState);
+      console.log("Nouvelle URL:", newUrl);
+      
+      window.history.replaceState({}, '', newUrl);
+      console.log("URL mise à jour");
   });
+});
+
+// Fonction pour mettre à jour les paramètres de l'URL
+function updateQueryStringParameter(uri, key, value) {
+  console.log("Fonction updateQueryStringParameter appelée");
+  
+  var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+  var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+  if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+  }
+  else {
+      return uri + separator + key + "=" + value;
+  }
+}
 
 /* ------------------*/
 /*                   */

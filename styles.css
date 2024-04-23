@@ -989,6 +989,30 @@ main .bottom_data .reminders {
   align-items: flex-start;
 }
 
+/* ------------------*/
+/*                   */
+/*                   */
+/*  PAGE COMMERCIAL  */
+/*                   */
+/*                   */
+/*-------------------*/
+
+/* ======== Tickets COMMERCIAL =================== */
+.form-ticket {
+  padding: 15px;
+  min-height: 100px;
+  width: 90%;
+  max-width: 600px;
+  background-color: red;
+  border-radius: 5px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  margin-left: 20%;
+}
 
 /* ------------------*/
 /*                   */
@@ -1216,6 +1240,12 @@ main .bottom_data .reminders {
     padding: 15px 5px; /* Augmenter la marge intérieure de la boîte */
   }
 
+  .form-ticket {
+    width: 100%; /* Modifier la largeur de la boîte pour occuper toute la largeur de l'écran */
+    margin-left: 0; /* Réinitialiser la marge gauche */
+    padding: 15px 5px; /* Augmenter la marge intérieure de la boîte */
+  }
+
   /* Ajouter un padding au tableau */
   .table {
     padding-left: 10px; /* Ajouter un padding à gauche du tableau */
@@ -1230,6 +1260,10 @@ main .bottom_data .reminders {
 
 @media only screen and (max-width: 1200px) {
   .box-general {
+    width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
+    margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
+  }
+  .form-ticket {
     width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
     margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
   }

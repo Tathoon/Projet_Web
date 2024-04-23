@@ -61,9 +61,12 @@
     <a href="../../index.php?logout=true" class="logout-commercial" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
-  <h1 class="title">Formulaire de dépôt de note de frais</h1>
+  
+  
+  <h1 class="title">Vos tickets</h1>
 
-  <div class="box-general">
+  <div class="form-ticket">
+    <h1 class="">Formulaire de dépôt de note de frais</h1>
     <form action="tickets_commercial.php" method="post" enctype="multipart/form-data">
 
       <div class="mb-3">
@@ -102,82 +105,78 @@
       <div class="mb-3">
         <button type="submit" class="">Ajouter la note de frais</button>
       </div>
-
-
-      <?php
-if (isset($_POST['categorie']) && isset($_POST['cout']) && isset($_POST['description']) && isset($_POST['lieu']) && isset($_FILES['justificatif'])) {
-    $categorie = $_POST['categorie'];
-    $cout = $_POST['cout'];
-    $description = $_POST['description'];
-    $lieu = $_POST['lieu'];
-
-    // Connexion à la base de données
-    $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
-
-    if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
-        $nom = $_SESSION['nom'];
-        $prenom = $_SESSION['prenom'];
-
-        $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
-        $stmt_user->bindParam(':nom', $nom);
-        $stmt_user->bindParam(':prenom', $prenom);
-        $stmt_user->execute();
-        $id_utilisateur = $stmt_user->fetch()['id_utilisateur']; // Récupérez l'ID de l'utilisateur
-    }
-
-    // ID du statut à insérer (dans cet exemple, 3)
-    $id_status = 3;
-
-    // Préparation de la requête pour insérer le ticket
-    $stmt_ticket = $db->prepare("INSERT INTO ticket (categorie, prix, description, lieu, status, date, utilisateur) VALUES (:categorie, :cout, :description, :lieu, :status, NOW(), :id_utilisateur)");
-    $stmt_ticket->bindParam(':categorie', $categorie);
-    $stmt_ticket->bindParam(':cout', $cout);
-    $stmt_ticket->bindParam(':description', $description);
-    $stmt_ticket->bindParam(':lieu', $lieu);
-    $stmt_ticket->bindParam(':status', $id_status);
-    $stmt_ticket->bindParam(':id_utilisateur', $id_utilisateur); // Utilisez l'ID de l'utilisateur récupéré
-
-    // Exécution de la requête pour insérer le ticket
-    $stmt_ticket->execute();
-
-    // Récupération de l'ID du ticket inséré
-    $id_ticket = $db->lastInsertId();
-
-    // Traitement de l'image justificatif
-    $target_dir = "../../images/justificatifs/";
-    $extension = pathinfo($_FILES["justificatif"]["name"], PATHINFO_EXTENSION);
-    $nouveau_nom_image = "justificatif$id_ticket.$extension";
-    $target_file = $target_dir . $nouveau_nom_image;
-
-    // Déplacer l'image vers le dossier "justificatifs"
-    if (move_uploaded_file($_FILES["justificatif"]["tmp_name"], $target_file)) {
-        // Préparation de la requête pour mettre à jour le nom de l'image dans la base de données
-        $stmt_image = $db->prepare("UPDATE ticket SET justificatif = :justificatif WHERE id_ticket = :id_ticket");
-        $stmt_image->bindParam(':justificatif', $nouveau_nom_image);
-        $stmt_image->bindParam(':id_ticket', $id_ticket);
-
-        // Exécution de la requête pour mettre à jour le nom de l'image dans la base de données
-        $stmt_image->execute();
-
-        echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong> La note de frais a bien été ajoutée.</strong>
-            </div>';
-        echo '<script type="text/javascript">
-              setTimeout(function() {
-                  var element = document.getElementById("success-alert");
-                  element.parentNode.removeChild(element);
-              }, 3000);
-            </script>';
-    } else {
-        echo "Une erreur s'est produite lors du téléchargement du fichier.";
-    }
-}
-?>
     </form>
   </div>
+        
+      <?php
+        if (isset($_POST['categorie']) && isset($_POST['cout']) && isset($_POST['description']) && isset($_POST['lieu']) && isset($_FILES['justificatif'])) {
+            $categorie = $_POST['categorie'];
+            $cout = $_POST['cout'];
+            $description = $_POST['description'];
+            $lieu = $_POST['lieu'];
 
-  
+            // Connexion à la base de données
+            $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
 
+            if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
+                $nom = $_SESSION['nom'];
+                $prenom = $_SESSION['prenom'];
+
+                $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                $stmt_user->bindParam(':nom', $nom);
+                $stmt_user->bindParam(':prenom', $prenom);
+                $stmt_user->execute();
+                $id_utilisateur = $stmt_user->fetch()['id_utilisateur']; // Récupérez l'ID de l'utilisateur
+            }
+
+            // ID du statut à insérer (dans cet exemple, 3)
+            $id_status = 3;
+
+            // Préparation de la requête pour insérer le ticket
+            $stmt_ticket = $db->prepare("INSERT INTO ticket (categorie, prix, description, lieu, status, date, utilisateur) VALUES (:categorie, :cout, :description, :lieu, :status, NOW(), :id_utilisateur)");
+            $stmt_ticket->bindParam(':categorie', $categorie);
+            $stmt_ticket->bindParam(':cout', $cout);
+            $stmt_ticket->bindParam(':description', $description);
+            $stmt_ticket->bindParam(':lieu', $lieu);
+            $stmt_ticket->bindParam(':status', $id_status);
+            $stmt_ticket->bindParam(':id_utilisateur', $id_utilisateur); // Utilisez l'ID de l'utilisateur récupéré
+
+            // Exécution de la requête pour insérer le ticket
+            $stmt_ticket->execute();
+
+            // Récupération de l'ID du ticket inséré
+            $id_ticket = $db->lastInsertId();
+
+            // Traitement de l'image justificatif
+            $target_dir = "../../images/justificatifs/";
+            $extension = pathinfo($_FILES["justificatif"]["name"], PATHINFO_EXTENSION);
+            $nouveau_nom_image = "justificatif$id_ticket.$extension";
+            $target_file = $target_dir . $nouveau_nom_image;
+
+            // Déplacer l'image vers le dossier "justificatifs"
+            if (move_uploaded_file($_FILES["justificatif"]["tmp_name"], $target_file)) {
+                // Préparation de la requête pour mettre à jour le nom de l'image dans la base de données
+                $stmt_image = $db->prepare("UPDATE ticket SET justificatif = :justificatif WHERE id_ticket = :id_ticket");
+                $stmt_image->bindParam(':justificatif', $nouveau_nom_image);
+                $stmt_image->bindParam(':id_ticket', $id_ticket);
+
+                // Exécution de la requête pour mettre à jour le nom de l'image dans la base de données
+                $stmt_image->execute();
+
+                echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong> La note de frais a bien été ajoutée.</strong>
+                    </div>';
+                echo '<script type="text/javascript">
+                      setTimeout(function() {
+                          var element = document.getElementById("success-alert");
+                          element.parentNode.removeChild(element);
+                      }, 3000);
+                    </script>';
+            } else {
+                echo "Une erreur s'est produite lors du téléchargement du fichier.";
+            }
+        }
+      ?>
   
   <script type="text/javascript" src="../../index.js"></script>
 </body>

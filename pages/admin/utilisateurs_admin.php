@@ -65,29 +65,35 @@
     <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
-  <form action="utilisateurs_admin.php" method="post">
+   <div class="title">
+      <h1>Gestion d'utilisateurs</h1>
+   </div>
 
-    <div class="mb-3">
+  <div class="box-general">
+
+  <form action="utilisateurs_admin.php" method="post" class="form-user form-card form-container">
+
+    <div>
       <label for="nom" class="">Nom</label>
       <input type="text" name="nom" class="" id="nom">
     </div>
   
-    <div class="mb-3">
+    <div>
       <label for="prenom" class="">Prénom</label>
       <input name="prenom" type="text" class="" id="prenom">
     </div>
 
-    <div class="mb-3">
+    <div>
       <label for="mail" class="">Email</label>
       <input name="mail" type="text" class="" id="mail" aria-describedby="emailHelp">
     </div>
 
-    <div class="mb-3">
+    <div>
       <label for="mdp" class="">Mot de passe</label>
       <input name="mdp" type="password" class="" id="mdp">
     </div>
 
-    <div class="mb-3">
+    <div>
     <label for="role" class="">Role</label>
     <select name="role" class="" id="role">
      <?php
@@ -98,12 +104,16 @@
         }
      ?>
     </select>
+    </div>
     
-    <div style="margin-bottom: 30px;"></div>
+    
+    <div style="margin-bottom: 10px;"></div>
 
     <input type="submit" class="" value="Enregistrer">
 
-    <div style="margin-bottom: 30px;"></div>
+    <div style="margin-bottom: 5px;"></div>
+
+    </form>
 
     <?php
 
@@ -137,7 +147,7 @@
     }
     
     ?>
-
+    <div class=" table-container">
     <table class="table">
       <thead>
         <tr>
@@ -197,9 +207,8 @@
 
       </tbody>
     </table>
+  </div></div>
 
-  </div>
-  </div>
 <script type="text/javascript" src="../../index.js"></script>
 </body>
 </html>

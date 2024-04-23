@@ -65,7 +65,7 @@
     <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
-  <form action="utilisateurs_admin.php" method="post">
+  <form action="utilisateurs_admin.php  " method="post">
 
     <div class="mb-3">
       <label for="nom" class="">Nom</label>

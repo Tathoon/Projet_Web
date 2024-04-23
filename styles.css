@@ -777,6 +777,37 @@ main .bottom_data .reminders {
   flex-basis: 300px;
 }
 
+.graph {
+  width: 100%;
+  max-width: 100%;
+  height: auto; 
+}
+
+#camembertChart {
+  padding: 1.8rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  grid-gap: 1.5rem;
+}
+
+/* -------CALENDRIER-----------*/
+#calendar {
+  width: 97%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto; 
+  margin-top: 12%;
+}
+
+#calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--light-danger);
+  color: #fff;
+}
 /* Personnalisation de la pagination */
 .dataTables_paginate {
   padding: 12px 10px;
@@ -795,6 +826,19 @@ main .bottom_data .reminders {
   margin-right: 5px;
 }
 
+
+#calendar-body {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  background-color: #333;
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+#calendar-body.fade-out {
+  opacity: 0;
+}
 .dataTables_paginate .paginate_button:hover {
   background-color: #1974d4;
 }
@@ -925,6 +969,17 @@ main .bottom_data .reminders {
   justify-content: flex-start;
   cursor: pointer;
   margin-left: 37.9%;
+.most-ticket-user td img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.dataTables_length {
+  padding: 12px 10px;
+  font-size: 1rem;
+  text-align: left;
+  color: dark;
 }
 
 .form-container {
@@ -1178,4 +1233,5 @@ main .bottom_data .reminders {
     width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
     margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
   }
+}
 }

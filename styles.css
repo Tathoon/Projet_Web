@@ -479,6 +479,79 @@ main .cards li .info p {
   color: var(--dark);
 }
 
+main .bottom_data .reminders {
+  flex-grow: 1;
+  flex-basis: 300px;
+}
+
+main .bottom_data .reminders .task_list li {
+  width: 100%;
+  margin-bottom: 16px;
+  background-color: var(--grey);
+  padding: 14px 10px;
+  border-radius: 05px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#calendar {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--light-danger);
+  color: #fff;
+}
+
+#days {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f18390;
+  color: #fff;
+}
+
+#calendar-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background-color: #333;
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+#calendar-body.fade-out {
+  opacity: 0;
+}
+
+#calendar-body div {
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+#calendar-body div.today {
+  background-color: var(--light-danger);
+  color: black;
+}
+
+.change-month {
+  cursor: pointer;
+}
+
+.graph {
+  width: 100%; /* Ajustez la largeur selon vos préférences */
+  max-width: 100%; /* Définissez une largeur maximale pour éviter que le graphique ne devienne trop large */
+  height: auto; 
+}
+
 /* ========Orders Details Start=================== */
 .content main .bottom_data {
   display: flex;
@@ -553,7 +626,6 @@ main .bottom_data .orders table td {
 }
 
 .content main .bottom_data .orders table tbody tr {
-  cursor: pointer;
   transition: all 0.3s ease-in;
 }
 
@@ -584,77 +656,47 @@ main .bottom_data .orders table td {
   color: #C18E09;
 }
 
-main .bottom_data .reminders {
-  flex-grow: 1;
-  flex-basis: 300px;
-}
-
-main .bottom_data .reminders .task_list li {
-  width: 100%;
-  margin-bottom: 16px;
-  background-color: var(--grey);
-  padding: 14px 10px;
-  border-radius: 05px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#calendar {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-#calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: var(--light-danger);
-  color: #fff;
-}
-
-#days {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: #f18390;
-  color: #fff;
-}
-
-#calendar-body {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
-  background-color: #333;
-  transition: opacity 0.5s ease;
-  opacity: 1;
-}
-
-#calendar-body.fade-out {
-  opacity: 0;
-}
-
-#calendar-body div {
-  padding: 20px;
-  background-color: #fff;
+/* Personnalisation de la pagination */
+.dataTables_paginate {
+  padding: 12px 10px;
+  font-size: 1rem;
   text-align: center;
+  color: dark;
 }
 
-#calendar-body div.today {
-  background-color: var(--light-danger);
-  color: black;
-}
-
-.change-month {
+.dataTables_paginate .paginate_button {
+  background-color: #19B3D3;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
   cursor: pointer;
+  margin-right: 5px;
 }
 
-.graph {
-  width: 100%; /* Ajustez la largeur selon vos préférences */
-  max-width: 100%; /* Définissez une largeur maximale pour éviter que le graphique ne devienne trop large */
-  height: auto; 
+.dataTables_paginate .paginate_button:hover {
+  background-color: #1974d4;
+}
+
+.dataTables_info {
+  padding: 12px 10px;
+  font-size: 1rem;
+  text-align: center;
+  color: dark;
+}
+
+.dataTables_filter {
+  padding: 12px 10px;
+  font-size: 1rem;
+  text-align: left;
+  color: dark;
+}
+
+.dataTables_length {
+  padding: 12px 10px;
+  font-size: 1rem;
+  text-align: left;
+  color: dark;
 }
 /* ------------------*/
 /*                   */

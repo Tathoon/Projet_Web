@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tickets - Admin</title>
   <link rel="stylesheet" href="../../styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
 </head>
 <body>
   <?php
@@ -61,7 +59,7 @@
     <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
     <a href="utilisateurs_admin.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
     <a href="../autres/notifications.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-    <a href="../autres/settings.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+    <a href="../autres/settings.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) ? $_GET['menu'] === 'active' : ''; ?>"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
     <a href="../../index.php?logout=true&menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
@@ -75,7 +73,7 @@
             <div class="header">
               <h3>Recent Orders</h3>
             </div>
-            <table>
+            <table id="myTable">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -98,6 +96,10 @@
                   </td>
                   <td>admin@onlineittuts.com</td>
                   <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
                   <td><span class="status completed">Complété</span></td>
                 </tr>
                 <tr>
@@ -108,6 +110,10 @@
                   </td>
                   <td>admin@onlineittuts.com</td>
                   <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
                   <td><span class="status pending">En attente</span></td>
                 </tr>
                 <tr>
@@ -118,6 +124,10 @@
                   </td>
                   <td>admin@onlineittuts.com</td>
                   <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
                   <td><span class="status processing">Rejeté</span></td>
                 </tr>
                 <tr>
@@ -128,6 +138,10 @@
                   </td>
                   <td>admin@onlineittuts.com</td>
                   <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
                   <td><span class="status completed">Complété</span></td>
                 </tr>
                 <tr>
@@ -138,6 +152,150 @@
                   </td>
                   <td>admin@onlineittuts.com</td>
                   <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
+                  <td><span class="status pending">En attente</span></td>
+                </tr>
+                <tr>
+                  <td>103326</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>John Doe</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
+                  <td><span class="status completed">Complété</span></td>
+                </tr>
+                <tr>
+                  <td>103626</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>Jullee Smith</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
+                  <td><span class="status pending">En attente</span></td>
+                </tr>
+                <tr>
+                  <td>103926</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>Willims</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
+                  <td><span class="status processing">Rejeté</span></td>
+                </tr>
+                <tr>
+                  <td>103326</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>John Doe</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
+                  <td><span class="status completed">Complété</span></td>
+                </tr>
+                <tr>
+                  <td>103626</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>Jullee Smith</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
+                  <td><span class="status pending">En attente</span></td>
+                </tr>
+                <tr>
+                  <td>103326</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>John Doe</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
+                  <td><span class="status completed">Complété</span></td>
+                </tr>
+                <tr>
+                  <td>103626</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>Jullee Smith</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
+                  <td><span class="status pending">En attente</span></td>
+                </tr>
+                <tr>
+                  <td>103926</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>Willims</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
+                  <td><span class="status processing">Rejeté</span></td>
+                </tr>
+                <tr>
+                  <td>103326</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>John Doe</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
+                  <td><span class="status completed">Complété</span></td>
+                </tr>
+                <tr>
+                  <td>103626</td>
+                  <td class="img_content">
+                    <img src="../../images/user-icon.png" alt="" />
+                    <p>Jullee Smith</p>
+                  </td>
+                  <td>admin@onlineittuts.com</td>
+                  <td>6th Sep 2025</td>
+                  <td>Lyon</td>
+                  <td>caca</td>
+                  <td>500€</td>
+                  <td>il était dur</td>
                   <td><span class="status pending">En attente</span></td>
                 </tr>
               </tbody>
@@ -146,6 +304,13 @@
         </div>
       </main>
     </div>
-  <script type="text/javascript" src="../../index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+  <script>
+  $(document).ready(function () {
+    $('#myTable').DataTable();
+  });
+  </script>
+  <script src="../../index.js"></script>
 </body>
 </html>

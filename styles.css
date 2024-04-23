@@ -50,7 +50,7 @@
     }
 }
 
-form {
+.form-login {
     position: absolute;
     top: 53%;
     left: 50%;
@@ -59,7 +59,7 @@ form {
     font-family: 'Roboto Thin', sans-serif;
 }
 
-form img {
+.form-login img {
     width: 200px;
     margin-bottom: 20px;
 }
@@ -858,5 +858,154 @@ main .bottom_data .reminders .task_list li {
   #calendar-body div {
     padding: 10px; /* Réduire l'espacement à l'intérieur des cellules */
     font-size: 12px; /* Réduire la taille de la police */
+  }
+}
+
+.form-card {
+  margin: 20px auto; 
+  max-width: 400px; 
+}
+
+.form-card label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.form-card input[type="text"],
+.form-card input[type="password"],
+.form-card select {
+  width: 220%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-card select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23555555' width='24' height='24'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 10px);
+  background-position-y: center;
+  padding-right: 30px;
+  width: 365%;
+}
+
+.form-card input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.form-card input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+.title {
+  font-size: 19.6px;
+  font-weight: 800px;
+  margin-top: 4.6%;
+  margin-left: 16.6%;
+  color: var(--dark);
+}
+
+.box-general {
+  padding: 15px;
+  min-height: 100px;
+  width: 90%;
+  max-width: 600px;
+  background-color: var(--light);
+  border-radius: 5px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  margin-left: 37.9%;
+}
+
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@media (max-width: 576px) {
+  .form-card input[type="text"],
+  .form-card input[type="password"],
+  .table-container {
+    overflow-x: auto; /* Activer le défilement horizontal */
+    -webkit-overflow-scrolling: touch; /* Activer le défilement tactile pour les navigateurs WebKit */
+    width: 100%; /* Ajuster la largeur pour s'adapter à l'écran */
+  }
+  .form-card select {
+    width: 100%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
+  }
+
+  .box-general {
+    width: 100%; /* Modifier la largeur de la boîte pour occuper toute la largeur de l'écran */
+    margin-left: 0; /* Réinitialiser la marge gauche */
+    padding: 15px 5px; /* Augmenter la marge intérieure de la boîte */
+  }
+
+  /* Ajouter un padding au tableau */
+  .table {
+    padding-left: 10px; /* Ajouter un padding à gauche du tableau */
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .title {
+    margin-left: 10%; /* Ajuster la marge gauche du titre pour une meilleure mise en page */
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .box-general {
+    width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
+    margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
   }
 }

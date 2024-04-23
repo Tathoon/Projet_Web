@@ -6,6 +6,9 @@
 /*                   */
 /*-------------------*/
 
+a {
+    text-decoration: none;
+}
 
 .body-login {
     margin: 0;
@@ -479,12 +482,12 @@ main .cards li .info p {
   color: var(--dark);
 }
 
-/* ========Orders Details Start=================== */
+/* ========Graph Details Start=================== */
 .content main .bottom_data {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  grid-gap: 24px;
+  grid-gap: 20px;
   margin-top: 24px;
   color: var(--dark);
   position: relative;
@@ -511,7 +514,7 @@ main .bottom_data .header h3 {
 }
 
 main .bottom_data .orders {
-  flex-grow: 1;
+  flex-grow: 7;
   flex-basis: 500;
 }
 
@@ -589,21 +592,27 @@ main .bottom_data .reminders {
   flex-basis: 300px;
 }
 
-main .bottom_data .reminders .task_list li {
+.graph {
   width: 100%;
-  margin-bottom: 16px;
-  background-color: var(--grey);
-  padding: 14px 10px;
-  border-radius: 05px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  max-width: 100%;
+  height: auto; 
 }
 
+#camembertChart {
+  padding: 1.8rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  grid-gap: 1.5rem;
+}
+
+/* -------CALENDRIER-----------*/
 #calendar {
-  width: 100%;
+  width: 97%;
   max-width: 600px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto; 
+  margin-top: 12%;
 }
 
 #calendar-header {
@@ -625,7 +634,7 @@ main .bottom_data .reminders .task_list li {
 
 #calendar-body {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 1px;
   background-color: #333;
   transition: opacity 0.5s ease;
@@ -651,11 +660,72 @@ main .bottom_data .reminders .task_list li {
   cursor: pointer;
 }
 
-.graph {
-  width: 100%; /* Ajustez la largeur selon vos préférences */
-  max-width: 100%; /* Définissez une largeur maximale pour éviter que le graphique ne devienne trop large */
-  height: auto; 
+.charts-container {
+  display: flex;
 }
+
+.pie-chart{
+  width: 50%;
+  background-color: var(--light);
+  margin-top: 3%;
+  border-radius: 10px;
+}
+
+.most-ticket-user {
+  width: 50%;
+  background-color: var(--light);
+  margin-top: 3%;
+  border-radius: 10px;
+}
+
+.pie-chart,
+.most-ticket-user {
+    flex: 1;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.pie-chart + .most-ticket-user {
+  margin-left: 1.3%;
+}
+
+.pie-chart .header h3,
+.most-ticket-user .header h3 {
+    color: var(--dark);
+    font-size: 24px;
+    font-weight: 600;
+    margin-left: 2%;
+    margin-top: 8%;
+}
+
+.most-ticket-user table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.most-ticket-user th,
+.most-ticket-user td {
+  padding: 12px 10px;
+  font-size: 1rem;
+  text-align: left;
+  border-bottom: 2px solid var(--grey);
+  background-color: var(--grey);
+  color: var(--dark);
+}
+
+.most-ticket-user td img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.most-ticket-user tbody tr:nth-child(even) {
+  background-color: var(--grey);
+}
+
+
+
 /* ------------------*/
 /*                   */
 /*                   */
@@ -712,6 +782,9 @@ main .bottom_data .reminders .task_list li {
     .error-alert {
       font-size: 16px;
       white-space: pre-line;
+    }
+    #calendar {
+      margin-top: 8%;
     }
 }
 

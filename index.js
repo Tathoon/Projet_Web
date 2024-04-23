@@ -137,6 +137,30 @@ const data = {
   }]
 };
 
+data.datasets.push(
+    {
+      label: 'Courbe 2',
+      data: [70, 65, 80, 75, 60, 50, 45], // Données pour la courbe 2
+      backgroundColor: 'rgba(255, 206, 86, 0.2)', // Couleur de fond de la zone
+      borderColor: 'rgba(255, 206, 86, 1)', // Couleur de la bordure
+      borderWidth: 1
+    },
+    {
+      label: 'Courbe 3',
+      data: [40, 55, 65, 70, 75, 80, 85], // Données pour la courbe 3
+      backgroundColor: 'rgba(75, 192, 192, 0.2)', // Couleur de fond de la zone
+      borderColor: 'rgba(75, 192, 192, 1)', // Couleur de la bordure
+      borderWidth: 1
+    },
+    {
+      label: 'Autre courbe',
+      data: [45, 60, 75, 70, 65, 55, 50], // Les données pour l'autre courbe
+      backgroundColor: 'rgba(54, 162, 235, 0.2)', // Couleur de fond de la zone
+      borderColor: 'rgba(54, 162, 235, 1)', // Couleur de la bordure
+      borderWidth: 1
+    }
+  );
+
 // Configuration du graphique
 const config = {
   type: 'line',
@@ -147,4 +171,30 @@ const config = {
 const myChart = new Chart(
   document.getElementById('myChart'),
   config
+);
+
+// Utilisation de vos variables existantes pour les données et la configuration
+const myData = {
+  labels: ['Label 1', 'Label 2', 'Label 3'],
+  datasets: [{
+    label: 'Camembert Example',
+    data: [30, 40, 30], // Exemple de données
+    backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)'
+    ],
+    hoverOffset: 4
+  }]
+};
+
+const myConfig = {
+  type: 'pie',
+  data: myData,
+};
+
+// Création du camembert avec vos variables existantes
+var myChartCAM = new Chart(
+  document.getElementById('camembertChart'),
+  myConfig
 );

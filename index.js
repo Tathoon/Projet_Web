@@ -203,7 +203,3 @@ var myChartCAM = new Chart(
   myConfig
 );
 /*Tableau tickets*/
-
-
-
-

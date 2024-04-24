@@ -65,29 +65,36 @@
     } else {
         echo "Une erreur s'est produite lors de l'exécution de la requête.";
     }
+
+    $data = array(
+      'total_utilisateurs' => $total_utilisateurs,
+      'total_tickets' => $total_tickets,
+      'total_depense' => $total_depense,
+      'total_tickets_attente' => $total_tickets_attente
+    );
+
+    $sql_categories_and_totals = "SELECT tc.nom_categorie, COALESCE(SUM(t.prix), 0) AS prix_total_par_categorie 
+                              FROM ticket_categorie tc 
+                              LEFT JOIN ticket t ON tc.id_category = t.categorie 
+                              GROUP BY tc.nom_categorie";
+
     
-    //  code PHP pour récupérer les noms de catégories depuis la base de données
+    $result_categories_and_totals = $db->query($sql_categories_and_totals);
+    
     $labels = array();
-    $sql_categories = "SELECT nom_categorie FROM ticket_categorie";
-    $result_categories = $db->query($sql_categories);
-
-    while ($row = $result_categories->fetch(PDO::FETCH_ASSOC)) {
-        $labels[] = $row['nom_categorie'];
-    }
-
-    $labelsJSON = json_encode($labels);
-
-    $sql_total_by_category = "SELECT categorie, SUM(prix) AS prix_total_par_categorie FROM ticket GROUP BY categorie";
-    $result_total_by_category = $db->query($sql_total_by_category);
-
     $prices_per_category = array();
-
-    while ($row = $result_total_by_category->fetch(PDO::FETCH_ASSOC)) {
-        $prices_per_category[] = $row['prix_total_par_categorie'];
+    
+    while ($row = $result_categories_and_totals->fetch(PDO::FETCH_ASSOC)) {
+        $labels[] = $row['nom_categorie'];
+        $prices_per_category[] = $row['prix_total_par_categorie']; 
     }
-
+    
+    $labelsJSON = json_encode($labels);
     $prices_per_category_json = json_encode($prices_per_category);
+
     ?>
+    
+
 
   <input type="checkbox" id="check">
   <header>
@@ -219,6 +226,7 @@
     <script>
     const categoryLabels = <?php echo $labelsJSON; ?>;
     const pricesPerCategory = <?php echo $prices_per_category_json; ?>;
+    var chartData = <?php echo json_encode($data); ?>;
   </script>
   <script type="text/javascript" src="../../index.js"></script>
 </body>

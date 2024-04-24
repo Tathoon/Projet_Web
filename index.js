@@ -130,44 +130,55 @@ renderCalendar();
 
 // Données pour le graphique
 const data = {
-  labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet'],
-  datasets: [{
-    label: 'Ventes mensuelles',
-    data: [65, 59, 80, 81, 56, 55, 40],
-    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-    borderColor: 'rgba(255, 99, 132, 1)',
-    borderWidth: 1
-  }]
-};
-
-data.datasets.push(
+  labels: Object.keys(chartData),
+  datasets: [
     {
-      label: 'Courbe 2',
-      data: [70, 65, 80, 75, 60, 50, 45], // Données pour la courbe 2
-      backgroundColor: 'rgba(255, 206, 86, 0.2)', // Couleur de fond de la zone
-      borderColor: 'rgba(255, 206, 86, 1)', // Couleur de la bordure
+      label: 'Total Utilisateurs',
+      data: [chartData.total_utilisateurs],
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgba(255, 99, 132, 1)',
+      borderWidth: 1,
+    },
+    {
+      label: 'Nombre de Tickets',
+      data: [chartData.total_tickets],
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(54, 162, 235, 1)',
       borderWidth: 1
     },
     {
-      label: 'Courbe 3',
-      data: [40, 55, 65, 70, 75, 80, 85], // Données pour la courbe 3
-      backgroundColor: 'rgba(75, 192, 192, 0.2)', // Couleur de fond de la zone
-      borderColor: 'rgba(75, 192, 192, 1)', // Couleur de la bordure
+      label: 'Dépense',
+      data: [chartData.total_depense],
+      backgroundColor: 'rgba(255, 206, 86, 0.2)',
+      borderColor: 'rgba(255, 206, 86, 1)',
       borderWidth: 1
     },
     {
-      label: 'Autre courbe',
-      data: [45, 60, 75, 70, 65, 55, 50], // Les données pour l'autre courbe
-      backgroundColor: 'rgba(54, 162, 235, 0.2)', // Couleur de fond de la zone
-      borderColor: 'rgba(54, 162, 235, 1)', // Couleur de la bordure
+      label: 'Tickets en Attente',
+      data: [chartData.total_tickets_attente],
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
       borderWidth: 1
     }
-  );
+  ]
+};
 
-// Configuration du graphique
+// Configuration du graphique avec une échelle logarithmique pour l'axe des y
 const config = {
-  type: 'line',
+  type: 'bar',
   data: data,
+  options: {
+    scales: {
+      y: {
+        type: 'logarithmic',
+        ticks: {
+          callback: function (value, index, values) {
+            return Number(value.toString()); // Convertir la valeur en nombre pour éviter l'affichage de nombres exponentiels
+          }
+        }
+      }
+    }
+  }
 };
 
 // Création du graphique
@@ -177,32 +188,38 @@ const myChart = new Chart(
 );
 
 
-const myData = {
-  labels: categoryLabels, 
-  datasets: [{
-    label: 'Dépense total ',
-    data: pricesPerCategory,
-    backgroundColor: [
-      'rgb(219, 88, 86)', 
-      'rgb(86, 180, 233)', 
-      'rgb(0, 158, 115)', 
-      'rgb(240, 228, 66)', 
-      'rgb(0, 114, 178)', 
-      'rgb(213, 94, 0)',  
-      'rgb(204, 121, 167)',
-      'rgba(157,134,146,255)' 
-    ],
-    hoverOffset: 4
-  }]
-};
 
-var myChartCAM = new Chart(
-  document.getElementById('camembertChart'),
-  { type: 'pie', data: myData }
-);
+// Vérifier si les données sont correctement récupérées
+const dataAvailable = categoryLabels.length > 0 && pricesPerCategory.length > 0;
 
-const myConfig = {
-  type: 'pie',
-  data: myData,
-};
+if (dataAvailable) {
+  const myData = {
+    labels: categoryLabels, 
+    datasets: [{
+      label: 'Dépense total ',
+      data: pricesPerCategory,
+      backgroundColor: [
+        'rgb(219, 88, 86)', 
+        'rgb(86, 180, 233)', 
+        'rgb(0, 158, 115)', 
+        'rgb(240, 228, 66)', 
+        'rgb(0, 114, 178)', 
+        'rgb(213, 94, 0)',  
+        'rgb(204, 121, 167)',
+        'rgba(157,134,146,255)' 
+      ],
+      hoverOffset: 4
+    }]
+  };
 
+  if (typeof Chart !== 'undefined') {
+    var myChartCAM = new Chart(
+      document.getElementById('camembertChart'),
+      { type: 'pie', data: myData }
+    );
+  } else {
+    console.error('La bibliothèque Chart.js n\'est pas chargée.');
+  }
+} else {
+  console.error('Aucune donnée disponible pour afficher le graphique.');
+}

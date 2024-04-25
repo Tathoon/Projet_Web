@@ -63,11 +63,8 @@
 
   
 
-  <h1 class="title">Formulaire de dépôt de note de frais</h1>
-
-  <div class="box-general">
-    <form action="tickets_commercial.php" method="post" enctype="multipart/form-data" class="form-user form-card form-container">
-
+  <h1 class="title">Vos notes de frais</h1>
+  
   <div class="ticket-container">
     <div class="card-ticket">
       <h1 class="title">Formulaire de dépôt de note de frais</h1>

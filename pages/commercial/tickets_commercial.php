@@ -62,9 +62,10 @@
   </div>
 
 
-  <div class="add-ticket">
-    <h1>Formulaire de dépôt de note de frais</h1>
-    <form action="tickets_commercial.php" method="post" enctype="multipart/form-data">
+  <h1 class="title">Formulaire de dépôt de note de frais</h1>
+
+  <div class="box-general">
+    <form action="tickets_commercial.php" method="post" enctype="multipart/form-data" class="form-user form-card form-container">
 
       <div class="mb-3">
         <label for="choix">Type de frais :</label>

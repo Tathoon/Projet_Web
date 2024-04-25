@@ -750,15 +750,11 @@ main .bottom_data .orders table td {
 }
 
 .content main .bottom_data .orders table td .status {
-  display: inline-block;
   font-size: 10px;
   padding: 6px 16px;
   color: var(--light);
   border-radius: 20px;
   font-weight: 700;
-  text-align: center;
-  width: 50px;
-  height: 10px;
 }
 
 .content main .bottom_data .orders table td .status.completed {
@@ -1237,4 +1233,5 @@ main .bottom_data .reminders {
     width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
     margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
   }
+}
 }

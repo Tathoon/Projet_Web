@@ -125,50 +125,65 @@ document.getElementById('month-next').addEventListener('click', () => {
 
 renderCalendar();
 
+console.log(chartData);
 
-/* GRAPHGIQUE */
+/* GRAPHIQUE */
 
 // Données pour le graphique
 const data = {
-  labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet'],
-  datasets: [{
-    label: 'Ventes mensuelles',
-    data: [65, 59, 80, 81, 56, 55, 40],
-    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-    borderColor: 'rgba(255, 99, 132, 1)',
-    borderWidth: 1
-  }]
-};
-
-data.datasets.push(
+  labels: ['Total Utilisateurs', 'Nombre de Tickets', 'Dépense', 'Tickets en Attente'],
+  datasets: [
     {
-      label: 'Courbe 2',
-      data: [70, 65, 80, 75, 60, 50, 45], // Données pour la courbe 2
-      backgroundColor: 'rgba(255, 206, 86, 0.2)', // Couleur de fond de la zone
-      borderColor: 'rgba(255, 206, 86, 1)', // Couleur de la bordure
+      label: 'Total Utilisateurs',
+      data: [chartData.total_utilisateurs, null, null, null,],
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(54, 162, 235, 1)',
       borderWidth: 1
     },
     {
-      label: 'Courbe 3',
-      data: [40, 55, 65, 70, 75, 80, 85], // Données pour la courbe 3
-      backgroundColor: 'rgba(75, 192, 192, 0.2)', // Couleur de fond de la zone
-      borderColor: 'rgba(75, 192, 192, 1)', // Couleur de la bordure
+      label: 'Nombre de Tickets',
+      data: [null, chartData.total_tickets, null, null],
+      backgroundColor: 'rgba(255, 206, 86, 0.2)',
+      borderColor: 'rgba(255, 206, 86, 1)',
       borderWidth: 1
     },
     {
-      label: 'Autre courbe',
-      data: [45, 60, 75, 70, 65, 55, 50], // Les données pour l'autre courbe
-      backgroundColor: 'rgba(54, 162, 235, 0.2)', // Couleur de fond de la zone
-      borderColor: 'rgba(54, 162, 235, 1)', // Couleur de la bordure
+      label: 'Dépense',
+      data: [null, null, chartData.total_depense, null],
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1
+    },
+    {
+      label: 'Tickets en Attente',
+      data: [null, null, null, chartData.total_tickets_attente],
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgba(255, 99, 132, 1)',
       borderWidth: 1
     }
-  );
-
-// Configuration du graphique
-const config = {
-  type: 'line',
-  data: data,
+  ]
 };
+
+
+const config = {
+  type: 'bar',
+  data: data,
+  options: {
+    scales: {
+      y: {
+        type: 'logarithmic',
+        ticks: {
+          callback: function (value, index, values) {
+            return Number(value.toString());
+          }
+        }
+      }
+    },
+    barPercentage: 11,
+    categoryPercentage: 0.2,
+  }
+};
+
 
 // Création du graphique
 const myChart = new Chart(
@@ -177,29 +192,38 @@ const myChart = new Chart(
 );
 
 
-// Utilisation de vos variables existantes pour les données et la configuration
-const myData = {
-  labels: ['Label 1', 'Label 2', 'Label 3'],
-  datasets: [{
-    label: 'Camembert Example',
-    data: [30, 40, 30], // Exemple de données
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
-    hoverOffset: 4
-  }]
-};
 
-const myConfig = {
-  type: 'pie',
-  data: myData,
-};
+// Vérifier si les données sont correctement récupérées
+const dataAvailable = categoryLabels.length > 0 && pricesPerCategory.length > 0;
 
-// Création du camembert avec vos variables existantes
-var myChartCAM = new Chart(
-  document.getElementById('camembertChart'),
-  myConfig
-);
-/*Tableau tickets*/
+if (dataAvailable) {
+  const myData = {
+    labels: categoryLabels, 
+    datasets: [{
+      label: 'Dépense total ',
+      data: pricesPerCategory,
+      backgroundColor: [
+        'rgb(219, 88, 86)', 
+        'rgb(86, 180, 233)', 
+        'rgb(0, 158, 115)', 
+        'rgb(240, 228, 66)', 
+        'rgb(0, 114, 178)', 
+        'rgb(213, 94, 0)',  
+        'rgb(204, 121, 167)',
+        'rgba(157,134,146,255)' 
+      ],
+      hoverOffset: 4
+    }]
+  };
+
+  if (typeof Chart !== 'undefined') {
+    var myChartCAM = new Chart(
+      document.getElementById('camembertChart'),
+      { type: 'pie', data: myData }
+    );
+  } else {
+    console.error('La bibliothèque Chart.js n\'est pas chargée.');
+  }
+} else {
+  console.error('Aucune donnée disponible pour afficher le graphique.');
+}

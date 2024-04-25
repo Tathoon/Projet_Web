@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ruda:wght@400;600;700&display=swap"); /* Obligatoire de le mettre en haut */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ruda:wght@400;600;700&display=swap");
 
 /* ------------------*/
 /*                   */
@@ -341,7 +341,6 @@ label #sidebar_btn:hover{
 /*-------------------*/
 
 /* ========Dashboard ADMIN =================== */
-
 :root {
   --light: #f6f6f9;
   --primary: #1976d2;

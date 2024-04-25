@@ -462,6 +462,11 @@ main .cards li:nth-child(2) .bx {
   color: #6e6725;
 }
 
+main .cards .comptable-redirection .bx {
+  background-color: var(--light-success) !important;
+  color: #658671 !important;
+}
+
 main .cards li:nth-child(3) .bx {
   background-color: var(--light-danger);
   color: #ee6273;
@@ -702,6 +707,9 @@ main .bottom_data .orders {
   background-color: var(--grey);
 }
 
+.page-redirection {
+  white-space: nowrap;
+}
 
 /* ========Tickets Admin =================== */
 main .bottom_data .orders table {
@@ -775,12 +783,6 @@ main .bottom_data .orders table td {
 main .bottom_data .reminders {
   flex-grow: 1;
   flex-basis: 300px;
-}
-
-.graph {
-  width: 100%;
-  max-width: 100%;
-  height: auto; 
 }
 
 #camembertChart {

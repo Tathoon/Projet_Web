@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ruda:wght@400;600;700&display=swap"); /* Obligatoire de le mettre en haut */
+
 /* ------------------*/
 /*                   */
 /*                   */
@@ -339,7 +341,6 @@ label #sidebar_btn:hover{
 /*-------------------*/
 
 /* ========Dashboard ADMIN =================== */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ruda:wght@400;600;700&display=swap");
 
 :root {
   --light: #f6f6f9;
@@ -969,6 +970,8 @@ main .bottom_data .reminders {
   justify-content: flex-start;
   cursor: pointer;
   margin-left: 37.9%;
+}
+
 .most-ticket-user td img {
   width: 36px;
   height: 36px;
@@ -989,6 +992,8 @@ main .bottom_data .reminders {
   align-items: flex-start;
 }
 
+
+
 /* ------------------*/
 /*                   */
 /*                   */
@@ -998,20 +1003,110 @@ main .bottom_data .reminders {
 /*-------------------*/
 
 /* ======== Tickets COMMERCIAL =================== */
-.form-ticket {
+.ticket-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.ticket-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.card-ticket {
   padding: 15px;
   min-height: 100px;
   width: 90%;
   max-width: 600px;
-  background-color: red;
+  background-color: var(--light);
   border-radius: 5px;
   margin: 20px auto;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  margin-left: 17%;
+}
+
+
+.ticket-card select {
+  appearance: none;
+  padding-right: 30px;
+  width: 243% !important;
+}
+
+.ticket-card {
+  margin: 20px auto; 
+  max-width: 400px; 
+}
+
+.ticket-card label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.ticket-card input[type="text"],
+.ticket-card select {
+  width: 220%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.ticket-card button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-top: 20px;
   cursor: pointer;
-  margin-left: 20%;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.ticket-card button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.ticket-card [name="description"] { 
+  height: 65px !important;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tbody tr:hover {
+  background-color: #eaeaea;
+}
+
+.table th:first-child,
+.table td:first-child {
+  width: 10%; /* Ajustez selon vos besoins */
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 25%; /* Ajustez selon vos besoins */
 }
 
 /* ------------------*/
@@ -1234,6 +1329,17 @@ main .bottom_data .reminders {
     width: 100%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
   }
 
+  .ticket-card input[type="text"],
+  .ticket-card select {
+    width: 100%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
+  }
+
+  .ticket-container {
+    width: 100%; /* Modifier la largeur de la boîte pour occuper toute la largeur de l'écran */
+    margin-left: 0; /* Réinitialiser la marge gauche */
+    padding: 15px 5px; /* Augmenter la marge intérieure de la boîte */
+  }
+
   .box-general {
     width: 100%; /* Modifier la largeur de la boîte pour occuper toute la largeur de l'écran */
     margin-left: 0; /* Réinitialiser la marge gauche */
@@ -1267,5 +1373,19 @@ main .bottom_data .reminders {
     width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
     margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
   }
-}
+
+  .form-card {
+    width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
+    margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
+  }
+
+  .ticket-card {
+    width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
+    margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
+  }
+
+  .ticket-container {
+    width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
+    margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
+  }
 }

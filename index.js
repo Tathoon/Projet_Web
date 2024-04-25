@@ -236,8 +236,6 @@ var myChartCAM = new Chart(
   document.getElementById('camembertChart'),
   myConfig
 );
-=======
-/*Tableau tickets*/
 
 
 

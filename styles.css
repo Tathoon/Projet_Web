@@ -484,7 +484,7 @@ main .cards li .info p {
 
 
 /* ========Graph Details Start=================== */
-=======
+
 main .bottom_data .reminders {
   flex-grow: 1;
   flex-basis: 300px;
@@ -640,11 +640,15 @@ main .bottom_data .orders table td {
 }
 
 .content main .bottom_data .orders table td .status {
+  display: inline-block;
   font-size: 10px;
   padding: 6px 16px;
   color: var(--light);
   border-radius: 20px;
   font-weight: 700;
+  text-align: center;
+  width: 50px;
+  height: 10px;
 }
 
 .content main .bottom_data .orders table td .status.completed {
@@ -697,7 +701,7 @@ main .bottom_data .reminders {
   padding: 10px;
   background-color: var(--light-danger);
   color: #fff;
-=======
+}
 /* Personnalisation de la pagination */
 .dataTables_paginate {
   padding: 12px 10px;
@@ -728,7 +732,7 @@ main .bottom_data .reminders {
 
 #calendar-body.fade-out {
   opacity: 0;
-=======
+}
 .dataTables_paginate .paginate_button:hover {
   background-color: #1974d4;
 }
@@ -806,7 +810,7 @@ main .bottom_data .reminders {
   height: 36px;
   border-radius: 50%;
   object-fit: cover;
-=======
+}
 .dataTables_length {
   padding: 12px 10px;
   font-size: 1rem;

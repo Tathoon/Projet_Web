@@ -26,6 +26,42 @@
       header('Location: ../../index.php');
       exit();
      }
+
+    $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql_number_users = "SELECT COUNT(DISTINCT id_utilisateur) AS total_utilisateurs FROM utilisateur";
+    $result_users = $db->query($sql_number_users);
+
+    $sql_number_tickets = "SELECT COUNT(DISTINCT id_ticket) AS total_tickets FROM ticket";
+    $result_tickets = $db->query($sql_number_tickets);
+
+    $sql_depense = "SELECT COALESCE(SUM(prix), 0) AS total_depense FROM ticket";
+    $result_depense = $db->query($sql_depense);
+
+    $sql_tickets_attente = "SELECT COUNT(DISTINCT id_ticket) AS total_tickets_attente FROM ticket WHERE status = 3";
+    $result_tickets_attente = $db->query($sql_tickets_attente);
+
+    $sql_most_ticket_user = "SELECT nom, prenom, COUNT(id_ticket) AS nombre_tickets FROM utilisateur JOIN ticket ON utilisateur.id_utilisateur = ticket.id_utilisateur GROUP BY utilisateur.id_utilisateur ORDER BY nombre_tickets DESC LIMIT 2";
+
+    if ($result_users !== false && $result_tickets !== false && $result_depense !== false && $result_tickets_attente !== false){
+        $row_users = $result_users->fetch(PDO::FETCH_ASSOC);
+        $row_tickets = $result_tickets->fetch(PDO::FETCH_ASSOC);
+        $row_depense = $result_depense->fetch(PDO::FETCH_ASSOC);
+        $row_tickets_attente = $result_tickets_attente->fetch(PDO::FETCH_ASSOC);
+        
+        if ($row_users && $row_tickets && $row_depense) {
+            $total_utilisateurs = $row_users["total_utilisateurs"];
+            $total_tickets = $row_tickets["total_tickets"];
+            $total_depense = $row_depense["total_depense"];
+            $total_tickets_attente = $row_tickets_attente["total_tickets_attente"];
+        } else {
+            echo "Aucun résultat trouvé.";
+        }
+    } else {
+        echo "Une erreur s'est produite lors de l'exécution de la requête.";
+    }
+
   ?>
 
   <input type="checkbox" id="check">
@@ -59,46 +95,46 @@
       <img src="../../images/user-icon.png" class="profile_image" alt="">
       <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
     </div>
-    <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
-    <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-    <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
-    <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i></i><span>Notifications</span></a>
-    <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-    <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+      <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
+      <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
+      <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
+      <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i></i><span>Notifications</span></a>
+      <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+      <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
 
   <div class="content">
       <main>
         <div class="header">
-          <h1>Dashboard</h1>
+          <h1><i class="fa-solid fa-gauge"></i> Dashboard</h1>
         </div>
         <ul class="cards">
           <li>
             <i class="bx bx-group"></i>
             <span class="info">
-              <h3>7,373</h3>
+            <h3><?php echo $total_utilisateurs; ?></h3>
               <p>Total Utilisateurs</p>
             </span>
           </li>
           <li>
             <i class="bx bx-movie"></i>
             <span class="info">
-              <h3>9,373</h3>
+              <h3><?php echo $total_tickets; ?></h3>
               <p>Nombre Tickets</p>
             </span>
           </li>
           <li>
-          <i class="bx bx-line-chart"></i>
+          <i class='bx bxs-stopwatch'></i>
             <span class="info">
-              <h3>5,373</h3>
-              <p>Bénéfice</p>
+              <h3><?php echo $total_tickets_attente; ?></h3>
+              <p>Tickets en attente</p>
             </span>
           </li>
           <li>
             <i class="bx bx-dollar-circle"></i>
             <span class="info">
-              <h3>$6,373</h3>
+              <h3><?php echo $total_depense; ?> €</h3>
               <p>Dépense</p>
             </span>
           </li>
@@ -110,7 +146,6 @@
             </div>
             <canvas id="myChart" class="graph"></canvas>
           </div>
-
           <div class="reminders">
             <div id="calendar">
               <div id="calendar-header">
@@ -123,6 +158,38 @@
           </div>
           </div>
         </div>
+        <div class="charts-container">
+          <div class="pie-chart">
+              <div class="header">
+                  <h3>Pourcentage de dépense par catégories</h3>
+              </div>
+              <canvas id="camembertChart"></canvas>
+          </div>
+          <div class="most-ticket-user">
+              <div class="header">
+                  <h3>Commercials avec le plus de tickets</h3>
+              </div>
+              <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Nombre de tickets</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td<?php echo $sql_most_ticket_user ; ?></td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>20</td>
+                    </tr>
+                    <!-- Ajoutez d'autres lignes selon vos données -->
+                </tbody>
+            </table>
+          </div>
+      </div>
       </main>
     </div>
   <script type="text/javascript" src="../../index.js"></script>

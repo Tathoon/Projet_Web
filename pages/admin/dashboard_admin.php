@@ -42,15 +42,19 @@
     $sql_tickets_attente = "SELECT COUNT(DISTINCT id_ticket) AS total_tickets_attente FROM ticket WHERE status = 3";
     $result_tickets_attente = $db->query($sql_tickets_attente);
 
-    $sql_most_ticket_user = "SELECT nom, prenom, COUNT(id_ticket) AS nombre_tickets FROM utilisateur JOIN ticket ON utilisateur.id_utilisateur = ticket.id_utilisateur GROUP BY utilisateur.id_utilisateur ORDER BY nombre_tickets DESC LIMIT 2";
+    $sql_user_by_number_tickets = "SELECT nom, prenom, COUNT(id_ticket) AS nombre_tickets FROM utilisateur JOIN ticket ON utilisateur.id_utilisateur = ticket.utilisateur GROUP BY utilisateur.id_utilisateur ORDER BY nombre_tickets DESC LIMIT 5";
+    $result_user_by_number_tickets = $db->query($sql_user_by_number_tickets);
+
 
     if ($result_users !== false && $result_tickets !== false && $result_depense !== false && $result_tickets_attente !== false){
         $row_users = $result_users->fetch(PDO::FETCH_ASSOC);
         $row_tickets = $result_tickets->fetch(PDO::FETCH_ASSOC);
         $row_depense = $result_depense->fetch(PDO::FETCH_ASSOC);
         $row_tickets_attente = $result_tickets_attente->fetch(PDO::FETCH_ASSOC);
+        $rows_user_by_number_tickets = $result_user_by_number_tickets->fetchAll(PDO::FETCH_ASSOC);
+
         
-        if ($row_users && $row_tickets && $row_depense) {
+        if ($row_users && $row_tickets && $row_depense && $row_tickets_attente && $rows_user_by_number_tickets) {
             $total_utilisateurs = $row_users["total_utilisateurs"];
             $total_tickets = $row_tickets["total_tickets"];
             $total_depense = $row_depense["total_depense"];
@@ -62,7 +66,35 @@
         echo "Une erreur s'est produite lors de l'exécution de la requête.";
     }
 
-  ?>
+    $data = array(
+      'total_utilisateurs' => $total_utilisateurs,
+      'total_tickets' => $total_tickets,
+      'total_depense' => $total_depense,
+      'total_tickets_attente' => $total_tickets_attente
+    );
+
+    $sql_categories_and_totals = "SELECT tc.nom_categorie, COALESCE(SUM(t.prix), 0) AS prix_total_par_categorie 
+                              FROM ticket_categorie tc 
+                              LEFT JOIN ticket t ON tc.id_category = t.categorie 
+                              GROUP BY tc.nom_categorie";
+
+    
+    $result_categories_and_totals = $db->query($sql_categories_and_totals);
+    
+    $labels = array();
+    $prices_per_category = array();
+    
+    while ($row = $result_categories_and_totals->fetch(PDO::FETCH_ASSOC)) {
+        $labels[] = $row['nom_categorie'];
+        $prices_per_category[] = $row['prix_total_par_categorie']; 
+    }
+    
+    $labelsJSON = json_encode($labels);
+    $prices_per_category_json = json_encode($prices_per_category);
+
+    ?>
+    
+
 
   <input type="checkbox" id="check">
   <header>
@@ -177,21 +209,44 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td<?php echo $sql_most_ticket_user ; ?></td>
-                        <td>25</td>
-                    </tr>
-                    <tr>
-                        <td>Jane Smith</td>
-                        <td>20</td>
-                    </tr>
-                    <!-- Ajoutez d'autres lignes selon vos données -->
+                <?php
+                  $liste_utilisateurs_tickets = [];
+
+                  while ($row = $result_user_by_number_tickets->fetch(PDO::FETCH_ASSOC)) {
+                      $rows_user_by_number_tickets[] = $row; 
+                  }
+
+                  usort($rows_user_by_number_tickets, function($a, $b) { 
+                      return $b['nombre_tickets'] - $a['nombre_tickets'];
+                  });
+
+                  $counter = 0;
+
+                  foreach ($rows_user_by_number_tickets as $row) {
+                      if ($counter < 3) {
+                          echo "<tr>";
+                          echo "<td>" . $row['nom'] . " " . $row['prenom'] . "</td>";
+                          echo "<td>" . $row['nombre_tickets'] . "</td>";
+                          echo "</tr>";
+                          $counter++;
+                      } else {
+                          break;
+                      }
+                  }
+
+                  ?>
+
                 </tbody>
             </table>
           </div>
       </div>
       </main>
     </div>
+    <script>
+    const categoryLabels = <?php echo $labelsJSON; ?>;
+    const pricesPerCategory = <?php echo $prices_per_category_json; ?>;
+    var chartData = <?php echo json_encode($data); ?>;
+  </script>
   <script type="text/javascript" src="../../index.js"></script>
 </body>
 </html>

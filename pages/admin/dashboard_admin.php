@@ -205,7 +205,7 @@
           </div>
           <div class="most-ticket-user">
               <div class="header">
-                  <h3>Commercials avec le plus de tickets</h3>
+                  <h3>Commerciaux avec le plus de tickets</h3>
               </div>
               <table>
                 <thead>

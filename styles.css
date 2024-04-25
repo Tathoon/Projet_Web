@@ -777,12 +777,6 @@ main .bottom_data .reminders {
   flex-basis: 300px;
 }
 
-.graph {
-  width: 100%;
-  max-width: 100%;
-  height: auto; 
-}
-
 #camembertChart {
   padding: 1.8rem;
   border-radius: 5px;

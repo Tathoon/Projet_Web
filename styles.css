@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ruda:wght@400;600;700&display=swap");
+
 /* ------------------*/
 /*                   */
 /*                   */
@@ -339,8 +341,6 @@ label #sidebar_btn:hover{
 /*-------------------*/
 
 /* ========Dashboard ADMIN =================== */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ruda:wght@400;600;700&display=swap");
-
 :root {
   --light: #f6f6f9;
   --primary: #1976d2;
@@ -969,6 +969,8 @@ main .bottom_data .reminders {
   justify-content: flex-start;
   cursor: pointer;
   margin-left: 37.9%;
+}
+
 .most-ticket-user td img {
   width: 36px;
   height: 36px;
@@ -1233,5 +1235,4 @@ main .bottom_data .reminders {
     width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
     margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
   }
-}
 }

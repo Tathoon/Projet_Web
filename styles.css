@@ -1108,6 +1108,16 @@ main .bottom_data .reminders {
   width: 25%; /* Ajustez selon vos besoins */
 }
 
+.drop-area {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.dragover .drop-area {
+  background-color: #f0f0f0;
+}
+
 /* ------------------*/
 /*                   */
 /*                   */

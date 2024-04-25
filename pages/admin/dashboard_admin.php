@@ -209,14 +209,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                   foreach ($rows_user_by_number_tickets as $row) {
-                    echo "<tr>";
-                    echo "<td>" . $row['nom'] . " " . $row['prenom'] . "</td>";
-                    echo "<td>" . $row['nombre_tickets'] . "</td>";
-                    echo "</tr>";
-                    }                
-                    ?>
+                <?php
+                  $liste_utilisateurs_tickets = [];
+
+                  while ($row = $result_user_by_number_tickets->fetch(PDO::FETCH_ASSOC)) {
+                      $rows_user_by_number_tickets[] = $row; 
+                  }
+
+                  usort($rows_user_by_number_tickets, function($a, $b) { 
+                      return $b['nombre_tickets'] - $a['nombre_tickets'];
+                  });
+
+                  $counter = 0;
+
+                  foreach ($rows_user_by_number_tickets as $row) {
+                      if ($counter < 3) {
+                          echo "<tr>";
+                          echo "<td>" . $row['nom'] . " " . $row['prenom'] . "</td>";
+                          echo "<td>" . $row['nombre_tickets'] . "</td>";
+                          echo "</tr>";
+                          $counter++;
+                      } else {
+                          break;
+                      }
+                  }
+
+                  ?>
+
                 </tbody>
             </table>
           </div>

@@ -125,45 +125,46 @@ document.getElementById('month-next').addEventListener('click', () => {
 
 renderCalendar();
 
+console.log(chartData);
 
 /* GRAPHIQUE */
 
 // Données pour le graphique
 const data = {
-  labels: Object.keys(chartData),
+  labels: ['Total Utilisateurs', 'Nombre de Tickets', 'Dépense', 'Tickets en Attente'],
   datasets: [
     {
       label: 'Total Utilisateurs',
-      data: [chartData.total_utilisateurs],
-      backgroundColor: 'rgba(255, 99, 132, 0.2)',
-      borderColor: 'rgba(255, 99, 132, 1)',
-      borderWidth: 1,
-    },
-    {
-      label: 'Nombre de Tickets',
-      data: [chartData.total_tickets],
+      data: [chartData.total_utilisateurs, null, null, null,],
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       borderColor: 'rgba(54, 162, 235, 1)',
       borderWidth: 1
     },
     {
-      label: 'Dépense',
-      data: [chartData.total_depense],
+      label: 'Nombre de Tickets',
+      data: [null, chartData.total_tickets, null, null],
       backgroundColor: 'rgba(255, 206, 86, 0.2)',
       borderColor: 'rgba(255, 206, 86, 1)',
       borderWidth: 1
     },
     {
-      label: 'Tickets en Attente',
-      data: [chartData.total_tickets_attente],
+      label: 'Dépense',
+      data: [null, null, chartData.total_depense, null],
       backgroundColor: 'rgba(75, 192, 192, 0.2)',
       borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1
+    },
+    {
+      label: 'Tickets en Attente',
+      data: [null, null, null, chartData.total_tickets_attente],
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgba(255, 99, 132, 1)',
       borderWidth: 1
     }
   ]
 };
 
-// Configuration du graphique avec une échelle logarithmique pour l'axe des y
+
 const config = {
   type: 'bar',
   data: data,
@@ -173,13 +174,16 @@ const config = {
         type: 'logarithmic',
         ticks: {
           callback: function (value, index, values) {
-            return Number(value.toString()); // Convertir la valeur en nombre pour éviter l'affichage de nombres exponentiels
+            return Number(value.toString());
           }
         }
       }
-    }
+    },
+    barPercentage: 11,
+    categoryPercentage: 0.2,
   }
 };
+
 
 // Création du graphique
 const myChart = new Chart(

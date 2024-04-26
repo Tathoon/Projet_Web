@@ -905,7 +905,7 @@ main .bottom_data .reminders {
   background-position-x: calc(100% - 10px);
   background-position-y: center;
   padding-right: 30px;
-  width: 365%;
+  width: 366%;
 }
 
 .form-card input[type="submit"] {

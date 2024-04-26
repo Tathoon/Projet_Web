@@ -42,86 +42,77 @@
             <input type="submit" value="LOGIN">
         </div>
         
-<?php
-    // Démarrage de la temporisation de la sortie
-    ob_start();
+        <?php
+// Démarrage de la temporisation de la sortie
+ob_start();
 
-    // Démarrage de la session
-    session_start();
+// Démarrage de la session
+session_start();
 
-    // Affichage pour le débogage
-    echo 'PHP lancé';
-    echo 'Session démarrée';
+// Affichage pour le débogage
+echo 'PHP lancé';
+echo 'Session démarrée';
 
-    // Vérification de la méthode de la requête
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Vérification des données postées
-        if (isset($_POST['email']) && isset($_POST['password'])) {
-            // Récupération des données postées
-            $usermail = $_POST['email'];
-            $userpasswd = $_POST['password'];
+// Vérification de la méthode de la requête
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Vérification des données postées
+    if (isset($_POST['email']) && isset($_POST['password'])) {
+        // Récupération des données postées
+        $usermail = $_POST['email'];
+        $userpasswd = $_POST['password'];
 
-            // Affichage pour le débogage
-            echo 'Informations récupérées';
+        // Connexion à la base de données
+        $serveur = "e11event.mysql.database.azure.com";
+        $utilisateur = "Tathoon";
+        $mot_de_passe = "*7d7K7yt&Q8t#!";
+        $base_de_donnees = "e11event_bdd";
 
-            // Connexion à la base de données
-            $serveur = "e11event.mysql.database.azure.com";
-            $utilisateur = "Tathoon";
-            $mot_de_passe = "*7d7K7yt&Q8t#!";
-            $base_de_donnees = "e11event_bdd";
+        try {
+            $db = new PDO("mysql:host=$serveur;dbname=$base_de_donnees", $utilisateur, $mot_de_passe);
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            try {
-                $db = new PDO("mysql:host=$serveur;dbname=$base_de_donnees", $utilisateur, $mot_de_passe);
-                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // Préparation et exécution de la requête SQL
+            $query = $db->prepare('SELECT * FROM utilisateur WHERE mail = :mail AND mdp = :mdp');
+            $query->execute(array('mail' => $usermail, 'mdp' => $userpasswd));
+            $row = $query->fetch();
 
-                // Affichage pour le débogage
-                echo 'Connexion réussie';
-
-                // Préparation et exécution de la requête SQL
-                $query = $db->prepare('SELECT * FROM utilisateur WHERE mail = :mail AND mdp = :mdp');
-                $query->execute(array('mail' => $usermail, 'mdp' => $userpasswd));
-                $row = $query->fetch();
-
-                // Affichage pour le débogage
-                echo 'Requête exécutée';
-
-                // Vérification des résultats de la requête
-                if ($row) {
-                    // Redirection de l'utilisateur en fonction de son rôle
-                    switch ($row['role']) {
-                        case 1:
-                            header('Location: pages/admin/dashboard_admin.php');
-                            break;
-                        case 2:
-                            header('Location: pages/commercial/tickets_commercial.php');
-                            break;
-                        case 3:
-                            header('Location: pages/comptable/dashboard_comptable.php');
-                            break;
-                        default:
-                            // Redirection vers une page par défaut si aucun rôle spécifié
-                            header('Location: pages/index.php');
-                            break;
-                    }
-
-                    // Sortie de script après la redirection
-                    exit();
-                } else {
-                    // Affichage d'un message d'erreur si les informations de connexion sont incorrectes
-                    $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
-                                        <strong>Erreur</strong> le mail ou le mot de passe est incorrect.
-                                    </div>';
-                    echo $errorMessage;
+            // Vérification des résultats de la requête
+            if ($row) {
+                // Redirection de l'utilisateur en fonction de son rôle
+                switch ($row['role']) {
+                    case 1:
+                        header('Location: pages/admin/dashboard_admin.php');
+                        break;
+                    case 2:
+                        header('Location: pages/commercial/tickets_commercial.php');
+                        break;
+                    case 3:
+                        header('Location: pages/comptable/dashboard_comptable.php');
+                        break;
+                    default:
+                        // Redirection vers une page par défaut si aucun rôle spécifié
+                        header('Location: pages/index.php');
+                        break;
                 }
-            } catch (PDOException $e) {
-                // Gestion des erreurs de connexion à la base de données
+
+                // Sortie de script après la redirection
+                exit();
+            } else {
+                // Affichage d'un message d'erreur si les informations de connexion sont incorrectes
                 $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
-                                    <strong>Erreur de connexion à la base de données :</strong> ' . $e->getMessage() . '
+                                    <strong>Erreur</strong> le mail ou le mot de passe est incorrect.
                                 </div>';
                 echo $errorMessage;
             }
+        } catch (PDOException $e) {
+            // Gestion des erreurs de connexion à la base de données
+            $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
+                                <strong>Erreur de connexion à la base de données :</strong> ' . $e->getMessage() . '
+                            </div>';
+            echo $errorMessage;
         }
     }
+}
 ?>
     
 </form>

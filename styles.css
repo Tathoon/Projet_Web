@@ -1424,18 +1424,14 @@ main .bottom_data .reminders {
 
   main .cards {
     grid-template-columns: 1fr;
-  }
-
-  .cards {
     position: relative;
-    right: 12px;
+    right: 4.5%;
   }
 
   .orders {
     position: relative;
-    right: -2px;
+    right: 5.5%;
   }
-
 
   main .bottom_data .header {
     min-width: unset;
@@ -1554,5 +1550,56 @@ main .bottom_data .reminders {
   .ticket-container {
     width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
     margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
+  }
+}
+
+/* Styles pour les écrans de taille moyenne */
+@media screen and (max-width: 768px) {
+  .charts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pie-chart,
+  .most-ticket-user {
+    width: 100%;
+  }
+}
+
+/* Styles pour les téléphones */
+@media screen and (max-width: 480px) {
+  .charts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Styles pour les écrans de taille moyenne */
+@media screen and (max-width: 768px) {
+  .bottom_data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .orders,
+  .reminders {
+    width: 100%;
+  }
+
+  .reminders {
+    position: relative;
+    right: 5.5%;
+  }
+}
+
+/* Styles pour les téléphones */
+@media screen and (max-width: 480px) {
+  .bottom_data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

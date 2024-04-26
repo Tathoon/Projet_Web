@@ -6,12 +6,14 @@
 /*                   */
 /*-------------------*/
 
+/* NAVBAR CLOSE */
 $(document).ready(function(){
   $('.nav_btn').click(function(){
     $('.mobile_nav_items').toggleClass('active');
   });
 });
 
+/* CHANGEMENT AVATAR NAVBAR */
 var radios = document.querySelectorAll('input[name="avatar"]');
 var mobileProfileImage = document.querySelector('.mobile_profile_image');
 var profileImage = document.querySelector('.profile_image');
@@ -33,6 +35,18 @@ radios.forEach(function(radio) {
                 avatarSrc = '../../images/avatar/avatar4.png';
             } else if (this.id === 'avatar5') {
                 avatarSrc = '../../images/avatar/avatar5.png';
+            } else if (this.id === 'avatar6') {
+                avatarSrc = '../../images/avatar/dancing-toothless-tothless.gif';
+            } else if (this.id === 'avatar7') {
+                avatarSrc = '../../images/avatar/Donald-Duck.gif';
+            } else if (this.id === 'avatar8') {
+                avatarSrc = '../../images/avatar/Pedro.gif';
+            } else if (this.id === 'avatar9') {
+                avatarSrc = '../../images/avatar/PowerRanger.gif';
+            } else if (this.id === 'avatar10') {
+                avatarSrc = '../../images/avatar/angry-cat.gif';
+            } else if (this.id === 'avatar11') {
+                avatarSrc = '../../images/avatar/quokka.gif';
             }
             mobileProfileImage.src = avatarSrc;
             profileImage.src = avatarSrc;
@@ -45,6 +59,16 @@ radios.forEach(function(radio) {
             profileImage.src = '../../images/user-icon.png';
         }
     });
+});
+
+
+function showMoreAvatars() {
+  document.getElementById('hiddenAvatars').style.display = 'flex';
+  document.getElementById('showMoreAvatars').style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('showMoreAvatars').addEventListener('click', showMoreAvatars);
 });
 
 
@@ -263,5 +287,3 @@ if (dataAvailable) {
 } else {
   console.error('Aucune donnée disponible pour afficher le graphique.');
 }
-
-// Vérifier si le formulaire est correctement rempli

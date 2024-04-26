@@ -84,10 +84,12 @@
     </script>
   </div>
   <div class="content">
-    <main>
+  <main>
     <div class="avatar_section">
-      <h2>Changez votre avatar</h2>
-      <div class="avatar_options">
+      <div class="header">
+        <h1>Changez votre avatar</h1>
+      </div>
+      <div class="avatar_options" id="avatarContainer">
         <label for="avatar1">
           <img src="../../images/avatar/avatar1.png" alt="Avatar 1">
           <input type="radio" id="avatar1" name="avatar" value="avatar1.jpg">
@@ -108,9 +110,40 @@
           <img src="../../images/avatar/avatar5.png" alt="Avatar 5">
           <input type="radio" id="avatar5" name="avatar" value="avatar5.jpg">
         </label>
+
+        <button id="showMoreAvatars">Surprise !</button>
+
+        <div id="hiddenAvatars" class="avatar_options" style="display: none;">
+          <label for="avatar6">
+            <img src="../../images/avatar/dancing-toothless-tothless.gif" alt="Avatar 6">
+            <input type="radio" id="avatar6" name="avatar" value="avatar6.jpg">
+          </label>
+          <label for="avatar7">
+            <img src="../../images/avatar/Donald-Duck.gif" alt="Avatar 7">
+            <input type="radio" id="avatar7" name="avatar" value="avatar7.jpg">
+          </label>
+          <label for="avatar8">
+            <img src="../../images/avatar/Pedro.gif" alt="Avatar 8">
+            <input type="radio" id="avatar8" name="avatar" value="avatar8.jpg">
+          </label>
+          <label for="avatar9">
+            <img src="../../images/avatar/PowerRanger.gif" alt="Avatar 9">
+            <input type="radio" id="avatar9" name="avatar" value="avatar9.jpg">
+          </label>
+          <label for="avatar10">
+            <img src="../../images/avatar/angry-cat.gif" alt="Avatar 10">
+            <input type="radio" id="avatar10" name="avatar" value="avatar10.jpg">
+          </label>
+          <label for="avatar11">
+            <img src="../../images/avatar/quokka.gif" alt="Avatar 11">
+            <input type="radio" id="avatar11" name="avatar" value="avatar11.jpg">
+          </label>
+        </div>
       </div>
     </div>
   </main>
+</div>
+
 
     <script>
       // Sélectionnez les boutons radio et les images

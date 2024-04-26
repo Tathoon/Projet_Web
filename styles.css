@@ -332,10 +332,32 @@ label #sidebar_btn:hover{
   text-align: center;
 }
 
-.avatar_options img {
-  width: 100px; /* ajustez la largeur selon vos besoins */
-  height: 100px; /* ajustez la hauteur selon vos besoins */
+.avatar_options {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; 
 }
+
+.avatar_options img {
+  width: 100px; 
+  height: 100px;
+  margin: 10px; 
+  transition: transform 0.2s;
+}
+
+.avatar_options img:hover {
+  transform: scale(1.1);
+  background-color: #f6f6f9;
+}
+
+.avatar_options input[type="radio"] {
+  display: none;
+}
+
+.avatar_options label {
+  cursor: pointer;
+}
+
 
 /* ------------------*/
 /*                   */

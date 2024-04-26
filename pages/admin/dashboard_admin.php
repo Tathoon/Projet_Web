@@ -198,7 +198,7 @@
         <div class="charts-container">
           <div class="pie-chart">
               <div class="header">
-                  <h3>Pourcentage de dépense par catégories</h3>
+                  <h3>Dépense totale par catégories</h3>
               </div>
               <canvas id="camembertChart"></canvas>
           </div>

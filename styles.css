@@ -822,7 +822,7 @@ main .bottom_data .reminders {
 }
 
 .dataTables_paginate .paginate_button {
-  background-color: #19B3D3;
+  background-color: #6aa3ff;
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -845,7 +845,7 @@ main .bottom_data .reminders {
   opacity: 0;
 }
 .dataTables_paginate .paginate_button:hover {
-  background-color: #1974d4;
+  background-color: var(--primary);
 }
 
 .dataTables_info {
@@ -905,6 +905,7 @@ main .bottom_data .reminders {
   background-position-y: center;
   padding-right: 30px;
   width: 366%;
+  cursor: pointer;
 }
 
 .form-card input[type="submit"] {
@@ -978,7 +979,6 @@ main .bottom_data .reminders {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  cursor: pointer;
   margin-left: 21.6%;
 }
 

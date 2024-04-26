@@ -1,6 +1,5 @@
 <?php
-ob_start();
-session_start();
+session_start();  // Start the session at the beginning
 
 $errorMessage = '';
 
@@ -50,8 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         error_log("Database error: " . $e->getMessage());  // Log the database error
     }
 }
-
-ob_end_flush();
 ?>
 
 <!DOCTYPE html>

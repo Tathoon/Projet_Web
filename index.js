@@ -287,4 +287,3 @@ if (dataAvailable) {
 } else {
   console.error('Aucune donnée disponible pour afficher le graphique.');
 }
-

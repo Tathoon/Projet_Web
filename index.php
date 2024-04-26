@@ -100,6 +100,7 @@
             
             // Établir une connexion à la base de données
             $connexion = new mysqli($serveur, $utilisateur, $mot_de_passe, $base_de_donnees);
+            echo $connexion->connect_error;
             
             // Vérifier la connexion
             if ($connexion->connect_error) {

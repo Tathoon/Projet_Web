@@ -1,3 +1,20 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['role']) || ($_SESSION['role'] != 1 && $_SESSION['role'] != 3 && $_SESSION['role'] != 2)) {
+      header('Location: ../../index.php');
+      session_destroy();
+      exit();
+    }
+
+    if(isset($_GET['logout'])) {
+      session_destroy();
+      header('Location: ../../index.php');
+      exit();
+     }
+
+     $role = $_SESSION['role'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,22 +27,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
 </head>
 <body>
-  <?php
-    session_start();
-    echo $_SESSION['nom'];
-
-    if (!isset($_SESSION['role']) || ($_SESSION['role'] != 1 && $_SESSION['role'] != 3 && $_SESSION['role'] != 2)) {
-      header('Location: ../../index.php');
-      session_destroy();
-      exit();
-    }
-
-    if(isset($_GET['logout'])) {
-      session_destroy();
-      header('Location: ../../index.php');
-      exit();
-     }
-  ?>
 
   <input type="checkbox" id="check">
   <header>
@@ -61,9 +62,6 @@
     <a href="javascript:goBack()" class="back"><i class="fa-solid fa-arrow-left"></i><span>Retour</span></a>
     <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
 
-    <?php
-      $role = $_SESSION['role'];
-    ?>
     <script>
     function goBack() {
       switch (<?php echo $role; ?>) {

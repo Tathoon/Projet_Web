@@ -62,122 +62,279 @@
     <a href="../../index.php?logout=true" class="logout-commercial" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
-  <h1 class="title">Formulaire de dépôt de note de frais</h1>
+  
 
-  <div class="box-general">
-    <form action="tickets_commercial.php" method="post" enctype="multipart/form-data">
+  <h1 class="title">Vos notes de frais</h1>
 
-      <div class="mb-3">
-        <label for="choix">Type de frais :</label>
-          <select name="categorie" id="categorie">
-              <?php 
-                $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
-                $ticket_categorie = $db->query("SELECT * FROM ticket_categorie")->fetchAll();
-                foreach ($ticket_categorie as $row) {
-                  echo "<option value=".$row['id_category'].">".$row['nom_categorie']."</option>";
-                }
-              ?>
+  <div class="ticket-container">
+    <div class="card-ticket">
+      <h1 class="title">Formulaire de dépôt de note de frais</h1>
+      <form action="tickets_commercial.php" method="post" enctype="multipart/form-data" class="form-user ticket-card form-container">
+
+        <div class="mb-3">
+          <label for="categorie">Type de frais<span style="color: red;">*</span> <span> :</span></label>
+          <select name="categorie" id="categorie" required>
+              <option value="" style="color: gray;">Renseignez le type de frais</option>
+            <?php 
+            $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
+            $ticket_categorie = $db->query("SELECT * FROM ticket_categorie")->fetchAll();
+            foreach ($ticket_categorie as $row) {
+              echo "<option value=".$row['id_category'].">".$row['nom_categorie']."</option>";
+            }
+            ?>
           </select>
-      </div>
-    
-      <div class="mb-3">
-        <label for="cout" class="">Coût du frais :</label>
-        <input name="cout" type="text" id="cout">
-      </div>
+        </div>
 
-      <div class="mb-3">
-        <label for="description" class="">Description du frais :</label>
-        <input name="description" type="text" id="description">
-      </div>
+        <div class="mb-3">
+          <label for="cout">Coût du frais<span style="color: red;">*</span> <span> :</span></label>
+          <input name="cout" type="text" id="cout" required>
+        </div>
 
-      <div class="mb-3">
-        <label for="lieu" class="">Lieu du frais :</label>
-        <input name="lieu" type="text" id="lieu">
-      </div>
+        <div class="mb-3">
+          <label for="description">Description du frais<span style="color: red;">*</span> <span> :</span></label>
+          <input name="description" type="text" id="description" required>
+        </div>
 
-      <div class="mb-3">
-        <label for="justificatif">Justificatif :</label>
-        <input type="file" name="justificatif" id="justificatif">
-      </div>
+        <div class="mb-3">
+          <label for="lieu">Lieu du frais<span style="color: red;">*</span> <span> :</span></label>
+          <input name="lieu" type="text" id="lieu" required>
+        </div>
 
-      <div class="mb-3">
-        <button type="submit" class="">Ajouter la note de frais</button>
-      </div>
+        <div class="mb-3">
+          <label for="justificatif">justificatif<span> : </span><span>(facultatif)</span></label>
+          <input type="file" name="justificatif" id="justificatif">
+        </div>
 
+        <div class="mb-3">
+          <button type="submit">Ajouter la note de frais</button>
+        </div>
+      
+        <?php
+        if (isset($_POST['categorie']) && isset($_POST['cout']) && isset($_POST['description']) && isset($_POST['lieu']) && isset($_FILES['justificatif'])) {
+            $categorie = $_POST['categorie'];
+            $cout = $_POST['cout'];
+            $description = $_POST['description'];
+            $lieu = $_POST['lieu'];
 
-      <?php
-if (isset($_POST['categorie']) && isset($_POST['cout']) && isset($_POST['description']) && isset($_POST['lieu']) && isset($_FILES['justificatif'])) {
-    $categorie = $_POST['categorie'];
-    $cout = $_POST['cout'];
-    $description = $_POST['description'];
-    $lieu = $_POST['lieu'];
+            // Vérifie si les informations de nom et prénom de l'utilisateur sont disponibles dans la session
+            if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
+                $nom = $_SESSION['nom'];
+                $prenom = $_SESSION['prenom'];
 
-    // Connexion à la base de données
-    $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
+                // Connexion à la base de données
+                $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
 
-    if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
-        $nom = $_SESSION['nom'];
-        $prenom = $_SESSION['prenom'];
+                // Récupère le nom de l'utilisateur à partir de la base de données
+                $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                $stmt_nom->bindParam(':nom', $nom);
+                $stmt_nom->bindParam(':prenom', $prenom);
+                $stmt_nom->execute();
+                $nom = $stmt_nom->fetch()['nom'];
 
-        $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
-        $stmt_user->bindParam(':nom', $nom);
-        $stmt_user->bindParam(':prenom', $prenom);
-        $stmt_user->execute();
-        $id_utilisateur = $stmt_user->fetch()['id_utilisateur']; // Récupérez l'ID de l'utilisateur
-    }
+                // Récupère l'adresse mail de l'utilisateur à partir de la base de données
+                $stmt_mail = $db->prepare("SELECT mail FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                $stmt_mail->bindParam(':nom', $nom);
+                $stmt_mail->bindParam(':prenom', $prenom);
+                $stmt_mail->execute();
+                $mail = $stmt_mail->fetch()['mail'];
 
-    // ID du statut à insérer (dans cet exemple, 3)
-    $id_status = 3;
+                // Récupère l'ID de l'utilisateur à partir de la base de données
+                $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                $stmt_user->bindParam(':nom', $nom);
+                $stmt_user->bindParam(':prenom', $prenom);
+                $stmt_user->execute();
+                $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
 
-    // Préparation de la requête pour insérer le ticket
-    $stmt_ticket = $db->prepare("INSERT INTO ticket (categorie, prix, description, lieu, status, date, utilisateur) VALUES (:categorie, :cout, :description, :lieu, :status, NOW(), :id_utilisateur)");
-    $stmt_ticket->bindParam(':categorie', $categorie);
-    $stmt_ticket->bindParam(':cout', $cout);
-    $stmt_ticket->bindParam(':description', $description);
-    $stmt_ticket->bindParam(':lieu', $lieu);
-    $stmt_ticket->bindParam(':status', $id_status);
-    $stmt_ticket->bindParam(':id_utilisateur', $id_utilisateur); // Utilisez l'ID de l'utilisateur récupéré
+                $id_status = 3;
 
-    // Exécution de la requête pour insérer le ticket
-    $stmt_ticket->execute();
+                // Insère les informations du ticket dans la base de données
+                $stmt_ticket = $db->prepare("INSERT INTO ticket (categorie, prix, description, lieu, status, date, utilisateur, nom, mail) VALUES (:categorie, :cout, :description, :lieu, :status, NOW(), :id_utilisateur, :nom, :mail)");
+                $stmt_ticket->bindParam(':categorie', $categorie);
+                $stmt_ticket->bindParam(':cout', $cout);
+                $stmt_ticket->bindParam(':description', $description);
+                $stmt_ticket->bindParam(':lieu', $lieu);
+                $stmt_ticket->bindParam(':status', $id_status);
+                $stmt_ticket->bindParam(':id_utilisateur', $id_utilisateur);
+                $stmt_ticket->bindParam(':nom', $nom);
+                $stmt_ticket->bindParam(':mail', $mail);
 
-    // Récupération de l'ID du ticket inséré
-    $id_ticket = $db->lastInsertId();
+                $stmt_ticket->execute();
 
-    // Traitement de l'image justificatif
-    $target_dir = "../../images/justificatifs/";
-    $extension = pathinfo($_FILES["justificatif"]["name"], PATHINFO_EXTENSION);
-    $nouveau_nom_image = "justificatif$id_ticket.$extension";
-    $target_file = $target_dir . $nouveau_nom_image;
+                $id_ticket = $db->lastInsertId();
 
-    // Déplacer l'image vers le dossier "justificatifs"
-    if (move_uploaded_file($_FILES["justificatif"]["tmp_name"], $target_file)) {
-        // Préparation de la requête pour mettre à jour le nom de l'image dans la base de données
-        $stmt_image = $db->prepare("UPDATE ticket SET justificatif = :justificatif WHERE id_ticket = :id_ticket");
-        $stmt_image->bindParam(':justificatif', $nouveau_nom_image);
-        $stmt_image->bindParam(':id_ticket', $id_ticket);
+                $target_dir = "../../images/justificatifs/";
+                $extension = pathinfo($_FILES["justificatif"]["name"], PATHINFO_EXTENSION);
+                $nouveau_nom_image = "justificatif$id_ticket.$extension";
+                $target_file = $target_dir . $nouveau_nom_image;
 
-        // Exécution de la requête pour mettre à jour le nom de l'image dans la base de données
-        $stmt_image->execute();
+                if (move_uploaded_file($_FILES["justificatif"]["tmp_name"], $target_file)) {
+                    $stmt_image = $db->prepare("UPDATE ticket SET justificatif = :justificatif WHERE id_ticket = :id_ticket");
+                    $stmt_image->bindParam(':justificatif', $nouveau_nom_image);
+                    $stmt_image->bindParam(':id_ticket', $id_ticket);
 
-        echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong> La note de frais a bien été ajoutée.</strong>
-            </div>';
-        echo '<script type="text/javascript">
-              setTimeout(function() {
-                  var element = document.getElementById("success-alert");
-                  element.parentNode.removeChild(element);
-              }, 3000);
-            </script>';
-    } else {
-        echo "Une erreur s'est produite lors du téléchargement du fichier.";
-    }
-}
-?>
-    </form>
+                    $stmt_image->execute();
+
+                echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                      <strong> La note de frais a bien été ajoutée.</strong>
+                      </div>';
+                echo '<script type="text/javascript">
+                      setTimeout(function() {
+                          var element = document.getElementById("success-alert");
+                          element.parentNode.removeChild(element);
+                      }, 3000);
+                      </script>';
+            } else {
+                echo '<div role="alert">
+                      <strong> Erreur lors de l\'envois du formulaire. Veuillez vous connecter.</strong>
+                      </div>';
+                echo '<script type="text/javascript">
+                      setTimeout(function() {
+                          var element = document.getElementById("success-alert");
+                          element.parentNode.removeChild(element);
+                      }, 5000);
+                      </script>';
+            }
+          }
+        }
+        ?>
+      </form>
+    </div>
   </div>
 
-  
+  <div class="table-container">
+    <div class="ticket-pending">
+      <main>
+        <div class="bottom_data">
+          <div class="orders">
+            <div class="header">
+              <h3>Tickets en attente</h3>
+            </div>
+            <table id="pendingTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Date</th>
+                  <th>Lieu</th>
+                  <th>Catégorie</th>
+                  <th>Prix</th>
+                  <th>Description</th>
+                  <th>Justificatif</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                  $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
+
+                  $pending_tickets = $db->prepare("
+                    SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                    FROM ticket AS t
+                    INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                    INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                    INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                    WHERE ts.nom_status = 'En attente'
+                  ");
+                  $pending_tickets->execute();
+                  $pending_data = $pending_tickets->fetchAll();
+
+                  foreach ($pending_data as $row) {
+                    $justificatifIcon = '';
+                    if (!empty($row['justificatif'])) {
+                      $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                    }
+                    echo "<tr>
+                            <td>".$row['id_ticket']."</td>
+                            <td>".$row['date']."</td>
+                            <td>".$row['lieu']."</td>
+                            <td>".$row['categorie']."</td>
+                            <td>".$row['prix']."</td>
+                            <td>".$row['description']."</td>
+                            <td>".$row['justificatif']." ".$justificatifIcon."</td>
+                            <td><span class='status pending'>".$row['status']."</span></td>
+                          </tr>";
+                  }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="ticket-table-container">                
+    <div class="ticket-other">
+      <main>
+        <div class="bottom_data">
+          <div class="orders">
+            <div class="header">
+              <h3>Autres tickets</h3>
+            </div>
+            <table id="otherTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Date</th>
+                  <th>Lieu</th>
+                  <th>Catégorie</th>
+                  <th>Prix</th>
+                  <th>Description</th>
+                  <th>Justificatif</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                  $other_tickets = $db->prepare("
+                    SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                    FROM ticket AS t
+                    INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                    INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                    INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                    WHERE ts.nom_status != 'En attente'
+                  ");
+                  $other_tickets->execute();
+                  $other_data = $other_tickets->fetchAll();
+
+                  foreach ($other_data as $row) {
+                    $justificatifIcon = '';
+                    if (!empty($row['justificatif'])) {
+                      $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                    }
+                  
+                    $statusClass = '';
+                    if ($row['status'] == 'Refusé') {
+                      $statusClass = 'status processing';
+                    } elseif ($row['status'] == 'Accepté') {
+                      $statusClass = 'status completed';
+                    }
+                  
+                    echo "<tr>
+                            <td>".$row['id_ticket']."</td>
+                            <td>".$row['date']."</td>
+                            <td>".$row['lieu']."</td>
+                            <td>".$row['categorie']."</td>
+                            <td>".$row['prix']."</td>
+                            <td>".$row['description']."</td>
+                            <td>".$row['justificatif']." ".$justificatifIcon."</td>
+                            <td><span class='status completed processing".$statusClass."'>".$row['status']."</span></td>
+                          </tr>";
+                  }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $('#pendingTable').DataTable();
+      $('#otherTable').DataTable();
+    });
+  </script>
 
   
   <script type="text/javascript" src="../../index.js"></script>

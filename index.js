@@ -227,3 +227,7 @@ if (dataAvailable) {
 } else {
   console.error('Aucune donnée disponible pour afficher le graphique.');
 }
+
+// Vérifier si le formulaire est correctement rempli
+
+

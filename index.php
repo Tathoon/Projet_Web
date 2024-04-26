@@ -93,10 +93,10 @@
         ?>
         <?php
             // Informations de connexion à la base de données
-            $serveur = "adresse_du_serveur_mysql";
-            $utilisateur = "nom_utilisateur";
-            $mot_de_passe = "mot_de_passe";
-            $base_de_donnees = "nom_de_la_base_de_donnees";
+            $serveur = "e11event.azurewebsites.net";
+            $utilisateur = "Tathoon";
+            $mot_de_passe = "RNm78BQx6y@@6P";
+            $base_de_donnees = "e11event_bdd";
             
             // Établir une connexion à la base de données
             $connexion = new mysqli($serveur, $utilisateur, $mot_de_passe, $base_de_donnees);

@@ -896,6 +896,9 @@ main .bottom_data .reminders {
   color: dark;
 }
 
+.sorting {
+  cursor: pointer;
+}
 /* ========Utilisateurs Admin =================== */
 
 .form-card {

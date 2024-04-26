@@ -5,27 +5,23 @@ session_start();
 $errorMessage = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    error_log("mail: $email");  // Log the email
+    $usermail = $_POST['mail'];
+    $userpasswd = $_POST['mdp'];
 
     try {
-        $conn = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $conn->prepare("SELECT * FROM utilisateur WHERE mail = :mail");
-        $stmt->execute(['mail' => $email]);
-        $user = $stmt->fetch();
+        $query = $db->prepare('SELECT * FROM utilisateur WHERE mail = :mail');
+        $query->execute(array('mail' => $usermail));
+        $row = $query->fetch();
 
-        error_log("Utilisateur: " . print_r($user, true));  // Log the fetched user
+        if ($row && $userpasswd == $row['mdp']) {
+            $_SESSION['role'] = $row['role'];
+            $_SESSION['nom'] = $row['nom'];
+            $_SESSION['prenom'] = $row['prenom'];
 
-        if ($user && password_verify($password, $user['mdp'])) {
-            $_SESSION['utilisateur'] = $user;
-
-            error_log("User role: " . $user['role']);  // Log the user role
-
-            switch ($user['role']) {
+            switch ($row['role']) {
                 case 1:
                     header('Location: pages/admin/dashboard_admin.php');
                     break;

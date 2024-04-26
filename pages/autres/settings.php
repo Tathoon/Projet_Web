@@ -57,10 +57,32 @@
     </div>
     <a href="notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
     <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-    <a href="javascript:history.go(-1)" class="back"><i class="fa-solid fa-arrow-left"></i></i><span>Retour</span></a>
-    <a href="../../index.php?logout=true" class="logout-settings" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
-  </div>
+    <a href="javascript:goBack()" class="back"><i class="fa-solid fa-arrow-left"></i><span>Retour</span></a>
+    <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
 
+    <?php
+      $role = $_SESSION['role'];
+    ?>
+
+    <script>
+    function goBack() {
+      switch (<?php echo $role; ?>) {
+        case 1:
+          window.location.href = '../admin/dashboard_admin.php';
+          break;
+        case 2:
+          window.location.href = '../commercial/tickets_commercial.php';
+          break;
+        case 3:
+          window.location.href = '../comptable/dashboard_comptable.php';
+          break;
+        default:
+          window.location.href = '../../index.php';
+          break;
+      }
+    }
+    </script>
+  </div>
   
   <script type="text/javascript" src="../../index.js"></script>
 </body>

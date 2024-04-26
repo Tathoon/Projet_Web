@@ -73,16 +73,18 @@
 
         <div class="mb-3">
           <label for="categorie">Type de frais<span style="color: red;">*</span> <span> :</span></label>
-          <select name="categorie" id="categorie" required>
-              <option value="" style="color: gray;">Renseignez le type de frais</option>
-            <?php 
-            $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-            $ticket_categorie = $db->query("SELECT * FROM ticket_categorie")->fetchAll();
-            foreach ($ticket_categorie as $row) {
-              echo "<option value=".$row['id_category'].">".$row['nom_categorie']."</option>";
-            }
-            ?>
-          </select>
+          <div class="form-type-frais">
+            <select name="categorie" id="categorie" required>
+                <option value="" style="color: gray;">Renseignez le type de frais</option>
+              <?php 
+              $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+              $ticket_categorie = $db->query("SELECT * FROM ticket_categorie")->fetchAll();
+              foreach ($ticket_categorie as $row) {
+                echo "<option value=".$row['id_category'].">".$row['nom_categorie']."</option>";
+              }
+              ?>
+            </select>
+          </div>
         </div>
 
         <div class="mb-3">
@@ -92,7 +94,7 @@
 
         <div class="mb-3">
           <label for="description">Description du frais<span style="color: red;">*</span> <span> :</span></label>
-          <input name="description" type="text" id="description" required>
+          <textarea name="description" type="text" id="description" required></textarea>
         </div>
 
         <div class="mb-3">
@@ -101,14 +103,57 @@
         </div>
 
         <div class="mb-3">
-          <label for="justificatif">justificatif<span> : </span><span>(facultatif)</span></label>
-          <input type="file" name="justificatif" id="justificatif">
+          <label for="justificatif">Justificatif : <span> (Optionnel)</span></label>
+          <div id="file-info" style="display: flex; align-items: center;">
+            <div id="file-name" style="flex: 1;"></div>
+            <i class='fa-solid fa-trash' id="delete-justificatif" style="display: none;"></i>
+          </div>
+          <div class="button-row">
+            <label class="file-label" for="justificatif">Ajouter un fichier</label>
+            <input type="file" name="justificatif" id="justificatif">
+            <button type="submit" class="submit-button">Ajouter la note</button>
+          </div>
         </div>
 
-        <div class="mb-3">
-          <button type="submit">Ajouter la note de frais</button>
-        </div>
-      
+        <script>
+          $(document).ready(function () {
+            // Lorsque le bouton de sélection de fichier change
+            $('#justificatif').on('change', function(e){
+              // Récupérer le nom du fichier sélectionné
+              var fileName = e.target.files[0].name;
+              // Mettre à jour le texte de l'élément pour afficher le nom du fichier
+              $('#file-name').text(fileName);
+            });
+          });
+
+          $(document).ready(function () {
+            // Lorsque le bouton de sélection de fichier change
+            $('#justificatif').on('change', function(e){
+              // Récupérer le nom du fichier sélectionné
+              var fileName = e.target.files[0].name;
+              // Mettre à jour le texte de l'élément pour afficher le nom du fichier
+              $('#file-name').text(fileName);
+              
+              // Afficher le bouton de suppression si un justificatif est sélectionné
+              if(fileName !== ''){
+                $('#delete-justificatif').show();
+              } else {
+                $('#delete-justificatif').hide();
+              }
+            });
+
+            // Lorsque le bouton de suppression de justificatif est cliqué
+            $('#delete-justificatif').on('click', function(){
+              // Réinitialiser l'élément de sélection de fichier
+              $('#justificatif').val('');
+              // Réinitialiser le texte affichant le nom du fichier
+              $('#file-name').text('');
+              // Masquer le bouton de suppression
+              $(this).hide();
+            });
+          });
+        </script>
+              
         <?php
         if (isset($_POST['categorie']) && isset($_POST['cout']) && isset($_POST['description']) && isset($_POST['lieu']) && isset($_FILES['justificatif'])) {
             $categorie = $_POST['categorie'];
@@ -201,7 +246,6 @@
     </div>
   </div>
 
-  <div class="table-ticket-container">
     <div class="ticket-pending">
       <main>
         <div class="bottom_data">
@@ -226,32 +270,92 @@
                 <?php
                   $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
-                  $pending_tickets = $db->prepare("
-                    SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
-                    FROM ticket AS t
-                    INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
-                    INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
-                    INNER JOIN ticket_status AS ts ON t.status = ts.id_status
-                    WHERE ts.nom_status = 'En attente'
-                  ");
-                  $pending_tickets->execute();
-                  $pending_data = $pending_tickets->fetchAll();
+                  if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
+                    $nom = $_SESSION['nom'];
+                    $prenom = $_SESSION['prenom'];
+    
+                    // Connexion à la base de données
+                    $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+    
+                    // Récupère le nom de l'utilisateur à partir de la base de données
+                    $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_nom->bindParam(':nom', $nom);
+                    $stmt_nom->bindParam(':prenom', $prenom);
+                    $stmt_nom->execute();
+                    $nom = $stmt_nom->fetch()['nom'];
+    
+                    // Récupère l'adresse mail de l'utilisateur à partir de la base de données
+                    $stmt_mail = $db->prepare("SELECT mail FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_mail->bindParam(':nom', $nom);
+                    $stmt_mail->bindParam(':prenom', $prenom);
+                    $stmt_mail->execute();
+                    $mail = $stmt_mail->fetch()['mail'];
+    
+                    // Récupère l'ID de l'utilisateur à partir de la base de données
+                    $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_user->bindParam(':nom', $nom);
+                    $stmt_user->bindParam(':prenom', $prenom);
+                    $stmt_user->execute();
+                    $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
+                    
+                    $pending_tickets = $db->prepare("
+                        SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                        FROM ticket AS t
+                        INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                        INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                        INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                        WHERE t.utilisateur = :id_utilisateur AND ts.nom_status = 'En attente'
+                    ");
+                    $pending_tickets->bindParam(':id_utilisateur', $id_utilisateur); 
+                    $pending_tickets->execute();
+                    $pending_data = $pending_tickets->fetchAll();
 
-                  foreach ($pending_data as $row) {
-                    $justificatifIcon = '';
-                    if (!empty($row['justificatif'])) {
-                      $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                    foreach ($pending_data as $row) {
+                      $justificatifIcon = '';
+                      if (!empty($row['justificatif'])) {
+                        $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                      }
+                      echo "<tr>
+                              <td>".$row['id_ticket']."</td>
+                              <td>".$row['date']."</td>
+                              <td>".$row['lieu']."</td>
+                              <td>".$row['categorie']."</td>
+                              <td>".$row['prix']."</td>
+                              <td>".$row['description']."</td>
+                              <td>".$row['justificatif']." ".$justificatifIcon."</td>
+                              <td><span class='status pending'>".$row['status']."</span></td>
+                              <td><a href='delete_ticket.php?id=".$row['id_ticket']."' class='btn-delete'>Supprimer</a></td> <!-- Bouton Supprimer -->
+                            </tr>";
                     }
-                    echo "<tr>
-                            <td>".$row['id_ticket']."</td>
-                            <td>".$row['date']."</td>
-                            <td>".$row['lieu']."</td>
-                            <td>".$row['categorie']."</td>
-                            <td>".$row['prix']."</td>
-                            <td>".$row['description']."</td>
-                            <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                            <td><span class='status pending'>".$row['status']."</span></td>
-                          </tr>";
+
+                    if(isset($_GET['id'])) {
+                        $id_ticket_to_delete = $_GET['id'];
+                        
+                        // Connexion à la base de données
+                        $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+                    
+                        // Supprimer le ticket de la base de données
+                        $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
+                        $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
+                        $stmt_delete->execute();
+                        
+                        // Rediriger vers la page précédente ou une autre page après la suppression
+                        header('Location: previous_page.php');
+                        exit();
+                    }
+
+                    $rowCount = count($pending_data);
+
+                    if ($rowCount < 9) {
+                      $emptyRows = 9 - $rowCount;
+
+                      for ($i = 0; $i < $emptyRows; $i++) {
+                        echo "<tr><td colspan='8'>&nbsp;</td></tr>";
+                      }
+                    }
+
+                    foreach ($pending_data as $row) {
+                    }
                   }
                 ?>
               </tbody>
@@ -260,7 +364,6 @@
         </div>
       </main>
     </div>
-  </div>
 
   <div class="ticket-table-container">                
     <div class="ticket-other">
@@ -285,40 +388,72 @@
               </thead>
               <tbody>
                 <?php
-                  $other_tickets = $db->prepare("
-                    SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
-                    FROM ticket AS t
-                    INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
-                    INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
-                    INNER JOIN ticket_status AS ts ON t.status = ts.id_status
-                    WHERE ts.nom_status != 'En attente'
-                  ");
-                  $other_tickets->execute();
-                  $other_data = $other_tickets->fetchAll();
+                $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
-                  foreach ($other_data as $row) {
-                    $justificatifIcon = '';
-                    if (!empty($row['justificatif'])) {
-                      $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
-                    }
+                  if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
+                    $nom = $_SESSION['nom'];
+                    $prenom = $_SESSION['prenom'];
+    
+                    // Connexion à la base de données
+                    $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+    
+                    // Récupère le nom de l'utilisateur à partir de la base de données
+                    $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_nom->bindParam(':nom', $nom);
+                    $stmt_nom->bindParam(':prenom', $prenom);
+                    $stmt_nom->execute();
+                    $nom = $stmt_nom->fetch()['nom'];
+    
+                    // Récupère l'adresse mail de l'utilisateur à partir de la base de données
+                    $stmt_mail = $db->prepare("SELECT mail FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_mail->bindParam(':nom', $nom);
+                    $stmt_mail->bindParam(':prenom', $prenom);
+                    $stmt_mail->execute();
+                    $mail = $stmt_mail->fetch()['mail'];
+    
+                    // Récupère l'ID de l'utilisateur à partir de la base de données
+                    $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_user->bindParam(':nom', $nom);
+                    $stmt_user->bindParam(':prenom', $prenom);
+                    $stmt_user->execute();
+                    $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
+                    
+                    $other_tickets = $db->prepare("
+                        SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                        FROM ticket AS t
+                        INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                        INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                        INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                        WHERE t.utilisateur = :id_utilisateur AND ts.nom_status != 'En attente'
+                    ");
+                    $other_tickets->bindParam(':id_utilisateur', $id_utilisateur); 
+                    $other_tickets->execute();
+                    $other_data = $pending_tickets->fetchAll();
                   
-                    $statusClass = '';
-                    if ($row['status'] == 'Refusé') {
-                      $statusClass = 'status processing';
-                    } elseif ($row['status'] == 'Accepté') {
-                      $statusClass = 'status completed';
+                    foreach ($other_data as $row) {
+                      $justificatifIcon = '';
+                      if (!empty($row['justificatif'])) {
+                        $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                      }
+                    
+                      $statusClass = '';
+                      if ($row['status'] == 'Refusé') {
+                        $statusClass = 'status processing';
+                      } elseif ($row['status'] == 'Accepté') {
+                        $statusClass = 'status completed';
+                      }
+                    
+                      echo "<tr>
+                              <td>".$row['id_ticket']."</td>
+                              <td>".$row['date']."</td>
+                              <td>".$row['lieu']."</td>
+                              <td>".$row['categorie']."</td>
+                              <td>".$row['prix']."</td>
+                              <td>".$row['description']."</td>
+                              <td>".$row['justificatif']." ".$justificatifIcon."</td>
+                              <td><span class='status completed processing".$statusClass."'>".$row['status']."</span></td>
+                            </tr>";
                     }
-                  
-                    echo "<tr>
-                            <td>".$row['id_ticket']."</td>
-                            <td>".$row['date']."</td>
-                            <td>".$row['lieu']."</td>
-                            <td>".$row['categorie']."</td>
-                            <td>".$row['prix']."</td>
-                            <td>".$row['description']."</td>
-                            <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                            <td><span class='status completed processing".$statusClass."'>".$row['status']."</span></td>
-                          </tr>";
                   }
                 ?>
               </tbody>

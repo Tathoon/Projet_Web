@@ -36,7 +36,7 @@
     $sql_number_tickets = "SELECT COUNT(DISTINCT id_ticket) AS total_tickets FROM ticket";
     $result_tickets = $db->query($sql_number_tickets);
 
-    $sql_depense = "SELECT COALESCE(SUM(prix), 0) AS total_depense FROM ticket";
+    $sql_depense = "SELECT COALESCE(SUM(prix), 0) AS total_depense FROM ticket WHERE status = 1";
     $result_depense = $db->query($sql_depense);
 
     $sql_tickets_attente = "SELECT COUNT(DISTINCT id_ticket) AS total_tickets_attente FROM ticket WHERE status = 3";
@@ -45,6 +45,7 @@
     $sql_user_by_number_tickets = "SELECT u.nom, u.prenom, COUNT(t.id_ticket) AS nombre_tickets 
                                FROM utilisateur u 
                                LEFT JOIN ticket t ON u.id_utilisateur = t.utilisateur 
+                               WHERE t.status = 1
                                GROUP BY u.id_utilisateur 
                                ORDER BY nombre_tickets DESC";
 
@@ -81,6 +82,7 @@
     $sql_categories_and_totals = "SELECT tc.nom_categorie, COALESCE(SUM(t.prix), 0) AS prix_total_par_categorie 
                               FROM ticket_categorie tc 
                               LEFT JOIN ticket t ON tc.id_category = t.categorie 
+                              WHERE t.status = 1
                               GROUP BY tc.nom_categorie";
 
     

@@ -26,14 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             error_log("User role: " . $user['role']);  // Log the user role
 
             switch ($user['role']) {
-                case 'admin':
-                    header('Location: pages/admin.php');
+                case 1:
+                    header('Location: pages/admin/dashboard_admin.php');
                     break;
-                case 'user':
-                    header('Location: pages/user.php');
+                case 2:
+                    header('Location: pages/commercial/tickets_commercial.php');
+                    break;
+                case 3:
+                    header('Location: pages/comptable/dashboard_comptable.php');
                     break;
                 default:
-                    header('Location: pages/index.php');
+                    header('Location: index.php');
                     break;
             }
 

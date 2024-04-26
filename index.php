@@ -29,7 +29,7 @@
     </path>
 </svg>
 <img src="images/Logo-Web.png" alt="Logo" class="img-login">
-    <form action="#" method="post" class="form-login">
+    <form action="index.php" method="post" class="form-login">
         <div class="form-group">
             <label for="email" hidden></label>
             <input type="email" id="email" name="email" class="placeholder-white" placeholder="&#xf2c0;   E-mail" required style="font-family:Arial, FontAwesome"> 
@@ -41,53 +41,65 @@
         <div class="form-group">
             <input type="submit" value="LOGIN">
         </div>
-        <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
+        
+<?php
 session_start();
 
-if (isset($_POST['email']) && isset($_POST['password'])) {
-    $usermail = $_POST['email'];
-    $userpasswd = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['email']) && isset($_POST['password'])) {
+        $usermail = $_POST['email'];
+        $userpasswd = $_POST['password'];
 
-    // Informations de connexion à la base de données Azure
-    $serveur = "e11event.mysql.database.azure.com";
-    $utilisateur = "Tathoon";
-    $mot_de_passe = "*7d7K7yt&Q8t#!";
-    $base_de_donnees = "e11event_bdd";
+        $serveur = "e11event.mysql.database.azure.com";
+        $utilisateur = "Tathoon";
+        $mot_de_passe = "*7d7K7yt&Q8t#!";
+        $base_de_donnees = "e11event_bdd";
 
-    try {
-        // Établir une connexion à la base de données avec PDO
-        $db = new PDO("mysql:host=$serveur;dbname=$base_de_donnees", $utilisateur, $mot_de_passe);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        try {
+            $db = new PDO("mysql:host=$serveur;dbname=$base_de_donnees", $utilisateur, $mot_de_passe);
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Exécutez la requête SQL pour vérifier les informations de connexion de l'utilisateur
-        $query = $db->prepare('SELECT * FROM utilisateur WHERE mail = :mail AND mdp = :mdp');
-        $query->execute(array('mail' => $usermail, 'mdp' => $userpasswd));
-        $row = $query->fetch();
+            $query = $db->prepare('SELECT * FROM utilisateur WHERE mail = :mail AND mdp = :mdp');
+            $query->execute(array('mail' => $usermail, 'mdp' => $userpasswd));
+            $row = $query->fetch();
 
-        // Vérifiez si l'utilisateur existe et les informations de connexion sont correctes
-        if ($row) {
-            // Redirigez l'utilisateur en fonction de son rôle
-            switch ($row['role']) {
-                case 1:
-                    header('Location: pages/admin/dashboard_admin.php');
-                    break;
-                case 2:
-                    header('Location: pages/commercial/tickets_commercial.php');
-                    break;
-                case 3:
-                    // Redirection pour le rôle 3
-                    break;
+            if ($row) {
+                // Redirigez l'utilisateur en fonction de son rôle
+                switch ($row['role']) {
+                    case 1:
+                        header('Location: pages/admin/dashboard_admin.php');
+                        break;
+                    case 2:
+                        header('Location: pages/commercial/tickets_commercial.php');
+                        break;
+                    case 3:
+                        header('Location: pages/comptable/dashboard_comptable.php');
+                        break;
+                    default:
+                        // Redirigez vers une page par défaut si aucun rôle spécifié
+                        header('Location: pages/default.php');
+                        break;
+                }
+                // Stockez les informations de l'utilisateur dans la session
+                $_SESSION['role'] = $row['role'];
+                $_SESSION['nom'] = $row['nom'];
+                $_SESSION['prenom'] = $row['prenom'];
+                exit();
+            } else {
+                // Affichez un message d'erreur si les informations de connexion sont incorrectes
+                $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
+                                    <strong>Erreur</strong> le mail ou le mot de passe est incorrect.
+                                </div>';
             }
+        } catch (PDOException $e) {
+            // Gérez les erreurs de connexion à la base de données
+            $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
+                                <strong>Erreur de connexion à la base de données :</strong> ' . $e->getMessage() . '
+                            </div>';
         }
-    } catch (PDOException $e) {
-        echo 'Connection failed: ' . $e->getMessage();
     }
 }
-?>               
+?>
     </form>
     <div class="target">
         <div class="center"></div>

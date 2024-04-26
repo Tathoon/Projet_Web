@@ -8,6 +8,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    error_log("Email: $email");  // Log the email
+
     try {
         $conn = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -16,8 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute(['email' => $email]);
         $user = $stmt->fetch();
 
+        error_log("User: " . print_r($user, true));  // Log the fetched user
+
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user'] = $user;
+
+            error_log("User role: " . $user['role']);  // Log the user role
 
             switch ($user['role']) {
                 case 'admin':
@@ -36,16 +42,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
                                 <strong>Erreur</strong> le mail ou le mot de passe est incorrect.
                             </div>';
+            error_log("Login error: $errorMessage");  // Log the error message
         }
     } catch (PDOException $e) {
         $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
                             <strong>Erreur de connexion à la base de données :</strong> ' . $e->getMessage() . '
                         </div>';
+        error_log("Database error: " . $e->getMessage());  // Log the database error
     }
 }
 
 ob_end_flush();
-
 ?>
 
 <!DOCTYPE html>

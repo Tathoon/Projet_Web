@@ -98,7 +98,7 @@
     <label for="role" class="">Role</label>
     <select name="role" class="" id="role">
      <?php
-        $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
+        $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
         $role = $db->query("SELECT * FROM role")->fetchAll();
         foreach ($role as $row) {
           echo "<option value=".$row['id_role'].">".$row['nom_role']."</option>";
@@ -125,7 +125,7 @@
         $prenom = $_POST['prenom'];
         $role = $_POST['role'];
 
-      $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
+      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
       $stmt = $db->prepare("INSERT INTO utilisateur ( mail, mdp, nom, prenom, role) VALUES (:mail, :mdp, :nom, :prenom, :role)");
       $stmt->bindParam(':mail', $mail);
@@ -177,7 +177,7 @@
 
         <?php
 
-          $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', ''); 
+          $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!'); 
 
           $data = $db->query("SELECT utilisateur.*, role.nom_role FROM utilisateur INNER JOIN role ON utilisateur.role = role.id_role ORDER BY utilisateur.id_utilisateur ASC")->fetchAll();
 

@@ -99,7 +99,7 @@
               <tbody>
                 
                 <?php
-                  $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', ''); 
+                  $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!'); 
 
                   $data = $db->query("
                       SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status

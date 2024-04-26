@@ -76,7 +76,7 @@
           <select name="categorie" id="categorie" required>
               <option value="" style="color: gray;">Renseignez le type de frais</option>
             <?php 
-            $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
+            $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
             $ticket_categorie = $db->query("SELECT * FROM ticket_categorie")->fetchAll();
             foreach ($ticket_categorie as $row) {
               echo "<option value=".$row['id_category'].">".$row['nom_categorie']."</option>";
@@ -122,7 +122,7 @@
                 $prenom = $_SESSION['prenom'];
 
                 // Connexion à la base de données
-                $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
+                $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
                 // Récupère le nom de l'utilisateur à partir de la base de données
                 $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
@@ -224,7 +224,7 @@
               </thead>
               <tbody>
                 <?php
-                  $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
+                  $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
                   $pending_tickets = $db->prepare("
                     SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status

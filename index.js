@@ -203,14 +203,14 @@ if (dataAvailable) {
       label: 'Dépense total ',
       data: pricesPerCategory,
       backgroundColor: [
-        'rgb(219, 88, 86)', 
-        'rgb(86, 180, 233)', 
-        'rgb(0, 158, 115)', 
-        'rgb(240, 228, 66)', 
-        'rgb(0, 114, 178)', 
-        'rgb(213, 94, 0)',  
-        'rgb(204, 121, 167)',
-        'rgba(157,134,146,255)' 
+        'rgb(254, 205, 211)', 
+        'rgb(207, 232, 255)', 
+        'rgb(187, 247, 208)', 
+        'rgb(252, 252, 174)', 
+        'rgb(140, 162, 245)', 
+        'rgb(252, 201, 146)',  
+        'rgb(250, 175, 217)',
+        'rgba(173, 148, 235)' 
       ],
       hoverOffset: 4
     }]
@@ -227,3 +227,19 @@ if (dataAvailable) {
 } else {
   console.error('Aucune donnée disponible pour afficher le graphique.');
 }
+
+// Vérifier si le formulaire est correctement rempli
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('form').addEventListener('submit', function(event) {
+      var categorie = document.getElementById('categorie').value;
+      var cout = document.getElementById('cout').value;
+      var description = document.getElementById('description').value;
+      var lieu = document.getElementById('lieu').value;
+
+      if (!categorie || !cout || !description || !lieu) {
+          event.preventDefault();
+          alert('Please fill out all required fields');
+      }
+  });
+});
+

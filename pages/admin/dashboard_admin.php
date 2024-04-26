@@ -46,8 +46,7 @@
                                FROM utilisateur u 
                                LEFT JOIN ticket t ON u.id_utilisateur = t.utilisateur 
                                GROUP BY u.id_utilisateur 
-                               ORDER BY nombre_tickets DESC 
-                               LIMIT 5";
+                               ORDER BY nombre_tickets DESC";
 
     $result_user_by_number_tickets = $db->query($sql_user_by_number_tickets);
 
@@ -205,7 +204,7 @@
           </div>
           <div class="most-ticket-user">
               <div class="header">
-                  <h3>Commercials avec le plus de tickets</h3>
+                  <h3>Commerciaux avec le plus de tickets</h3>
               </div>
               <table>
                 <thead>
@@ -215,21 +214,23 @@
                     </tr>
                 </thead>
                 <tbody>
+
                 <?php
+             
                   $liste_utilisateurs_tickets = [];
 
                   while ($row = $result_user_by_number_tickets->fetch(PDO::FETCH_ASSOC)) {
                       $rows_user_by_number_tickets[] = $row; 
                   }
-
+                  
                   usort($rows_user_by_number_tickets, function($a, $b) { 
                       return $b['nombre_tickets'] - $a['nombre_tickets'];
                   });
-
+                  
                   $counter = 0;
-
+                  
                   foreach ($rows_user_by_number_tickets as $row) {
-                      if ($counter < 3) {
+                      if ($counter < 10) {
                           echo "<tr>";
                           echo "<td>" . $row['nom'] . " " . $row['prenom'] . "</td>";
                           echo "<td>" . ($row['nombre_tickets'] ?? 0) . "</td>";
@@ -239,12 +240,32 @@
                           break;
                       }
                   }
-
                   ?>
 
                 </tbody>
             </table>
           </div>
+          <ul class="cards">
+            <li>
+              <i class='bx bxs-wallet' ></i>
+              <a href="../commercial/tickets_commercial.php">
+                <span class="info">
+                <h3 class="page-redirection"><i class="fa-solid fa-arrow-right"></i>    Commercial</h3>
+                  <p>Gestion de ticket du commercial</p>
+              </a>
+              </span>
+            </li>
+            <li class="comptable-redirection">
+              <i class='bx bx-money-withdraw' ></i>
+              <a href="../comptable/dashboard_comptable.php">
+                <span class="info">
+                <h3 class="page-redirection"><i class="fa-solid fa-arrow-right"></i>    Comptable</h3>
+                  <p>Dashboard du comptable</p>
+              </a>
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
       </main>
     </div>

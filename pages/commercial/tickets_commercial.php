@@ -92,7 +92,7 @@
 
         <div class="mb-3">
           <label for="description">Description du frais<span style="color: red;">*</span> <span> :</span></label>
-          <input name="description" type="text" id="description" required>
+          <textarea name="description" type="text" id="description" required></textarea>
         </div>
 
         <div class="mb-3">
@@ -101,14 +101,27 @@
         </div>
 
         <div class="mb-3">
-          <label for="justificatif">justificatif<span> : </span><span>(facultatif)</span></label>
-          <input type="file" name="justificatif" id="justificatif">
+          <label for="justificatif">Justificatif : <span> (Optionnel)</span></label>
+          <div id="file-name"></div>
+          <div class="button-row">
+            <label class="file-label" for="justificatif">Ajouter un fichier</label>
+            <input type="file" name="justificatif" id="justificatif">
+            <button type="submit" class="submit-button">Ajouter la note</button>
+          </div>
         </div>
 
-        <div class="mb-3">
-          <button type="submit">Ajouter la note de frais</button>
-        </div>
-      
+        <script>
+          $(document).ready(function () {
+            // Lorsque le bouton de sélection de fichier change
+            $('#justificatif').on('change', function(e){
+              // Récupérer le nom du fichier sélectionné
+              var fileName = e.target.files[0].name;
+              // Mettre à jour le texte de l'élément pour afficher le nom du fichier
+              $('#file-name').text(fileName);
+            });
+          });
+        </script>
+              
         <?php
         if (isset($_POST['categorie']) && isset($_POST['cout']) && isset($_POST['description']) && isset($_POST['lieu']) && isset($_FILES['justificatif'])) {
             $categorie = $_POST['categorie'];

@@ -1061,6 +1061,12 @@ main .bottom_data .reminders {
   display: flex;
 }
 
+.ticket-table-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .card-ticket {
   padding: 15px;
   min-height: 100px;
@@ -1102,23 +1108,67 @@ main .bottom_data .reminders {
   box-sizing: border-box;
 }
 
-.ticket-card button[type="submit"] {
-  background-color: #007bff;
+textarea {
+  width: 220%; 
+  padding: 5px 10px;
+  margin: 8px 0;
+  box-sizing: border-box; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  background-color: #ffffff; 
+  resize: none; 
+}
+
+.ticket-card label.file-label {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 5px;
+  margin-right: 20px;
+  font-size: 14px;
+  background-color: #C8AD7F;
   color: #fff;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submit-button {
+  margin-right : 10px;
+}
+
+.ticket-card label.file-label:hover {
+  background-color: #A98F5B;
+}
+
+.ticket-card input[type="file"] {
+  display: none;
+}
+
+.ticket-container button[type="submit"] {
+  display: inline-block;
   padding: 10px 20px;
-  margin-top: 20px;
+  margin-right: -50%; 
+  background-color: #6aa3ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
 
 .ticket-card button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: var(--primary);
 }
 
 .ticket-card [name="description"] { 
-  height: 65px !important;
+  height: 75px !important;
 }
 
 .no-link-style {
@@ -1222,10 +1272,6 @@ main .bottom_data .reminders {
   font-weight: 700;
 }
 
-.placeholder-option {
-  opacity: 0.5; /* Adjust this value to change the transparency */
-}
-
 .left-section {
   display: flex;
   margin-left: 9%;
@@ -1242,10 +1288,12 @@ main .bottom_data .reminders {
 
 .bottom-section {
   margin: 0 auto;
-  width: 90%; /* Ajuste cette valeur selon tes besoins */
+  width: 70%; /* Ajuste cette valeur selon tes besoins */
   margin-bottom: 75px;
-  margin-right: 2%;
+  margin-left: 20%;
 }
+
+
 
 
 /* ------------------*/

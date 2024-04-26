@@ -41,7 +41,11 @@
         <div class="form-group">
             <input type="submit" value="LOGIN">
         </div>
-<?php
+        <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -49,8 +53,8 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     $userpasswd = $_POST['password'];
 
     // Informations de connexion à la base de données Azure
-    $serveur = "e11event_bdd.mysql.database.azure.com";
-    $utilisateur = "Tathoon@e11event_bdd";
+    $serveur = "e11event.mysql.database.azure.com";
+    $utilisateur = "Tathoon";
     $mot_de_passe = "*7d7K7yt&Q8t#!";
     $base_de_donnees = "e11event_bdd";
 
@@ -75,32 +79,15 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     header('Location: pages/commercial/tickets_commercial.php');
                     break;
                 case 3:
-                    header('Location: pages/comptable/dashboard_comptable.php');
-                    break;
-                default:
-                    // Redirigez vers une page par défaut si aucun rôle spécifié
-                    header('Location: pages/default.php');
+                    // Redirection pour le rôle 3
                     break;
             }
-            // Stockez les informations de l'utilisateur dans la session
-            $_SESSION['role'] = $row['role'];
-            $_SESSION['nom'] = $row['nom'];
-            $_SESSION['prenom'] = $row['prenom'];
-            exit();
-        } else {
-            // Affichez un message d'erreur si les informations de connexion sont incorrectes
-            $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
-                                <strong>Erreur</strong> le mail ou le mot de passe est incorrect.
-                            </div>';
         }
     } catch (PDOException $e) {
-        // Gérez les erreurs de connexion à la base de données
-        $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
-                            <strong>Erreur de connexion à la base de données :</strong> ' . $e->getMessage() . '
-                        </div>';
+        echo 'Connection failed: ' . $e->getMessage();
     }
 }
-?>                
+?>               
     </form>
     <div class="target">
         <div class="center"></div>

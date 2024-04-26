@@ -434,7 +434,6 @@ main .cards li {
   display: flex;
   align-items: center;
   grid-gap: 1.5rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
 }
 

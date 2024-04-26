@@ -1650,13 +1650,4 @@ textarea {
     flex-direction: column;
     align-items: center;
   }
-  .orders,
-  .reminders {
-    width: 100%;
-  }
-
-  .reminders {
-    position: relative;
-    right: 5.5%;
-  }
 }

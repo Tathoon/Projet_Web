@@ -33,6 +33,22 @@
 </head>
 <body>
 
+  <?php
+    session_start();
+
+    if (!isset($_SESSION['role']) || ($_SESSION['role'] != 1 )) {
+      header('Location: ../../index.php');
+      session_destroy();
+      exit();
+    }
+
+    if(isset($_GET['logout'])) {
+      session_destroy();
+      header('Location: ../../index.php');
+      exit();
+     }
+  ?>
+
   <input type="checkbox" id="check">
   <header>
     <label for="check">

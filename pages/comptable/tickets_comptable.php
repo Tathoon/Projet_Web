@@ -1,6 +1,5 @@
 <?php
     session_start();
-    echo $_SESSION['nom'];
 
     if (!isset($_SESSION['role']) || ($_SESSION['role'] != 3 && $_SESSION['role'] != 1)) {
       header('Location: ../../index.php');

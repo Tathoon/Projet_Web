@@ -1,3 +1,59 @@
+<?php
+ob_start();
+session_start();
+
+$errorMessage = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $usermail = $_POST['email'];
+    $userpasswd = $_POST['password'];
+
+    try {
+        $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $query = $db->prepare('SELECT * FROM utilisateur WHERE mail = :mail');
+        $query->execute(array('mail' => $usermail));
+        $row = $query->fetch();
+
+        if ($row && $userpasswd == $row['mdp']) {
+            $_SESSION['role'] = $row['role'];
+            $_SESSION['nom'] = $row['nom'];
+            $_SESSION['prenom'] = $row['prenom'];
+
+            switch ($row['role']) {
+                case 1:
+                    header('Location: pages/admin/dashboard_admin.php');
+                    break;
+                case 2:
+                    header('Location: pages/commercial/tickets_commercial.php');
+                    break;
+                case 3:
+                    header('Location: pages/comptable/dashboard_comptable.php');
+                    break;
+                default:
+                    header('Location: index.php');
+                    break;
+            }
+
+            exit();
+        } else {
+            $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
+                                <strong>Erreur</strong> le mail ou le mot de passe est incorrect.
+                            </div>';
+            error_log("Login error: $errorMessage");  // Log the error message
+        }
+    } catch (PDOException $e) {
+        $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
+                            <strong>Erreur de connexion à la base de données :</strong> ' . $e->getMessage() . '
+                        </div>';
+        error_log("Database error: " . $e->getMessage());  // Log the database error
+    }
+}
+
+ob_end_flush();
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -41,79 +97,8 @@
         <div class="form-group">
             <input type="submit" value="LOGIN">
         </div>
-        
-<?php
-echo 'PHP lancé';
-
-session_start();
-
-echo 'Session démarrée';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['email']) && isset($_POST['password'])) {
-        $usermail = $_POST['email'];
-        $userpasswd = $_POST['password'];
-
-        echo 'Informations récupérées';
-
-        $serveur = "e11event.mysql.database.azure.com";
-        $utilisateur = "Tathoon";
-        $mot_de_passe = "*7d7K7yt&Q8t#!";
-        $base_de_donnees = "e11event_bdd";
-
-        try {
-            $db = new PDO("mysql:host=$serveur;dbname=$base_de_donnees", $utilisateur, $mot_de_passe);
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            echo 'Connexion réussie';
-
-            $query = $db->prepare('SELECT * FROM utilisateur WHERE mail = :mail AND mdp = :mdp');
-            $query->execute(array('mail' => $usermail, 'mdp' => $userpasswd));
-            $row = $query->fetch();
-
-            echo 'Requête exécutée';
-
-            if ($row) {
-                // Redirigez l'utilisateur en fonction de son rôle
-                switch ($row['role']) {
-                    case 1:
-                        header('Location: pages/admin/dashboard_admin.php');
-                        break;
-                    case 2:
-                        header('Location: pages/commercial/tickets_commercial.php');
-                        break;
-                    case 3:
-                        header('Location: pages/comptable/dashboard_comptable.php');
-                        break;
-                    default:
-                        // Redirigez vers une page par défaut si aucun rôle spécifié
-                        header('Location: pages/default.php');
-                        break;
-                }
-                
-                echo 'Redirection effectuée';
-
-                // Stockez les informations de l'utilisateur dans la session
-                $_SESSION['role'] = $row['role'];
-                $_SESSION['nom'] = $row['nom'];
-                $_SESSION['prenom'] = $row['prenom'];
-                exit();
-            } else {
-                // Affichez un message d'erreur si les informations de connexion sont incorrectes
-                $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
-                                    <strong>Erreur</strong> le mail ou le mot de passe est incorrect.
-                                </div>';
-            }
-        } catch (PDOException $e) {
-            // Gérez les erreurs de connexion à la base de données
-            $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
-                                <strong>Erreur de connexion à la base de données :</strong> ' . $e->getMessage() . '
-                            </div>';
-        }
-    }
-}
-?>
-    </form>
+    
+</form>
     <div class="target">
         <div class="center"></div>
         <div class="outer-circle"></div>

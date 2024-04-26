@@ -46,8 +46,8 @@
     <div class="mobile_nav_items">
       <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
       <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-      <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+      <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
+      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
     </div>
   </div>
 
@@ -58,8 +58,8 @@
     </div>
     <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
     <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-    <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-    <a href="../../index.php?logout=true" class="logout-commercial" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+    <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
+    <a href="../../index.php?logout=true" class="logout-commercial" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
   </div>
 
   
@@ -331,9 +331,12 @@
 
   <script>
     $(document).ready(function () {
-      $('#pendingTable').DataTable();
-      $('#otherTable').DataTable();
-    });
+  $('#myTable').DataTable({
+      "language": {
+          "url": "../../Json/French.json"
+      }
+  });
+});
     
     var mobileProfileImage = document.querySelector('.mobile_profile_image');
     var profileImage = document.querySelector('.profile_image');

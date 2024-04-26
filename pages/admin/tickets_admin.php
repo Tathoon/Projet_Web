@@ -53,8 +53,8 @@
       <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
       <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
       <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-      <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+      <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
+      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
     </div>
   </div>
 
@@ -67,8 +67,8 @@
     <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
     <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
     <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-    <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-    <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+    <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
+    <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
   </div>
 
   <div class="content">
@@ -79,13 +79,13 @@
         <div class="bottom_data">
           <div class="orders">
             <div class="header">
-              <h3>Recent Orders</h3>
+              <h3>Liste des tickets</h3>
             </div>
             <table id="myTable">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
+                  <th>Nom</th>
                   <th>Email</th>
                   <th>Date</th>
                   <th>Lieu</th>
@@ -153,10 +153,14 @@
         </div>
       </main>
     </div>
-  <script>
+    <script>
   $(document).ready(function () {
-    $('#myTable').DataTable();
+  $('#myTable').DataTable({
+      "language": {
+          "url": "../../Json/French.json"
+      }
   });
+});
   var mobileProfileImage = document.querySelector('.mobile_profile_image');
     var profileImage = document.querySelector('.profile_image');
 

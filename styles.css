@@ -287,7 +287,7 @@ label #sidebar_btn:hover{
 }
 
 .active {
-  background-color: #2f323a;
+  background-color: #19B3D3;
 }
 
 #check:checked ~ .sidebar{
@@ -758,11 +758,15 @@ main .bottom_data .orders table td {
 }
 
 .content main .bottom_data .orders table td .status {
+  display: inline-block;
   font-size: 10px;
   padding: 6px 16px;
   color: var(--light);
   border-radius: 20px;
   font-weight: 700;
+  text-align: center;
+  width: 50px;
+  height: 10px;
 }
 
 .content main .bottom_data .orders table td .status.completed {
@@ -870,7 +874,10 @@ main .bottom_data .reminders {
 
 .form-card {
   margin: 20px auto; 
-  max-width: 400px; 
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
 }
 
 .form-card label {
@@ -881,6 +888,7 @@ main .bottom_data .reminders {
 
 .form-card input[type="text"],
 .form-card input[type="password"],
+.form-card input[type="email"],
 .form-card select {
   width: 220%;
   padding: 10px;
@@ -901,17 +909,19 @@ main .bottom_data .reminders {
 }
 
 .form-card input[type="submit"] {
-  background-color: #007bff;
+  background-color: #6aa3ff;
   color: #fff;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+  align-self: center;
+
 }
 
 .form-card input[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: var(--primary);
 }
 
 .table-container {
@@ -937,8 +947,8 @@ main .bottom_data .reminders {
 }
 
 .delete-button {
-  background-color: #dc3545;
-  color: #fff;
+  background-color: var(--danger);
+  color: #972f2f;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
@@ -946,7 +956,7 @@ main .bottom_data .reminders {
 }
 
 .delete-button:hover {
-  background-color: #c82333;
+  background-color: #f0a5a5;
 }
 
 .title {
@@ -960,8 +970,8 @@ main .bottom_data .reminders {
 .box-general {
   padding: 15px;
   min-height: 100px;
-  width: 90%;
-  max-width: 600px;
+  width: 100%;
+  max-width: 1200px;
   background-color: var(--light);
   border-radius: 5px;
   margin: 20px auto;
@@ -970,7 +980,7 @@ main .bottom_data .reminders {
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;
-  margin-left: 37.9%;
+  margin-left: 21.6%;
 }
 
 .most-ticket-user td img {
@@ -1422,13 +1432,17 @@ main .bottom_data .reminders {
 @media (max-width: 576px) {
   .form-card input[type="text"],
   .form-card input[type="password"],
+  .form-card input[type="email"],
+  .form-card select {
+    width: 130%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
+  }
   .table-container {
     overflow-x: auto; /* Activer le défilement horizontal */
     -webkit-overflow-scrolling: touch; /* Activer le défilement tactile pour les navigateurs WebKit */
     width: 100%; /* Ajuster la largeur pour s'adapter à l'écran */
   }
   .form-card select {
-    width: 100%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
+    width: 216%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
   }
 
   .ticket-card input[type="text"],

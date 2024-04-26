@@ -75,22 +75,22 @@
 
     <div>
       <label for="nom" class="">Nom</label>
-      <input type="text" name="nom" class="" id="nom">
+      <input type="text" name="nom" class="" id="nom" required>
     </div>
   
     <div>
       <label for="prenom" class="">Prénom</label>
-      <input name="prenom" type="text" class="" id="prenom">
+      <input name="prenom" type="text" class="" id="prenom" required>
     </div>
 
     <div>
       <label for="mail" class="">Email</label>
-      <input name="mail" type="text" class="" id="mail" aria-describedby="emailHelp">
+      <input name="mail" type="email" class="" id="mail" aria-describedby="emailHelp" required>
     </div>
 
     <div>
       <label for="mdp" class="">Mot de passe</label>
-      <input name="mdp" type="password" class="" id="mdp">
+      <input name="mdp" type="password" class="" id="mdp" required>
     </div>
 
     <div>

@@ -110,36 +110,41 @@
                   ")->fetchAll();
 
                   foreach ($data as $row) {
-                      $statusClass = '';
-                      switch ($row['status']) {
-                          case 'Accepté':
-                              $statusClass = 'completed';
-                              break;
-                          case 'En attente':
-                              $statusClass = 'pending';
-                              break;
-                          case 'Refusé':
-                              $statusClass = 'processing';
-                              break;
-                          default:
-                              $statusClass = '';
-                              break;
-                      }
-
-                      echo "<tr>
-                              <td>".$row['id_ticket']."</td>
-                              <td>".$row['nom']."</td>
-                              <td>".$row['mail']."</td>
-                              <td>".$row['date']."</td>
-                              <td>".$row['lieu']."</td>
-                              <td>".$row['categorie']."</td>
-                              <td>".$row['prix']."</td>
-                              <td>".$row['description']."</td>
-                              <td>".$row['justificatif']."</td>
-                              <td><span class='status ".$statusClass."'>".$row['status']."</span></td>
-                            </tr>";
+                    $statusClass = '';
+                    switch ($row['status']) {
+                        case 'Accepté':
+                            $statusClass = 'completed';
+                            break;
+                        case 'En attente':
+                            $statusClass = 'pending';
+                            break;
+                        case 'Refusé':
+                            $statusClass = 'processing';
+                            break;
+                        default:
+                            $statusClass = '';
+                            break;
+                    }
+                
+                    // Vérifie si un justificatif existe
+                    $justificatifIcon = '';
+                    if (!empty($row['justificatif'])) {
+                      $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                    }
+                
+                    echo "<tr>
+                            <td>".$row['id_ticket']."</td>
+                            <td>".$row['nom']."</td>
+                            <td>".$row['mail']."</td>
+                            <td>".$row['date']."</td>
+                            <td>".$row['lieu']."</td>
+                            <td>".$row['categorie']."</td>
+                            <td>".$row['prix']."</td>
+                            <td>".$row['description']."</td>
+                            <td>".$row['justificatif']." ".$justificatifIcon."</td>
+                            <td><span class='status ".$statusClass."'>".$row['status']."</span></td>
+                          </tr>";
                   }
-
                   ?>
 
               </tbody>

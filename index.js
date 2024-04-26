@@ -224,7 +224,6 @@ const data = {
   ]
 };
 
-
 const config = {
   type: 'bar',
   data: data,
@@ -244,14 +243,11 @@ const config = {
   }
 };
 
-
 // Création du graphique
 const myChart = new Chart(
   document.getElementById('myChart'),
   config
 );
-
-
 
 // Vérifier si les données sont correctement récupérées
 const dataAvailable = categoryLabels.length > 0 && pricesPerCategory.length > 0;

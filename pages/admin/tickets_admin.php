@@ -1,3 +1,20 @@
+<?php
+    session_start();
+    echo $_SESSION['nom'];
+
+    if (!isset($_SESSION['role']) || ($_SESSION['role'] != 1 )) {
+      header('Location: ../../index.php');
+      session_destroy();
+      exit();
+    }
+
+    if(isset($_GET['logout'])) {
+      session_destroy();
+      header('Location: ../../index.php');
+      exit();
+     }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <!DOCTYPE html>
@@ -15,6 +32,7 @@
   <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
 <body>
+
   <?php
     session_start();
 

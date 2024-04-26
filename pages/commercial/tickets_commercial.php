@@ -200,7 +200,7 @@
     </div>
   </div>
 
-  <div class="table-container">
+  <div class="table-ticket-container">
     <div class="ticket-pending">
       <main>
         <div class="bottom_data">

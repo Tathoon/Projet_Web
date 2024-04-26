@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ruda:wght@400;600;700&display=swap");
+
 /* ------------------*/
 /*                   */
 /*                   */
@@ -285,7 +287,7 @@ label #sidebar_btn:hover{
 }
 
 .active {
-  background-color: #2f323a;
+  background-color: #19B3D3;
 }
 
 #check:checked ~ .sidebar{
@@ -339,8 +341,6 @@ label #sidebar_btn:hover{
 /*-------------------*/
 
 /* ========Dashboard ADMIN =================== */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ruda:wght@400;600;700&display=swap");
-
 :root {
   --light: #f6f6f9;
   --primary: #1976d2;
@@ -460,6 +460,11 @@ main .cards li:nth-child(1) .bx {
 main .cards li:nth-child(2) .bx {
   background-color: var(--light-warning);
   color: #6e6725;
+}
+
+main .cards .comptable-redirection .bx {
+  background-color: var(--light-success) !important;
+  color: #658671 !important;
 }
 
 main .cards li:nth-child(3) .bx {
@@ -702,6 +707,9 @@ main .bottom_data .orders {
   background-color: var(--grey);
 }
 
+.page-redirection {
+  white-space: nowrap;
+}
 
 /* ========Tickets Admin =================== */
 main .bottom_data .orders table {
@@ -750,15 +758,11 @@ main .bottom_data .orders table td {
 }
 
 .content main .bottom_data .orders table td .status {
-  display: inline-block;
   font-size: 10px;
   padding: 6px 16px;
   color: var(--light);
   border-radius: 20px;
   font-weight: 700;
-  text-align: center;
-  width: 50px;
-  height: 10px;
 }
 
 .content main .bottom_data .orders table td .status.completed {
@@ -779,12 +783,6 @@ main .bottom_data .orders table td {
 main .bottom_data .reminders {
   flex-grow: 1;
   flex-basis: 300px;
-}
-
-.graph {
-  width: 100%;
-  max-width: 100%;
-  height: auto; 
 }
 
 #camembertChart {
@@ -872,7 +870,10 @@ main .bottom_data .reminders {
 
 .form-card {
   margin: 20px auto; 
-  max-width: 400px; 
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
 }
 
 .form-card label {
@@ -883,6 +884,7 @@ main .bottom_data .reminders {
 
 .form-card input[type="text"],
 .form-card input[type="password"],
+.form-card input[type="email"],
 .form-card select {
   width: 220%;
   padding: 10px;
@@ -903,17 +905,19 @@ main .bottom_data .reminders {
 }
 
 .form-card input[type="submit"] {
-  background-color: #007bff;
+  background-color: #6aa3ff;
   color: #fff;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+  align-self: center;
+
 }
 
 .form-card input[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: var(--primary);
 }
 
 .table-container {
@@ -939,8 +943,8 @@ main .bottom_data .reminders {
 }
 
 .delete-button {
-  background-color: #dc3545;
-  color: #fff;
+  background-color: var(--danger);
+  color: #972f2f;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
@@ -948,7 +952,7 @@ main .bottom_data .reminders {
 }
 
 .delete-button:hover {
-  background-color: #c82333;
+  background-color: #f0a5a5;
 }
 
 .title {
@@ -962,8 +966,8 @@ main .bottom_data .reminders {
 .box-general {
   padding: 15px;
   min-height: 100px;
-  width: 90%;
-  max-width: 600px;
+  width: 100%;
+  max-width: 1200px;
   background-color: var(--light);
   border-radius: 5px;
   margin: 20px auto;
@@ -972,7 +976,9 @@ main .bottom_data .reminders {
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;
-  margin-left: 37.9%;
+  margin-left: 21.6%;
+}
+
 .most-ticket-user td img {
   width: 36px;
   height: 36px;
@@ -992,7 +998,6 @@ main .bottom_data .reminders {
   flex-direction: column;
   align-items: flex-start;
 }
-
 
 /* ------------------*/
 /*                   */
@@ -1205,13 +1210,17 @@ main .bottom_data .reminders {
 @media (max-width: 576px) {
   .form-card input[type="text"],
   .form-card input[type="password"],
+  .form-card input[type="email"],
+  .form-card select {
+    width: 130%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
+  }
   .table-container {
     overflow-x: auto; /* Activer le défilement horizontal */
     -webkit-overflow-scrolling: touch; /* Activer le défilement tactile pour les navigateurs WebKit */
     width: 100%; /* Ajuster la largeur pour s'adapter à l'écran */
   }
   .form-card select {
-    width: 100%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
+    width: 216%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
   }
 
   .box-general {
@@ -1237,5 +1246,4 @@ main .bottom_data .reminders {
     width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
     margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
   }
-}
 }

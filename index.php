@@ -5,8 +5,8 @@ session_start();
 $errorMessage = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['mail'];
-    $password = $_POST['mdp'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
     error_log("mail: $email");  // Log the email
 

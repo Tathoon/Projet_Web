@@ -1378,12 +1378,11 @@ textarea {
 @media only screen and (max-width: 768px) {
     .img-login {
         width: 300px;
-        top: 10%;
-        z-index: -1;
+        top: 15%;
     }
 
     form {
-        width: 70% !important;
+        width: 50%;
     }
 
     #wave {

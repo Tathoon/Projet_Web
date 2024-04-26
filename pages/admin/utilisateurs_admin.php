@@ -162,11 +162,21 @@
       </thead>
       <tbody>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var deleteButtons = document.querySelectorAll('.delete-button');
+                deleteButtons.forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        var id = this.getAttribute('data-id');
+                        window.location.href = '?id_utilisateur=' + id;
+                    });
+                });
+            });
+        </script>
+
         <?php
 
           $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', ''); 
-
-          $data = $db->query("SELECT * FROM utilisateur")->fetchAll();
 
           $data = $db->query("SELECT utilisateur.*, role.nom_role FROM utilisateur INNER JOIN role ON utilisateur.role = role.id_role ORDER BY utilisateur.id_utilisateur ASC")->fetchAll();
 
@@ -175,34 +185,48 @@
         }
         
         if (isset($_GET['id_utilisateur'])) {  //supprime un utilisateur
-            $id = $_GET['id_utilisateur'];
-            $stmt = $db->prepare("DELETE FROM utilisateur WHERE id_utilisateur = :id_utilisateur");
-            $stmt->bindParam(':id_utilisateur', $id);
-            $stmt->execute();
-        }
+          $id = $_GET['id_utilisateur'];
+          try {
+              $db->beginTransaction();
+      
+              $stmt = $db->prepare("DELETE FROM utilisateur WHERE id_utilisateur = :id_utilisateur");
+              $stmt->bindParam(':id_utilisateur', $id);
+              $stmt->execute();
+      
+              $db->commit();
+      
+              // Si la requête est une requête AJAX, renvoyer une réponse HTTP appropriée
+              if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+                  echo "Utilisateur supprimé";
+                  exit;
+              }
+          } catch (Exception $e) {
+              $db->rollBack();
+              echo "Erreur : " . $e->getMessage();
+          }
+      }
         
         // permet de supprimer un utilisateur sans recharger la page (l'utilisateur est supprimé de la base de données et du tableau sans avoir à la recharger)
-        echo '<script type="text/javascript"> 
-            var deleteButtons = document.getElementsByClassName("delete-button");
-            for (var i = 0; i < deleteButtons.length; i++) {
-                deleteButtons[i].addEventListener("click", function() {
-                    var id = this.getAttribute("data-id");
-                    fetch("utilisateurs_admin.php?id_utilisateur=" + id, {
-                        method: "GET"
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error("HTTP error " + response.status);
-                        }
-                        document.getElementById("row-" + id).remove();
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
+        echo "<script type='text/javascript'> 
+        var deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var id = this.getAttribute('data-id');
+                fetch('?id_utilisateur=' + id, {
+                    method: 'GET'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('HTTP error ' + response.status);
+                    }
+                    document.getElementById('row-' + id).remove();
+                })
+                .catch(error => {
+                    console.log(error);
                 });
-            }
-        </script>';
-
+            });
+        });
+        </script>";
         ?>
 
       </tbody>

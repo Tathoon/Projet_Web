@@ -5,23 +5,23 @@ session_start();
 $errorMessage = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = $_POST['mail'];
+    $password = $_POST['mdp'];
 
-    error_log("Email: $email");  // Log the email
+    error_log("mail: $email");  // Log the email
 
     try {
         $conn = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
-        $stmt->execute(['email' => $email]);
+        $stmt = $conn->prepare("SELECT * FROM utilisateur WHERE mail = :mail");
+        $stmt->execute(['mail' => $email]);
         $user = $stmt->fetch();
 
-        error_log("User: " . print_r($user, true));  // Log the fetched user
+        error_log("Utilisateur: " . print_r($user, true));  // Log the fetched user
 
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user'] = $user;
+        if ($user && password_verify($password, $user['mdp'])) {
+            $_SESSION['utilisateur'] = $user;
 
             error_log("User role: " . $user['role']);  // Log the user role
 

@@ -331,9 +331,12 @@
 
   <script>
     $(document).ready(function () {
-      $('#pendingTable').DataTable();
-      $('#otherTable').DataTable();
-    });
+  $('#myTable').DataTable({
+      "language": {
+          "url": "../../Json/French.json"
+      }
+  });
+});
     
     var mobileProfileImage = document.querySelector('.mobile_profile_image');
     var profileImage = document.querySelector('.profile_image');

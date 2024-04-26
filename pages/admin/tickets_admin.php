@@ -79,13 +79,13 @@
         <div class="bottom_data">
           <div class="orders">
             <div class="header">
-              <h3>Recent Orders</h3>
+              <h3>Liste des tickets</h3>
             </div>
             <table id="myTable">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
+                  <th>Nom</th>
                   <th>Email</th>
                   <th>Date</th>
                   <th>Lieu</th>
@@ -153,10 +153,14 @@
         </div>
       </main>
     </div>
-  <script>
+    <script>
   $(document).ready(function () {
-    $('#myTable').DataTable();
+  $('#myTable').DataTable({
+      "language": {
+          "url": "../../Json/French.json"
+      }
   });
+});
   var mobileProfileImage = document.querySelector('.mobile_profile_image');
     var profileImage = document.querySelector('.profile_image');
 

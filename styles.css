@@ -899,6 +899,24 @@ main .bottom_data .reminders {
 .sorting {
   cursor: pointer;
 }
+
+.dataTables_filter input[type="search"] {
+  width: 15%;
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.dataTables_length select {
+  width: 4%;
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
 /* ========Utilisateurs Admin =================== */
 
 .form-card {

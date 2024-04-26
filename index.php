@@ -91,6 +91,38 @@
                 }
             }
         ?>
+        <?php
+            // Informations de connexion à la base de données
+            $serveur = "adresse_du_serveur_mysql";
+            $utilisateur = "nom_utilisateur";
+            $mot_de_passe = "mot_de_passe";
+            $base_de_donnees = "nom_de_la_base_de_donnees";
+            
+            // Établir une connexion à la base de données
+            $connexion = new mysqli($serveur, $utilisateur, $mot_de_passe, $base_de_donnees);
+            
+            // Vérifier la connexion
+            if ($connexion->connect_error) {
+                die("Échec de la connexion à la base de données : " . $connexion->connect_error);
+            }
+            
+            // Exemple de requête SQL (sélection de toutes les lignes de la table "utilisateurs")
+            $sql = "SELECT * FROM utilisateurs";
+            $resultat = $connexion->query($sql);
+            
+            // Vérifier si la requête a réussi
+            if ($resultat->num_rows > 0) {
+                // Parcourir les résultats et afficher les données
+                while($row = $resultat->fetch_assoc()) {
+                    echo "ID: " . $row["id"] . " - Nom: " . $row["nom"] . " - Email: " . $row["email"] . "<br>";
+                }
+            } else {
+                echo "Aucun résultat trouvé.";
+            }
+            
+            // Fermer la connexion à la base de données
+            $connexion->close();
+            ?>
     </form>
     <div class="target">
         <div class="center"></div>

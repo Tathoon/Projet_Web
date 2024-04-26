@@ -207,13 +207,13 @@
           </div>
           <div class="most-ticket-user">
               <div class="header">
-                  <h3>Commerciaux avec le plus de tickets</h3>
+                  <h3>Commerciaux avec le plus de tickets acceptés</h3>
               </div>
               <table>
                 <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Nombre de tickets</th>
+                        <th>Nombre de tickets acceptés</th>
                     </tr>
                 </thead>
                 <tbody>

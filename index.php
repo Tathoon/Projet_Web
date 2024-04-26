@@ -45,6 +45,7 @@
 <?php
 echo 'PHP lancé';
 
+ob_start(); // Ajoutez cette ligne au début de votre script PHP
 session_start();
 
 echo 'Session démarrée';
@@ -87,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         break;
                     default:
                         // Redirigez vers une page par défaut si aucun rôle spécifié
-                        header('Location: pages/default.php');
+                        header('Location: pages/index.php');
                         break;
                 }
                 
@@ -103,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
                                     <strong>Erreur</strong> le mail ou le mot de passe est incorrect.
                                 </div>';
+                echo $errorMessage;
             }
         } catch (PDOException $e) {
             // Gérez les erreurs de connexion à la base de données

@@ -5,8 +5,8 @@ session_start();
 $errorMessage = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $usermail = $_POST['mail'];
-    $userpasswd = $_POST['mdp'];
+    $usermail = $_POST['email'];
+    $userpasswd = $_POST['password'];
 
     try {
         $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');

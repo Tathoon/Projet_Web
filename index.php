@@ -43,12 +43,18 @@
         </div>
         
 <?php
+echo 'PHP lancé';
+
 session_start();
+
+echo 'Session démarrée';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['email']) && isset($_POST['password'])) {
         $usermail = $_POST['email'];
         $userpasswd = $_POST['password'];
+
+        echo 'Informations récupérées';
 
         $serveur = "e11event.mysql.database.azure.com";
         $utilisateur = "Tathoon";
@@ -59,9 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db = new PDO("mysql:host=$serveur;dbname=$base_de_donnees", $utilisateur, $mot_de_passe);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+            echo 'Connexion réussie';
+
             $query = $db->prepare('SELECT * FROM utilisateur WHERE mail = :mail AND mdp = :mdp');
             $query->execute(array('mail' => $usermail, 'mdp' => $userpasswd));
             $row = $query->fetch();
+
+            echo 'Requête exécutée';
 
             if ($row) {
                 // Redirigez l'utilisateur en fonction de son rôle
@@ -80,6 +90,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         header('Location: pages/default.php');
                         break;
                 }
+                
+                echo 'Redirection effectuée';
+
                 // Stockez les informations de l'utilisateur dans la session
                 $_SESSION['role'] = $row['role'];
                 $_SESSION['nom'] = $row['nom'];

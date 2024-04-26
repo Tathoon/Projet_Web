@@ -42,15 +42,18 @@
     $sql_tickets_attente = "SELECT COUNT(DISTINCT id_ticket) AS total_tickets_attente FROM ticket WHERE status = 3";
     $result_tickets_attente = $db->query($sql_tickets_attente);
 
-    $sql_most_ticket_user = "SELECT nom, prenom, COUNT(id_ticket) AS nombre_tickets FROM utilisateur JOIN ticket ON utilisateur.id_utilisateur = ticket.id_utilisateur GROUP BY utilisateur.id_utilisateur ORDER BY nombre_tickets DESC LIMIT 2";
+    $sql_user_by_number_tickets = "SELECT nom, prenom, COUNT(id_ticket) AS nombre_tickets FROM utilisateur JOIN ticket ON utilisateur.id_utilisateur = ticket.utilisateur GROUP BY utilisateur.id_utilisateur ORDER BY nombre_tickets DESC LIMIT 5";
+    $result_user_by_number_tickets = $db->query($sql_user_by_number_tickets);
 
     if ($result_users !== false && $result_tickets !== false && $result_depense !== false && $result_tickets_attente !== false){
         $row_users = $result_users->fetch(PDO::FETCH_ASSOC);
         $row_tickets = $result_tickets->fetch(PDO::FETCH_ASSOC);
         $row_depense = $result_depense->fetch(PDO::FETCH_ASSOC);
         $row_tickets_attente = $result_tickets_attente->fetch(PDO::FETCH_ASSOC);
+        $rows_user_by_number_tickets = $result_user_by_number_tickets->fetchAll(PDO::FETCH_ASSOC);
+
         
-        if ($row_users && $row_tickets && $row_depense) {
+        if ($row_users && $row_tickets && $row_depense && $row_tickets_attente && $rows_user_by_number_tickets) {
             $total_utilisateurs = $row_users["total_utilisateurs"];
             $total_tickets = $row_tickets["total_tickets"];
             $total_depense = $row_depense["total_depense"];
@@ -82,11 +85,11 @@
     </div>
     <div class="mobile_nav_items">
       <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
-      <a href="tickets_admin.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-      <a href="utilisateurs_admin.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
-      <a href="../autres/notifications.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-      <a href="../autres/settings.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-      <a href="../../index.php?logout=true&menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+      <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
+      <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
+      <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
+      <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
     </div>
   </div>
 
@@ -96,11 +99,11 @@
       <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
     </div>
       <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
-      <a href="tickets_admin.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-      <a href="utilisateurs_admin.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
-      <a href="../autres/notifications.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-      <a href="../autres/settings.php?menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="<?php echo isset($_GET['menu']) && $_GET['menu'] === 'active' ? 'active' : ''; ?>"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-      <a href="../../index.php?logout=true&menu=<?php echo isset($_GET['menu']) ? $_GET['menu'] : 'inactive'; ?>" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+      <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
+      <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
+      <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i></i><span>Notifications</span></a>
+      <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+      <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
 
 
@@ -177,15 +180,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td<?php echo $sql_most_ticket_user ; ?></td>
-                        <td>25</td>
-                    </tr>
-                    <tr>
-                        <td>Jane Smith</td>
-                        <td>20</td>
-                    </tr>
-                    <!-- Ajoutez d'autres lignes selon vos données -->
+                    <?php
+                   foreach ($rows_user_by_number_tickets as $row) {
+                    echo "<tr>";
+                    echo "<td>" . $row['nom'] . " " . $row['prenom'] . "</td>";
+                    echo "<td>" . $row['nombre_tickets'] . "</td>";
+                    echo "</tr>";
+                    }                
+                    ?>
                 </tbody>
             </table>
           </div>

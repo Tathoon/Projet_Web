@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tickets - Commercial</title>
-  <link rel="icon" href="../../images/Logo_onglet.png" type="image/x-icon">
-  <link rel="stylesheet" href="../../styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
-</head>
-<body>
-  <?php
+<?php
     session_start();
     echo $_SESSION['nom'];
 
@@ -25,7 +13,20 @@
       header('Location: ../../index.php');
       exit();
      }
-  ?>
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tickets - Commercial</title>
+  <link rel="icon" href="../../images/Logo_onglet.png" type="image/x-icon">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+</head>
+<body>
 
   <input type="checkbox" id="check">
   <header>
@@ -61,8 +62,6 @@
     <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
     <a href="../../index.php?logout=true" class="logout-commercial" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
   </div>
-
-  
 
   <h1 class="title">Vos notes de frais</h1>
 

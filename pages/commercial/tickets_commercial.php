@@ -62,8 +62,6 @@
     <a href="../../index.php?logout=true" class="logout-commercial" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
   </div>
 
-  
-
   <h1 class="title">Vos notes de frais</h1>
 
   <div class="ticket-container">
@@ -264,18 +262,49 @@
                   <th>Description</th>
                   <th>Justificatif</th>
                   <th>Status</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 <?php
                   $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
+                  
+                  if(isset($_GET['id'])) {
+                      $id_ticket_to_delete = $_GET['id'];
+                      
+                      // Connexion à la base de données
+                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+
+                      // Supprimer le ticket de la base de données
+                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
+                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
+                      $stmt_delete->execute();
+                      
+                      // Rediriger vers la page précédente ou une autre page après la suppression
+                      header('Location: tickets_commercial.php');
+                      exit();
+                  }
+
                   if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
                     $nom = $_SESSION['nom'];
                     $prenom = $_SESSION['prenom'];
-    
-                    // Connexion à la base de données
-                    $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+
+                    // Vérifie si l'ID du ticket est défini et s'il est numérique
+                    if(isset($_GET['id']) && is_numeric($_GET['id'])) {
+                      $id_ticket_to_delete = $_GET['id'];
+                      
+                      // Connexion à la base de données
+                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+                      
+                      // Supprimer le ticket de la base de données
+                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
+                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
+                      $stmt_delete->execute();
+                      
+                      // Renvoyer une réponse pour indiquer que la suppression a réussi
+                      echo "Ticket supprimé avec succès";
+                    }
     
                     // Récupère le nom de l'utilisateur à partir de la base de données
                     $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
@@ -297,16 +326,36 @@
                     $stmt_user->bindParam(':prenom', $prenom);
                     $stmt_user->execute();
                     $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
+
+                    // Récupère le rôle de l'utilisateur à partir de la base de données
+                    $stmt_user = $db->prepare("SELECT role FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_user->bindParam(':nom', $nom);
+                    $stmt_user->bindParam(':prenom', $prenom);
+                    $stmt_user->execute();
+
+                    $role = $stmt_user->fetch()['role']; 
+
                     
-                    $pending_tickets = $db->prepare("
-                        SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
-                        FROM ticket AS t
-                        INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
-                        INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
-                        INNER JOIN ticket_status AS ts ON t.status = ts.id_status
-                        WHERE t.utilisateur = :id_utilisateur AND ts.nom_status = 'En attente'
-                    ");
-                    $pending_tickets->bindParam(':id_utilisateur', $id_utilisateur); 
+                    if ($role == '1') {
+                        $pending_tickets = $db->prepare("
+                            SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                            FROM ticket AS t
+                            INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                            INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                            INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                            WHERE ts.nom_status = 'En attente'
+                        ");
+                    } else {
+                        $pending_tickets = $db->prepare("
+                            SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                            FROM ticket AS t
+                            INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                            INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                            INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                            WHERE t.utilisateur = :id_utilisateur AND ts.nom_status = 'En attente'
+                        ");
+                        $pending_tickets->bindParam(':id_utilisateur', $id_utilisateur);
+                    }
                     $pending_tickets->execute();
                     $pending_data = $pending_tickets->fetchAll();
 
@@ -324,7 +373,7 @@
                               <td>".$row['description']."</td>
                               <td>".$row['justificatif']." ".$justificatifIcon."</td>
                               <td><span class='status pending'>".$row['status']."</span></td>
-                              <td><a href='delete_ticket.php?id=".$row['id_ticket']."' class='btn-delete'>Supprimer</a></td> <!-- Bouton Supprimer -->
+                              <td><a href='tickets_commercial.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td>
                             </tr>";
                     }
 
@@ -360,6 +409,31 @@
                 ?>
               </tbody>
             </table>
+            <script>
+              $(document).ready(function() {
+                // Lorsqu'un bouton Supprimer est cliqué
+                $('.btn-delete').click(function(e) {
+                  e.preventDefault(); // Empêche le comportement par défaut du lien
+
+                  // Récupère l'URL du lien pour obtenir l'ID du ticket à supprimer
+                  var url = $(this).attr('href');
+
+                  // Effectue une requête AJAX pour supprimer le ticket
+                  $.ajax({
+                    type: 'GET',
+                    url: url,
+                    success: function(data) {
+                      // Si la suppression est réussie, supprimez la ligne du tableau correspondant
+                      $(e.target).closest('tr').remove();
+                    },
+                    error: function(xhr, status, error) {
+                      // Gérez les erreurs si la suppression échoue
+                      console.error(xhr.responseText);
+                    }
+                  });
+                });
+              });
+            </script>
           </div>
         </div>
       </main>
@@ -417,18 +491,37 @@
                     $stmt_user->bindParam(':prenom', $prenom);
                     $stmt_user->execute();
                     $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
-                    
-                    $other_tickets = $db->prepare("
-                        SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
-                        FROM ticket AS t
-                        INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
-                        INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
-                        INNER JOIN ticket_status AS ts ON t.status = ts.id_status
-                        WHERE t.utilisateur = :id_utilisateur AND ts.nom_status != 'En attente'
-                    ");
-                    $other_tickets->bindParam(':id_utilisateur', $id_utilisateur); 
-                    $other_tickets->execute();
-                    $other_data = $pending_tickets->fetchAll();
+
+                     // Récupère le rôle de l'utilisateur à partir de la base de données
+                     $stmt_user = $db->prepare("SELECT role FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                     $stmt_user->bindParam(':nom', $nom);
+                     $stmt_user->bindParam(':prenom', $prenom);
+                     $stmt_user->execute();
+ 
+                     $role = $stmt_user->fetch()['role']; 
+
+                     if ($role == '1') {
+                          $other_tickets = $db->prepare("
+                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              FROM ticket AS t
+                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                              INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                              INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                              WHERE ts.nom_status != 'En attente'
+                          ");
+                      } else {
+                          $other_tickets = $db->prepare("
+                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              FROM ticket AS t
+                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                              INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                              INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                              WHERE t.utilisateur = :id_utilisateur AND ts.nom_status != 'En attente'
+                          ");
+                          $other_tickets->bindParam(':id_utilisateur', $id_utilisateur);
+                      }
+                      $other_tickets->execute();
+                      $other_data = $other_tickets->fetchAll();
                   
                     foreach ($other_data as $row) {
                       $justificatifIcon = '';

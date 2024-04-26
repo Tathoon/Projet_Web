@@ -1083,6 +1083,13 @@ main .bottom_data .reminders {
   float: left;
 }
 
+#delete-justificatif {
+  cursor: pointer;
+  margin-left: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .table-ticket-container {
   display: flex;
   float: right;
@@ -1205,8 +1212,7 @@ textarea {
 
 .ticket-pending {
   position: relative;
-  width: calc(60% - 260px);
-  margin-right: 3.5%;
+  width: calc(63.8% - 260px);
   display: flex;
   justify-content: space-between;
   float: right;
@@ -1229,6 +1235,19 @@ textarea {
 .ticket-other main .bottom_data .orders table td .status.processing {
   background-color: var(--danger);
   color: #972f2f;
+}
+
+.btn-delete {
+  background-color: var(--danger);
+  color: #972f2f;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: #f0a5a5;
 }
 
 .ticket-pending main .bottom_data {

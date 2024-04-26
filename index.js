@@ -229,17 +229,5 @@ if (dataAvailable) {
 }
 
 // Vérifier si le formulaire est correctement rempli
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelector('form').addEventListener('submit', function(event) {
-      var categorie = document.getElementById('categorie').value;
-      var cout = document.getElementById('cout').value;
-      var description = document.getElementById('description').value;
-      var lieu = document.getElementById('lieu').value;
 
-      if (!categorie || !cout || !description || !lieu) {
-          event.preventDefault();
-          alert('Please fill out all required fields');
-      }
-  });
-});
 

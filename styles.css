@@ -1025,6 +1025,14 @@ main .bottom_data .reminders {
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
+  margin-left: 9%;
+  width: 45%;
+  float: left;
+}
+
+.table-container {
+  width:5000px;
+  display: flex;
 }
 
 .card-ticket {
@@ -1128,8 +1136,10 @@ main .bottom_data .reminders {
 .ticket-pending {
   position: relative;
   width: calc(96% - 260px);
-  left: 10px;
   transition: all 0.3s ease;
+  display: flex;
+  float: right;
+  margin-left: 2%;
 }
 
 .ticket-pending main .bottom_data .orders table tbody tr:nth-child(even) {
@@ -1181,8 +1191,11 @@ main .bottom_data .reminders {
 .ticket-other {
   position: relative;
   width: calc(96% - 260px);
-  left: 10px;
   transition: all 0.3s ease;
+  margin: 0 auto;
+  width: 90%; /* Ajuste cette valeur selon tes besoins */
+  margin-bottom: 75px;
+  margin-right: 2%;
 }
 
 .ticket-other main .bottom_data .orders table tbody tr:nth-child(even) {
@@ -1218,6 +1231,27 @@ main .bottom_data .reminders {
 
 .placeholder-option {
   opacity: 0.5; /* Adjust this value to change the transparency */
+}
+
+.left-section {
+  display: flex;
+  margin-left: 9%;
+  width: 45%;
+  float: left;
+}
+
+.right-section {
+  display: flex;
+  width: 45%;
+  float: right;
+  margin-left: 2%;
+}
+
+.bottom-section {
+  margin: 0 auto;
+  width: 90%; /* Ajuste cette valeur selon tes besoins */
+  margin-bottom: 75px;
+  margin-right: 2%;
 }
 
 

@@ -1,9 +1,6 @@
 <?php
     session_start();
 
-    $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
-
-
     if (!isset($_SESSION['role']) || ($_SESSION['role'] != 1 )) {
       header('Location: ../../index.php');
       session_destroy();

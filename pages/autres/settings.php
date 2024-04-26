@@ -64,7 +64,6 @@
     <?php
       $role = $_SESSION['role'];
     ?>
-
     <script>
     function goBack() {
       switch (<?php echo $role; ?>) {
@@ -84,7 +83,66 @@
     }
     </script>
   </div>
-  
+  <div class="content">
+    <main>
+    <div class="avatar_section">
+      <h2>Changez votre avatar</h2>
+      <div class="avatar_options">
+        <label for="avatar1">
+          <img src="../../images/avatar/avatar1.png" alt="Avatar 1">
+          <input type="radio" id="avatar1" name="avatar" value="avatar1.jpg">
+        </label>
+        <label for="avatar2">
+          <img src="../../images/avatar/avatar2.png" alt="Avatar 2">
+          <input type="radio" id="avatar2" name="avatar" value="avatar2.jpg">
+        </label>
+        <label for="avatar3">
+          <img src="../../images/avatar/avatar3.png" alt="Avatar 3">
+          <input type="radio" id="avatar3" name="avatar" value="avatar3.jpg">
+        </label>
+        <label for="avatar4">
+          <img src="../../images/avatar/avatar4.png" alt="Avatar 4">
+          <input type="radio" id="avatar4" name="avatar" value="avatar4.jpg">
+        </label>
+        <label for="avatar5">
+          <img src="../../images/avatar/avatar5.png" alt="Avatar 5">
+          <input type="radio" id="avatar5" name="avatar" value="avatar5.jpg">
+        </label>
+      </div>
+    </div>
+  </main>
+
+    <script>
+      // Sélectionnez les boutons radio et les images
+      var radios = document.querySelectorAll('input[type=radio][name="avatar"]');
+      var mobileProfileImage = document.querySelector('.mobile_profile_image');
+      var profileImage = document.querySelector('.profile_image');
+
+      // Récupérez l'avatar sélectionné du stockage local, s'il existe
+      var selectedAvatar = localStorage.getItem('selectedAvatar');
+      if (selectedAvatar) {
+          mobileProfileImage.src = selectedAvatar;
+          profileImage.src = selectedAvatar;
+      }
+
+      // Ajoutez un écouteur d'événements à chaque bouton radio
+      radios.forEach(function(radio) {
+          radio.addEventListener('change', function() {
+              // Modifiez les attributs src des images lorsque le bouton radio est sélectionné
+              var avatarSrc;
+              if (this.id === 'avatar1') {
+                  avatarSrc = '../../images/Logo-Web.png';
+              } else if (this.id === 'avatar2') {
+                  avatarSrc = '../../images/Logo_onglet.png';
+              }
+              mobileProfileImage.src = avatarSrc;
+              profileImage.src = avatarSrc;
+
+              // Enregistrez l'avatar sélectionné dans le stockage local
+              localStorage.setItem('selectedAvatar', avatarSrc);
+          });
+      });
+  </script>
   <script type="text/javascript" src="../../index.js"></script>
 </body>
 </html>

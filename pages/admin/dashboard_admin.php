@@ -276,6 +276,17 @@
     const categoryLabels = <?php echo $labelsJSON; ?>;
     const pricesPerCategory = <?php echo $prices_per_category_json; ?>;
     var chartData = <?php echo json_encode($data); ?>;
+
+    var mobileProfileImage = document.querySelector('.mobile_profile_image');
+    var profileImage = document.querySelector('.profile_image');
+
+    // Récupérez l'avatar sélectionné du stockage local, s'il existe
+    var selectedAvatar = localStorage.getItem('selectedAvatar');
+    if (selectedAvatar) {
+        mobileProfileImage.src = selectedAvatar;
+        profileImage.src = selectedAvatar;
+    }
+    
   </script>
   <script type="text/javascript" src="../../index.js"></script>
 </body>

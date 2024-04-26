@@ -332,6 +332,11 @@ label #sidebar_btn:hover{
   text-align: center;
 }
 
+.avatar_options img {
+  width: 100px; /* ajustez la largeur selon vos besoins */
+  height: 100px; /* ajustez la hauteur selon vos besoins */
+}
+
 /* ------------------*/
 /*                   */
 /*                   */

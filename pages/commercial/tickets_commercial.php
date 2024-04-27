@@ -71,7 +71,11 @@
       <h1 class="pending-ticket-title">Formulaire de dépôt de note de frais</h1>
       <form action="tickets_commercial.php" method="post" enctype="multipart/form-data" class="form-user ticket-card form-container">
 
-        <div class="mb-3">
+        <div class="text-obligatoire">
+          <p>Les champs marqués d'un * sont obligatoires.</p>
+        </div>
+
+        <div class="mb-3 space">
           <label for="categorie">Type de frais<span style="color: red;">*</span> <span> :</span></label>
           <div class="form-type-frais">
             <select name="categorie" id="categorie" required>
@@ -87,31 +91,35 @@
           </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 space">
           <label for="cout">Coût du frais<span style="color: red;">*</span> <span> :</span></label>
           <input name="cout" type="text" id="cout" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 space">
           <label for="description">Description du frais<span style="color: red;">*</span> <span> :</span></label>
           <textarea name="description" type="text" id="description" required></textarea>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 space">
           <label for="lieu">Lieu du frais<span style="color: red;">*</span> <span> :</span></label>
           <input name="lieu" type="text" id="lieu" required>
         </div>
 
         <div class="mb-3">
-          <label for="justificatif">Justificatif : <span> (Optionnel)</span></label>
-          <div id="file-info" style="display: flex; align-items: center;">
-            <div id="file-name" style="flex: 1;"></div>
-            <i class='fa-solid fa-trash' id="delete-justificatif" style="display: none;"></i>
+          <div class="space">
+            <label for="justificatif">Justificatif : <span> (Optionnel)</span></label>
+            <div id="file-info" style="display: flex; align-items: center;">
+              <div id="file-name" style="flex: 0;"></div>
+              <i class='fa-solid fa-trash' id="delete-justificatif" style="display: none;"></i>
+            </div>
           </div>
-          <div class="button-row">
-            <label class="file-label" for="justificatif">Ajouter un fichier</label>
-            <input type="file" name="justificatif" id="justificatif">
-            <button type="submit" class="submit-button">Ajouter la note</button>
+          <div class="space">
+            <div class="button-row">
+              <label class="file-label text-ticket" for="justificatif">Ajouter un fichier</label>
+              <input type="file" name="justificatif" id="justificatif">
+              <button type="submit" class="submit-button ticket-submit text-ticket">Ajouter la note</button>
+            </div>
           </div>
         </div>
 
@@ -479,9 +487,6 @@
                   if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
                     $nom = $_SESSION['nom'];
                     $prenom = $_SESSION['prenom'];
-    
-                    // Connexion à la base de données
-                    $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
     
                     // Récupère le nom de l'utilisateur à partir de la base de données
                     $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");

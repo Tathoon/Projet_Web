@@ -399,6 +399,7 @@
                             </tr>";
                     }
 
+                    
                     if(isset($_GET['id'])) {
                       $id_ticket_to_delete = $_GET['id'];
                       
@@ -414,6 +415,7 @@
                       header('Location: tickets_commercial.php');
                       exit();
                   }
+
                   
                   $rowCount = count($pending_data);
                   
@@ -430,31 +432,31 @@
             </table>
             <script>
               $(document).ready(function() {
-                // Lorsqu'un bouton Supprimer est cliqué
-                $('.btn-delete').click(function(e) {
-                  e.preventDefault(); // Empêche le comportement par défaut du lien
+                  // Lorsqu'un bouton Supprimer est cliqué
+                  $('.btn-delete').click(function(e) {
+                    e.preventDefault(); // Empêche le comportement par défaut du lien
 
-                  // Récupère l'URL du lien pour obtenir l'ID du ticket à supprimer
-                  var url = $(this).attr('href');
+                    // Récupère l'URL du lien pour obtenir l'ID du ticket à supprimer
+                    var url = $(this).attr('href');
 
-                  // Effectue une requête AJAX pour supprimer le ticket
-                  $.ajax({
-                    type: 'GET',
-                    url: url,
-                    success: function(data) {
-                      // If the deletion is successful, remove the corresponding row from the table
-                      $(e.target).closest('tr').remove();
+                    // Effectue une requête AJAX pour supprimer le ticket
+                    $.ajax({
+                      type: 'GET',
+                      url: url,
+                      success: function(data) {
+                        // If the deletion is successful, remove the corresponding row from the table
+                        $(e.target).closest('tr').remove();
 
-                      // Add a new empty row to the table
-                      $('table tbody').append("<tr><td colspan='8'>&nbsp;</td></tr>");
-                    },
-                    error: function(xhr, status, error) {
-                      // Handle errors if the deletion fails
-                      console.error(xhr.responseText);
-                    }
+                        // Add a new empty row to the table
+                        $('table tbody').append("<tr><td colspan='8'>&nbsp;</td></tr>");
+                      },
+                      error: function(xhr, status, error) {
+                        // Handle errors if the deletion fails
+                        console.error(xhr.responseText);
+                      }
+                    });
                   });
                 });
-              });
             </script>
           </div>
         </div>

@@ -1061,6 +1061,13 @@ main .bottom_data .reminders {
 /*-------------------*/
 
 /* ======== Tickets COMMERCIAL =================== */
+body, html {
+  height: 100%; /* Set the height to 100% */
+  overflow-x: hidden; /* Hide horizontal overflow */
+  overflow-y: auto; /* Allow vertical scrolling only when necessary */
+}
+
+
 .ticket-title {
   font-size: 20px;
   font-weight: 600;
@@ -1069,10 +1076,10 @@ main .bottom_data .reminders {
 
 .ticket-container {
   display: flex;
+  margin-top: 16px;
   align-items: center;
-  margin-top: 20px;
-  margin-left: 11%;
-  width: 38%;
+  margin-left: 14%;
+  width: 25%;
   float: left;
 }
 
@@ -1083,19 +1090,22 @@ main .bottom_data .reminders {
   float: left;
 }
 
+.pending-ticket-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--dark);
+  text-align: center;
+}
+
 .table-ticket-container {
   display: flex;
   float: right;
 }
 
-.ticket-table-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
+
 
 .card-ticket {
-  padding: 15px;
+  padding: 4%;
   min-height: 100px;
   width: 90%;
   max-width: 600px;
@@ -1107,10 +1117,18 @@ main .bottom_data .reminders {
   justify-content: flex-start;
 }
 
+.text-obligatoire {
+  color: #ff0000;
+  font-size: 13px;
+}
+
+.space {
+  margin-top: 1.5%;
+}
+
 
 .ticket-card select {
   appearance: none;
-  padding-right: 30px;
   width: 243% !important;
 }
 
@@ -1127,8 +1145,8 @@ main .bottom_data .reminders {
 
 .ticket-card input[type="text"],
 .ticket-card select {
-  width: 220%;
-  padding: 10px;
+  width: 218%;
+  padding: 13px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -1136,7 +1154,6 @@ main .bottom_data .reminders {
 }
 
 textarea {
-  width: 218%; 
   padding: 10px 10px;
   margin: 8px 0;
   box-sizing: border-box; 
@@ -1178,10 +1195,32 @@ textarea {
   display: none;
 }
 
+#delete-justificatif {
+  display: none; 
+  margin-left: 10px;
+}
+
+#delete-justificatif:hover {
+  cursor: pointer;
+}
+
+.btn-delete {
+  background-color: var(--danger);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 3px 7px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: #f0a5a5;
+}
+
 .ticket-container button[type="submit"] {
   display: inline-block;
   padding: 10px 20px;
-  margin-right: -39%; 
+  margin-right: -41%; 
   background-color: #6aa3ff;
   color: #fff;
   border: none;
@@ -1195,7 +1234,9 @@ textarea {
 }
 
 .ticket-card [name="description"] { 
-  height: 75px !important;
+  margin-top: 3px;
+  height: 80px;
+  width: 223%;
 }
 
 .no-link-style {
@@ -1205,60 +1246,118 @@ textarea {
 
 .ticket-pending {
   position: relative;
-  width: calc(60% - 260px);
-  margin-right: 3.5%;
-  display: flex;
-  justify-content: space-between;
+  width: calc(76.5% - 260px);
+  margin-right: -3%;
   float: right;
 }
 
-.ticket-pending main .bottom_data .orders table tbody tr:nth-child(even) {
+.ticket-pending  .bottom_data .orders table tbody tr:nth-child(even) {
   background-color: var(--grey);
+  max-width: 95%;
 }
 
-.ticket-other main .bottom_data .orders table td .status.completed {
+.ticket-other  .bottom_data .orders table td .status.completed {
   background-color: var(--success);
   color: #59904B;
 }
 
-.ticket-pending main .bottom_data .orders table td .status.pending {
+.ticket-pending  .bottom_data .orders table td .status.pending {
   background-color: var(--warning);
   color: #C18E09;
 }
 
-.ticket-other main .bottom_data .orders table td .status.processing {
+.ticket-other  .bottom_data .orders table td .status.processing {
   background-color: var(--danger);
   color: #972f2f;
+}
+
+.ticket-pending .bottom_data .orders table tbody tr {
+  height: 50px; 
+}
+
+.ticket-pending  .bottom_data .orders table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ticket-pending .orders {
+  width: 10%;
+  max-width: none;
+}
+
+.ticket-pending  .bottom_data .orders table th {
+  font-size: 1rem;
+  text-align: left;
+  border-bottom: 2px solid var(--grey);
+  background-color: var(--grey);
+  color: var(--dark);
+}
+
+.ticket-pending   .bottom_data .orders table .img_content {
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+}
+
+.ticket-pending  .bottom_data .orders table tbody tr {
+  transition: all 0.3s ease-in;
+}
+
+.ticket-pending   .bottom_data .orders table tbody tr:nth-child(even) {
+  background-color: var(--grey);
+}
+
+.ticket-pending  .bottom_data .orders table td .status {
+  display: inline-block;
+  font-size: 10px;
+  color: var(--light);
+  border-radius: 20px;
+  font-weight: 700;
+  text-align: center;
+  width: 50px;
+  height: 10px;
 }
 
 .ticket-pending main .bottom_data {
   display: flex;
   flex-wrap: wrap;
+  width: 95%;
+  max-width: 95%;
+  grid-gap: 20px;
   color: var(--dark);
+  position: relative;
+  left: 0.4%;
 }
 
 .ticket-pending main .bottom_data > div {
   border-radius: 10px;
   background-color: var(--light);
+  max-width: 95%;
   padding: 12px; /* Ajustez le rembourrage */
 }
 
 .ticket-pending main .bottom_data .orders table td .status {
   font-size: 10px;
-  padding: 6px 16px;
+  padding: 6px 13px;
   color: var(--light);
   border-radius: 20px;
   font-weight: 700;
+  max-width: 95%;
 }
 
 .ticket-other {
-  position: relative;
-  width: calc(96% - 260px);
-  transition: all 0.3s ease;
-  margin: 0 auto;
-  width: 90%;
+  position: flex;
+  width: calc(85% - 260px);
+  margin-top: 50px;
   margin-bottom: 75px;
-  margin-right: 2%;
+  margin-left: 20%;
+}
+
+.other-ticket-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--dark);
+  text-align: center;
 }
 
 .ticket-other main .bottom_data .orders table tbody tr:nth-child(even) {
@@ -1270,8 +1369,6 @@ textarea {
   flex-wrap: wrap;
   width: 95%;
   grid-gap: 20px;
-  margin-top: 1%; /* Ajustez la marge supérieure */
-  margin-bottom: 10%; /* Ajoutez une marge inférieure si nécessaire */
   color: var(--dark);
   position: relative;
   left: 0.4%;
@@ -1290,27 +1387,6 @@ textarea {
   color: var(--light);
   border-radius: 20px;
   font-weight: 700;
-}
-
-.left-section {
-  display: flex;
-  margin-left: 9%;
-  width: 45%;
-  float: left;
-}
-
-.right-section {
-  display: flex;
-  width: 45%;
-  float: right;
-  margin-left: 2%;
-}
-
-.bottom-section {
-  margin: 0 auto;
-  width: 70%; /* Ajuste cette valeur selon tes besoins */
-  margin-bottom: 75px;
-  margin-left: 20%;
 }
 
 
@@ -1649,5 +1725,134 @@ textarea {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .ticket-container {
+      width: 96%; /* Utiliser la largeur totale de l'écran */
+      margin-left: 5px; /* Aucun décalage à gauche */
+      margin-right: 5px; /* Aucun décalage à droite */
+      float: none; /* Aucun flottement */
+  }
+
+  .ticket-card,
+  .card-ticket {
+      width: 90%; /* Utiliser 90% de la largeur de l'écran */
+      max-width: none; /* Pas de largeur maximale */
+      margin: auto; /* Centrer horizontalement */
+  }
+
+  .ticket-card input[type="text"] {
+      width: 140%; /* Utiliser la largeur totale disponible */
+  }
+
+  .form-type-frais select[name="categorie"] {
+      width: 64% !important; /* Utiliser la largeur totale disponible */
+  }
+
+  .ticket-card [name="description"] {
+      width: 153%;
+      height: 85px; /* Ajuster la hauteur du champ de texte */
+  }
+
+  .ticket-card button[type="submit"] {
+      margin-right: auto; /* Centrer horizontalement */
+      margin-left: auto; /* Centrer horizontalement */
+  }
+
+  .ticket-pending {
+    width: 95% !important;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 0;
+    float: none;
+    display: flex; /* Utiliser flexbox */
+    flex-direction: column; /* Afficher les éléments en colonne */
+}
+
+  .ticket-other {
+      width: 90% !important;
+      margin-left: 5px;
+      margin-right: 5px;
+      margin-top: 0;
+      float: none;
+      display: flex; /* Utiliser flexbox */
+      flex-direction: column; /* Afficher les éléments en colonne */
+  }
+
+  .pending-ticket-title,
+  .other-ticket-title {
+      margin-left: 0;
+      text-align: center; /* Centrer le texte */
+  }
+
+  .ticket-pending main .bottom_data {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%; /* Utiliser la largeur totale */
+      grid-gap: 20px;
+      color: var(--dark);
+      position: relative;
+      left: 0.4%;
+      justify-content: center; /* Centrer horizontalement */
+  }
+
+  .ticket-other main .bottom_data {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%; /* Utiliser la largeur totale */
+      grid-gap: 20px;
+      color: var(--dark);
+      position: relative;
+      left: 0.4%;
+      justify-content: center; /* Centrer horizontalement */
+  }
+
+  .ticket-pending main .bottom_data > div {
+      border-radius: 10px;
+      background-color: var(--light);
+      width: 100%;
+      padding: 12px; /* Ajuster le rembourrage */
+      overflow-x: auto;
+      flex-basis: 100%; /* Utiliser toute la largeur disponible */
+      max-width: 100%; /* Utiliser toute la largeur disponible */
+  }
+
+  .ticket-other main .bottom_data > div {
+      border-radius: 10px;
+      background-color: var(--light);
+      width: 100%;
+      padding: 12px; /* Ajuster le rembourrage */
+      overflow-x: auto;
+      flex-basis: 100%; /* Utiliser toute la largeur disponible */
+      max-width: 100%; /* Pas de largeur maximale */
+  }
+
+  .ticket-pending main .bottom_data .orders table td .status,
+  .ticket-other main .bottom_data .orders table td .status {
+      font-size: 10px;
+      padding: 6px 16px;
+      color: var(--light);
+      border-radius: 20px;
+      font-weight: 700;
+      max-width: 95% !important;
+  }
+
+  .ticket-pending .bottom_data .orders table th,
+  .ticket-other main .bottom_data .orders table th {
+      font-size: 14px; /* Ajuster la taille de la police */
+  }
+
+  .text-ticket {
+      font-size: 11px !important; /* Ajuster la taille de la police */
+  }
+
+  .button-row {
+      padding: 1px 0; /* Ajouter de l'espace autour des boutons */
+  }
+
+  .ticket-submit {  
+      margin-right: -5% !important; /* Aucun décalage à droite */
   }
 }

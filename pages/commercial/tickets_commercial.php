@@ -24,6 +24,8 @@
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
 <body>
 
@@ -66,10 +68,14 @@
 
   <div class="ticket-container">
     <div class="card-ticket">
-      <h1 class="title">Formulaire de dépôt de note de frais</h1>
+      <h1 class="pending-ticket-title">Formulaire de dépôt de note de frais</h1>
       <form action="tickets_commercial.php" method="post" enctype="multipart/form-data" class="form-user ticket-card form-container">
 
-        <div class="mb-3">
+        <div class="text-obligatoire">
+          <p>Les champs marqués d'un * sont obligatoires.</p>
+        </div>
+
+        <div class="mb-3 space">
           <label for="categorie">Type de frais<span style="color: red;">*</span> <span> :</span></label>
           <div class="form-type-frais">
             <select name="categorie" id="categorie" required>
@@ -85,31 +91,35 @@
           </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 space">
           <label for="cout">Coût du frais<span style="color: red;">*</span> <span> :</span></label>
           <input name="cout" type="text" id="cout" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 space">
           <label for="description">Description du frais<span style="color: red;">*</span> <span> :</span></label>
           <textarea name="description" type="text" id="description" required></textarea>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 space">
           <label for="lieu">Lieu du frais<span style="color: red;">*</span> <span> :</span></label>
           <input name="lieu" type="text" id="lieu" required>
         </div>
 
         <div class="mb-3">
-          <label for="justificatif">Justificatif : <span> (Optionnel)</span></label>
-          <div id="file-info" style="display: flex; align-items: center;">
-            <div id="file-name" style="flex: 1;"></div>
-            <i class='fa-solid fa-trash' id="delete-justificatif" style="display: none;"></i>
+          <div class="space">
+            <label for="justificatif">Justificatif : <span> (Optionnel)</span></label>
+            <div id="file-info" style="display: flex; align-items: center;">
+              <div id="file-name" style="flex: 0;"></div>
+              <i class='fa-solid fa-trash' id="delete-justificatif" style="display: none;"></i>
+            </div>
           </div>
-          <div class="button-row">
-            <label class="file-label" for="justificatif">Ajouter un fichier</label>
-            <input type="file" name="justificatif" id="justificatif">
-            <button type="submit" class="submit-button">Ajouter la note</button>
+          <div class="space">
+            <div class="button-row">
+              <label class="file-label text-ticket" for="justificatif">Ajouter un fichier</label>
+              <input type="file" name="justificatif" id="justificatif">
+              <button type="submit" class="submit-button ticket-submit text-ticket">Ajouter la note</button>
+            </div>
           </div>
         </div>
 
@@ -248,9 +258,7 @@
       <main>
         <div class="bottom_data">
           <div class="orders">
-            <div class="header">
-              <h3>Tickets en attente</h3>
-            </div>
+            <h3 class="pending-ticket-title">Tickets en attente</h3>
             <table id="pendingTable">
               <thead>
                 <tr>
@@ -262,18 +270,63 @@
                   <th>Description</th>
                   <th>Justificatif</th>
                   <th>Status</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 <?php
                   $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
+                  if(isset($_GET['id'])) {
+                      $id_ticket_to_delete = $_GET['id'];
+                      
+                      // Connexion à la base de données
+                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+                  
+                      // Supprimer le ticket de la base de données
+                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
+                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
+                      $stmt_delete->execute();
+                      
+                      // Rediriger vers la page précédente ou une autre page après la suppression
+                      header('Location: tickets_commercial.php');
+                      exit();
+                  }
+                  if(isset($_GET['id'])) {
+                      $id_ticket_to_delete = $_GET['id'];
+                      
+                      // Connexion à la base de données
+                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+
+                      // Supprimer le ticket de la base de données
+                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
+                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
+                      $stmt_delete->execute();
+                      
+                      // Rediriger vers la page précédente ou une autre page après la suppression
+                      header('Location: tickets_commercial.php');
+                      exit();
+                  }
+
                   if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
                     $nom = $_SESSION['nom'];
                     $prenom = $_SESSION['prenom'];
-    
-                    // Connexion à la base de données
-                    $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+
+                    // Vérifie si l'ID du ticket est défini et s'il est numérique
+                    if(isset($_GET['id']) && is_numeric($_GET['id'])) {
+                      $id_ticket_to_delete = $_GET['id'];
+                      
+                      // Connexion à la base de données
+                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+                      
+                      // Supprimer le ticket de la base de données
+                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
+                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
+                      $stmt_delete->execute();
+                      
+                      // Renvoyer une réponse pour indiquer que la suppression a réussi
+                      echo "Ticket supprimé avec succès";
+                    }
     
                     // Récupère le nom de l'utilisateur à partir de la base de données
                     $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
@@ -295,16 +348,36 @@
                     $stmt_user->bindParam(':prenom', $prenom);
                     $stmt_user->execute();
                     $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
+
+                    // Récupère le rôle de l'utilisateur à partir de la base de données
+                    $stmt_user = $db->prepare("SELECT role FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_user->bindParam(':nom', $nom);
+                    $stmt_user->bindParam(':prenom', $prenom);
+                    $stmt_user->execute();
+
+                    $role = $stmt_user->fetch()['role']; 
+
                     
-                    $pending_tickets = $db->prepare("
-                        SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
-                        FROM ticket AS t
-                        INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
-                        INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
-                        INNER JOIN ticket_status AS ts ON t.status = ts.id_status
-                        WHERE t.utilisateur = :id_utilisateur AND ts.nom_status = 'En attente'
-                    ");
-                    $pending_tickets->bindParam(':id_utilisateur', $id_utilisateur); 
+                    if ($role == '1') {
+                        $pending_tickets = $db->prepare("
+                            SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                            FROM ticket AS t
+                            INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                            INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                            INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                            WHERE ts.nom_status = 'En attente'
+                        ");
+                    } else {
+                        $pending_tickets = $db->prepare("
+                            SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                            FROM ticket AS t
+                            INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                            INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                            INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                            WHERE t.utilisateur = :id_utilisateur AND ts.nom_status = 'En attente'
+                        ");
+                        $pending_tickets->bindParam(':id_utilisateur', $id_utilisateur);
+                    }
                     $pending_tickets->execute();
                     $pending_data = $pending_tickets->fetchAll();
 
@@ -322,42 +395,67 @@
                               <td>".$row['description']."</td>
                               <td>".$row['justificatif']." ".$justificatifIcon."</td>
                               <td><span class='status pending'>".$row['status']."</span></td>
-                              <td><a href='delete_ticket.php?id=".$row['id_ticket']."' class='btn-delete'>Supprimer</a></td> <!-- Bouton Supprimer -->
+                              <td><a href='tickets_commercial.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td> 
                             </tr>";
                     }
 
                     if(isset($_GET['id'])) {
-                        $id_ticket_to_delete = $_GET['id'];
-                        
-                        // Connexion à la base de données
-                        $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-                    
-                        // Supprimer le ticket de la base de données
-                        $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
-                        $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
-                        $stmt_delete->execute();
-                        
-                        // Rediriger vers la page précédente ou une autre page après la suppression
-                        header('Location: previous_page.php');
-                        exit();
-                    }
-
-                    $rowCount = count($pending_data);
-
-                    if ($rowCount < 9) {
-                      $emptyRows = 9 - $rowCount;
-
+                      $id_ticket_to_delete = $_GET['id'];
+                      
+                      // Connexion à la base de données
+                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+                  
+                      // Supprimer le ticket de la base de données
+                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
+                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
+                      $stmt_delete->execute();
+                      
+                      // Rediriger vers la page précédente ou une autre page après la suppression
+                      header('Location: tickets_commercial.php');
+                      exit();
+                  }
+                  
+                  $rowCount = count($pending_data);
+                  
+                  if ($rowCount < 10) {
+                      $emptyRows = 10 - $rowCount;
+                  
                       for ($i = 0; $i < $emptyRows; $i++) {
-                        echo "<tr><td colspan='8'>&nbsp;</td></tr>";
+                          echo "<tr><td colspan='8'>&nbsp;</td></tr>";
                       }
-                    }
-
-                    foreach ($pending_data as $row) {
-                    }
+                  }
                   }
                 ?>
               </tbody>
             </table>
+            <script>
+              $(document).ready(function() {
+                // Lorsqu'un bouton Supprimer est cliqué
+                $('.btn-delete').click(function(e) {
+                  e.preventDefault(); // Empêche le comportement par défaut du lien
+
+                  // Récupère l'URL du lien pour obtenir l'ID du ticket à supprimer
+                  var url = $(this).attr('href');
+
+                  // Effectue une requête AJAX pour supprimer le ticket
+                  $.ajax({
+                    type: 'GET',
+                    url: url,
+                    success: function(data) {
+                      // If the deletion is successful, remove the corresponding row from the table
+                      $(e.target).closest('tr').remove();
+
+                      // Add a new empty row to the table
+                      $('table tbody').append("<tr><td colspan='8'>&nbsp;</td></tr>");
+                    },
+                    error: function(xhr, status, error) {
+                      // Handle errors if the deletion fails
+                      console.error(xhr.responseText);
+                    }
+                  });
+                });
+              });
+            </script>
           </div>
         </div>
       </main>
@@ -368,9 +466,7 @@
       <main>
         <div class="bottom_data">
           <div class="orders">
-            <div class="header">
-              <h3>Autres tickets</h3>
-            </div>
+            <h3 class="other-ticket-title">Historique des tickets</h3>
             <table id="otherTable">
               <thead>
                 <tr>
@@ -392,9 +488,6 @@
                     $nom = $_SESSION['nom'];
                     $prenom = $_SESSION['prenom'];
     
-                    // Connexion à la base de données
-                    $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-    
                     // Récupère le nom de l'utilisateur à partir de la base de données
                     $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                     $stmt_nom->bindParam(':nom', $nom);
@@ -415,18 +508,37 @@
                     $stmt_user->bindParam(':prenom', $prenom);
                     $stmt_user->execute();
                     $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
-                    
-                    $other_tickets = $db->prepare("
-                        SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
-                        FROM ticket AS t
-                        INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
-                        INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
-                        INNER JOIN ticket_status AS ts ON t.status = ts.id_status
-                        WHERE t.utilisateur = :id_utilisateur AND ts.nom_status != 'En attente'
-                    ");
-                    $other_tickets->bindParam(':id_utilisateur', $id_utilisateur); 
-                    $other_tickets->execute();
-                    $other_data = $pending_tickets->fetchAll();
+
+                     // Récupère le rôle de l'utilisateur à partir de la base de données
+                     $stmt_user = $db->prepare("SELECT role FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                     $stmt_user->bindParam(':nom', $nom);
+                     $stmt_user->bindParam(':prenom', $prenom);
+                     $stmt_user->execute();
+ 
+                     $role = $stmt_user->fetch()['role']; 
+
+                     if ($role == '1') {
+                          $other_tickets = $db->prepare("
+                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              FROM ticket AS t
+                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                              INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                              INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                              WHERE ts.nom_status != 'En attente'
+                          ");
+                      } else {
+                          $other_tickets = $db->prepare("
+                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              FROM ticket AS t
+                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                              INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                              INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                              WHERE t.utilisateur = :id_utilisateur AND ts.nom_status != 'En attente'
+                          ");
+                          $other_tickets->bindParam(':id_utilisateur', $id_utilisateur);
+                      }
+                      $other_tickets->execute();
+                      $other_data = $other_tickets->fetchAll();
                   
                     foreach ($other_data as $row) {
                       $justificatifIcon = '';
@@ -452,6 +564,19 @@
                               <td><span class='status completed processing".$statusClass."'>".$row['status']."</span></td>
                             </tr>";
                     }
+
+                    $rowCount = count($other_data);
+
+                    if ($rowCount < 10) {
+                      $emptyRows = 10 - $rowCount;
+
+                      for ($i = 0; $i < $emptyRows; $i++) {
+                        echo "<tr><td colspan='8'>&nbsp;</td></tr>";
+                      }
+                    }
+
+                    foreach ($other_data as $row) {
+                    }
                   }
                 ?>
               </tbody>
@@ -464,12 +589,17 @@
 
   <script>
     $(document).ready(function () {
-  $('#myTable').DataTable({
-      "language": {
-          "url": "../../Json/French.json"
-      }
-  });
-});
+      $('#otherTable').DataTable({
+          "language": {
+              "url": "../../Json/French.json"
+          }
+      });
+      $('#pendingTable').DataTable({
+          "language": {
+              "url": "../../Json/French.json"
+          }
+      });
+    });
     
     var mobileProfileImage = document.querySelector('.mobile_profile_image');
     var profileImage = document.querySelector('.profile_image');

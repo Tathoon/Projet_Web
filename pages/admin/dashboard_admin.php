@@ -215,7 +215,7 @@
               <div class="header">
                   <h3>Commerciaux avec le plus de tickets acceptés</h3>
               </div>
-              <table>
+              <table class="user-table">
                 <thead>
                     <tr>
                         <th>Nom</th>

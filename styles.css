@@ -2166,3 +2166,9 @@ input:checked + .slider:before {
       margin-right: -5% !important; /* Aucun décalage à droite */
   }
 }
+
+@media screen and (max-width: 768px) {
+  .user-table tr:nth-child(n+3) {
+      display: none;
+  }
+}

@@ -1532,6 +1532,16 @@ textarea {
   color: #fff; /* Couleur de texte blanche en mode sombre */
 }
 
+.dark-mode .form-group input[type="submit"] {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode .form-group input {
+  background-color: #333;
+  color: #fff;
+}
+
 .switch {
   position: sticky;
   display: inline-block;

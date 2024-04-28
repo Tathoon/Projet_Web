@@ -81,7 +81,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         480C880,480,800,480,720,480C640,480,560,480,480,480C400,480,320,480,240,480C160,480,80,480,40,480L0,480Z">
     </path>
 </svg>
-<img src="images/Logo-Web.png" alt="Logo" class="img-login">
+
+<input type="checkbox" id="dark-mode-toggle">
+<img src="images/Logo-Web.png" alt="Logo" class="img-login" id="logo-image">
     <form action="index.php" method="post" class="form-login">
         <div class="form-group">
             <label for="email" hidden></label>

@@ -224,7 +224,7 @@
         
                 $id_ticket = $db->lastInsertId();
         
-                $target_dir = "../../images/justificatifs/";
+                $target_dir = "images/justificatifs/";
                 $extension = pathinfo($_FILES["justificatif"]["name"], PATHINFO_EXTENSION);
                 $nouveau_nom_image = "justificatif$id_ticket.$extension";
                 $target_file = $target_dir . $nouveau_nom_image;
@@ -278,7 +278,7 @@
                   <th>Prix</th>
                   <th>Description</th>
                   <th>Justificatif</th>
-                  <th>Status</th>
+                  <th id="status">Status</th>
                   <th></th>
                 </tr>
               </thead>
@@ -393,17 +393,17 @@
                     foreach ($pending_data as $row) {
                       $justificatifIcon = '';
                       if (!empty($row['justificatif'])) {
-                        $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                        $justificatifIcon = "<a href='images/justificatifs".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
                       }
                       echo "<tr>
                               <td>".$row['id_ticket']."</td>
                               <td>".$row['date']."</td>
                               <td>".$row['lieu']."</td>
                               <td>".$row['categorie']."</td>
-                              <td>".$row['prix']."</td>
+                              <td>".$row['prix']."€</td>
                               <td>".$row['description']."</td>
                               <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                              <td><span class='status pending'>".$row['status']."</span></td>
+                              <td id='status'><span class='status pending'>".$row['status']."</span></td>
                               <td><a href='tickets_commercial.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td> 
                             </tr>";
                     }
@@ -429,7 +429,7 @@
                   
                       // Supprimer le justificatif du dossier "justificatifs"
                       if (!empty($justificatif_filename)) {
-                          $justificatif_path = "../../images/justificatifs/".$justificatif_filename; // Chemin complet du fichier justificatif
+                          $justificatif_path = "images/justificatifs/".$justificatif_filename; // Chemin complet du fichier justificatif
                           if (file_exists($justificatif_path)) {
                               unlink($justificatif_path); // Supprimer le fichier justificatif
                           }
@@ -503,7 +503,7 @@
                   <th>Prix</th>
                   <th>Description</th>
                   <th>Justificatif</th>
-                  <th>Status</th>
+                  <th id="status">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -570,7 +570,7 @@
                     foreach ($other_data as $row) {
                       $justificatifIcon = '';
                       if (!empty($row['justificatif'])) {
-                        $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                        $justificatifIcon = "<a href='images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
                       }
                     
                       $statusClass = '';
@@ -585,10 +585,10 @@
                               <td>".$row['date']."</td>
                               <td>".$row['lieu']."</td>
                               <td>".$row['categorie']."</td>
-                              <td>".$row['prix']."</td>
+                              <td>".$row['prix']."€</td>
                               <td>".$row['description']."</td>
                               <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                              <td><span class='status completed processing".$statusClass."'>".$row['status']."</span></td>
+                              <td id='status'><span class='status completed processing" .$statusClass."'>".$row['status']."</span></td>
                             </tr>";
                     }
 

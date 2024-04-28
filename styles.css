@@ -1389,8 +1389,199 @@ textarea {
   font-weight: 700;
 }
 
+/* ------------------*/
+/*                   */
+/*                   */
+/*     DARK MODE     */
+/*                   */
+/*                   */
+/*-------------------*/
+
+.dark-mode {
+  background-color: #333;
+  color: #fff; 
+}
+
+.dark-mode .content {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode .cards li {
+  background-color: #444;
+  color: #fff;
+}
+
+.dark-mode main .cards li .info p {
+  color: #FFFFFF;
+}
+
+.dark-mode main .cards li .info h3 {
+  color: #FFFFFF;
+}
+
+.dark-mode #calendar-body div.today {
+  background-color: var(--light-danger);
+}
+
+.dark-mode .charts-container .pie-chart .header h3,
+.dark-mode .charts-container .most-ticket-user .header h3 {
+  color: #FFFFFF;
+}
+
+.dark-mode .charts-container .most-ticket-user table {
+  background-color: #444;
+  color: #fff;
+}
+
+.dark-mode .header h1 {
+  color: #fff;
+}
+
+.dark-mode .content main .bottom_data > div {
+  background-color: #444;
+}
+
+.dark-mode #calendar-body div {
+  background-color: #444;
+}
+
+.dark-mode #calendar-body {
+  background-color: #FFF;
+}
+
+.dark-mode .content main .bottom_data {
+  color: #FFFFFF;
+}
+
+.dark-mode .pie-chart {
+  background-color: #444;
+}
+
+.dark-mode .most-ticket-user {
+  background-color: #444;
+} 
+
+.dark-mode .content main .bottom_data .orders table tbody tr:nth-child(even) {
+  background-color: #393838;
+}
+
+.dark-mode .table-container .table tbody tr:nth-child(even) {
+  background-color: #393838;
+}
+.dark-mode th, .dark-mode td {
+  border: 1px solid #fff;
+}
+
+.dark-mode .box-general {
+  background-color: #444;
+}
+
+.dark-mode table thead{
+  color: #444;
+}
+
+.dark-mode form {
+  color: #FFF;
+}
+
+.dark-mode .title h1 {
+  color: #fff; /* Couleur du texte pour le titre en mode sombre */
+}
+
+.dark-mode .form-container label {
+  color: #fff; /* Couleur du texte pour les labels en mode sombre */
+}
+
+.dark-mode .card-ticket {
+  background-color: #444;
+}
+
+.dark-mode .card-ticket h1{
+  color: #fff;
+}
+
+/* Styles spécifiques pour la classe .bottom_data en mode sombre */
+.dark-mode .ticket-pending main .bottom_data .orders,
+.dark-mode .ticket-other main .bottom_data .orders {
+  background-color: #444;
+  color: #fff;
+}
 
 
+.dark-mode .ticket-pending main .bottom_data .orders .pending-ticket-title {
+  color: #fff;
+}
+
+.dark-mode .ticket-pending .bottom_data .orders table tbody tr:nth-child(even) {
+  background-color: #393838;
+}
+
+.dark-mode .ticket-table-container .ticket-other main .bottom_data .orders {
+  background-color: #444;
+}
+
+.dark-mode .ticket-table-container .ticket-other main .bottom_data .orders table tbody tr:nth-child(even) {
+  background-color: #393838;  
+}
+
+.dark-mode .ticket-table-container .ticket-other main .bottom_data .orders .other-ticket-title {
+  color: #fff;
+}
+.dark-mode .title {
+  color: #fff; /* Couleur de texte blanche en mode sombre */
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
 
 /* ------------------*/
 /*                   */

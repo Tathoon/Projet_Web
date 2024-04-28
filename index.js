@@ -39,6 +39,36 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  // Fonction pour changer l'image en fonction de l'état du mode sombre
+  function changeImage() {
+      console.log("Change Image Called"); // Vérifie si la fonction est appelée
+      const logoImage = document.getElementById('logo-image');
+      const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+      // Vérifie si le mode sombre est activé
+      const isDarkMode = darkModeToggle.checked;
+
+      console.log("Mode Sombre Activé:", isDarkMode); // Vérifie l'état du mode sombre
+
+      // Change l'image en fonction de l'état du mode sombre
+      if (isDarkMode) {
+          logoImage.src = "images/Logo-WebDarkmode.jpg"; // Image en mode sombre
+      } else {
+          logoImage.src = "images/Logo-Web.png"; // Image en mode clair
+      }
+  }
+
+  // Ajoute un écouteur d'événement pour détecter les changements de l'état du mode sombre
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  if (darkModeToggle) {
+      darkModeToggle.addEventListener('change', changeImage);
+  }
+
+  // Assurez-vous d'appeler la fonction une fois au chargement initial pour configurer l'image correctement
+  changeImage();
+});
+
 
 /* ------------------*/
 /*                   */

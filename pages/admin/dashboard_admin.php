@@ -180,7 +180,7 @@
           <li>
             <i class="bx bx-dollar-circle"></i>
             <span class="info">
-              <h3><?php echo $total_depense; ?> €</h3>
+              <h3><?php echo number_format($total_depense, 2); ?> €</h3>
               <p>Dépense</p>
             </span>
           </li>

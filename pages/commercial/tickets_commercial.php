@@ -406,10 +406,25 @@
                       // Connexion à la base de données
                       $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
                   
+                      // Récupérer le nom du fichier justificatif avant de supprimer le ticket
+                      $stmt = $db->prepare("SELECT justificatif FROM ticket WHERE id_ticket = :id_ticket");
+                      $stmt->bindParam(':id_ticket', $id_ticket_to_delete);
+                      $stmt->execute();
+                      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                      $justificatif_filename = $row ? $row['justificatif'] : null;
+                  
                       // Supprimer le ticket de la base de données
                       $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
                       $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
-                      $stmt_delete->execute();
+                      $stmt_delete->execute();                  
+                  
+                      // Supprimer le justificatif du dossier "justificatifs"
+                      if (!empty($justificatif_filename)) {
+                          $justificatif_path = "../../images/justificatifs/".$justificatif_filename; // Chemin complet du fichier justificatif
+                          if (file_exists($justificatif_path)) {
+                              unlink($justificatif_path); // Supprimer le fichier justificatif
+                          }
+                      }
                       
                       // Rediriger vers la page précédente ou une autre page après la suppression
                       header('Location: tickets_commercial.php');

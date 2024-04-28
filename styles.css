@@ -1533,10 +1533,13 @@ textarea {
 }
 
 .switch {
-  position: relative;
+  position: sticky;
   display: inline-block;
   width: 60px;
   height: 34px;
+  left: 90%;
+  z-index: 1;
+  top: 2%;
 }
 
 .switch input {
@@ -1581,6 +1584,28 @@ input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+
+.darkmodetitleSUN {
+  position: relative;
+  left: 120%;
+  top: 20%;
+  color: #fff;
+}
+
+.darkmodetitleMOON {
+  position: relative;
+  left: 120%;
+  top: 20%;
+  color: #444;
+}
+
+.dark-mode .darkmodetitleMOON {
+  color: #fff;
+}
+
+.dark-mode .darkmodetitleSUN {
+  color: #444;
 }
 
 /* ------------------*/
@@ -1644,6 +1669,10 @@ input:checked + .slider:before {
     #calendar {
       margin-top: 8%;
     }
+    .switch {
+      left: 70%;
+      top: 2%;
+    }
 }
 
 @media screen and (max-width: 780px){
@@ -1658,6 +1687,8 @@ input:checked + .slider:before {
   .mobile_nav{
     display: block;
     width: calc(100% - 0%);
+    position: relative;
+    bottom: 1.6%;
   }
 
   .nav_bar{
@@ -1785,6 +1816,11 @@ input:checked + .slider:before {
   #calendar-body div {
     padding: 10px; /* Réduire l'espacement à l'intérieur des cellules */
     font-size: 12px; /* Réduire la taille de la police */
+  }
+  
+  .switch{
+    right: 20%;
+    position: sticky;
   }
 }
 

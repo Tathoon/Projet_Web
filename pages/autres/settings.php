@@ -38,6 +38,14 @@
     </div>
   </header>
 
+  <label class="switch" for="dark-mode-toggle">
+      <input type="checkbox" id="dark-mode-toggle">
+      <span class="slider round">
+        <i class="far fa-sun sun-icon darkmodetitleSUN"></i>
+        <i class="far fa-moon moon-icon darkmodetitleMOON"></i>
+      </span>
+    </label>
+
   <div class="mobile_nav">
     <div class="nav_bar">
       <img src="../../images/user-icon.png" class="mobile_profile_image" alt="">
@@ -139,11 +147,6 @@
           </div>
         </div>
       </div>
-      <label class="switch" for="dark-mode-toggle">
-        <input type="checkbox" id="dark-mode-toggle">
-        <span class="slider round"></span>
-      </label>
-      <a href="#" id="dark-mode-toggle"><i class="far fa-moon"></i><span>Nightmode</span></a>
     </main>
   </div>
 

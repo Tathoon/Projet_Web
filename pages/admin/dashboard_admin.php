@@ -111,6 +111,14 @@
       <h3>E11<span>event</span></h3>
     </div>
   </header>
+  
+  <label class="switch" for="dark-mode-toggle">
+      <input type="checkbox" id="dark-mode-toggle">
+      <span class="slider round">
+        <i class="far fa-sun sun-icon darkmodetitleSUN"></i>
+        <i class="far fa-moon moon-icon darkmodetitleMOON"></i>
+      </span>
+    </label>
 
   <div class="mobile_nav">
     <div class="nav_bar">

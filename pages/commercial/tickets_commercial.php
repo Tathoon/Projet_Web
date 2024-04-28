@@ -224,7 +224,7 @@
         
                 $id_ticket = $db->lastInsertId();
         
-                $target_dir = "/site/wwwroot/images/justificatifs";
+                $target_dir = "../images/justificatifs";
                 $extension = pathinfo($_FILES["justificatif"]["name"], PATHINFO_EXTENSION);
                 $nouveau_nom_image = "justificatif$id_ticket.$extension";
                 $target_file = $target_dir . $nouveau_nom_image;
@@ -393,7 +393,7 @@
                     foreach ($pending_data as $row) {
                       $justificatifIcon = '';
                       if (!empty($row['justificatif'])) {
-                        $justificatifIcon = "<a href='/site/wwwroot/images/justificatifs".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                        $justificatifIcon = "<a href='../images/justificatifs".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
                       }
                       echo "<tr>
                               <td>".$row['id_ticket']."</td>
@@ -429,7 +429,7 @@
                   
                       // Supprimer le justificatif du dossier "justificatifs"
                       if (!empty($justificatif_filename)) {
-                          $justificatif_path = "/site/wwwroot/images/justificatifs".$justificatif_filename; // Chemin complet du fichier justificatif
+                          $justificatif_path = "../images/justificatifs".$justificatif_filename; // Chemin complet du fichier justificatif
                           if (file_exists($justificatif_path)) {
                               unlink($justificatif_path); // Supprimer le fichier justificatif
                           }
@@ -570,7 +570,7 @@
                     foreach ($other_data as $row) {
                       $justificatifIcon = '';
                       if (!empty($row['justificatif'])) {
-                        $justificatifIcon = "<a href='/site/wwwroot/images/justificatifs".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                        $justificatifIcon = "<a href='../justificatifs".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
                       }
                     
                       $statusClass = '';

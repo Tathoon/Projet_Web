@@ -400,7 +400,7 @@
                               <td>".$row['date']."</td>
                               <td>".$row['lieu']."</td>
                               <td>".$row['categorie']."</td>
-                              <td>".$row['prix']."</td>
+                              <td>".$row['prix']."€</td>
                               <td>".$row['description']."</td>
                               <td>".$row['justificatif']." ".$justificatifIcon."</td>
                               <td><span class='status pending'>".$row['status']."</span></td>
@@ -585,7 +585,7 @@
                               <td>".$row['date']."</td>
                               <td>".$row['lieu']."</td>
                               <td>".$row['categorie']."</td>
-                              <td>".$row['prix']."</td>
+                              <td>".$row['prix']."€</td>
                               <td>".$row['description']."</td>
                               <td>".$row['justificatif']." ".$justificatifIcon."</td>
                               <td><span class='status completed processing".$statusClass."'>".$row['status']."</span></td>

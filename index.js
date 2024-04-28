@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', function() {
   }
   
   var audio = new Audio(audioPath);
-  audio.volume = 0.03;
+  audio.volume = 0.01;
   audio.loop = true;
 
   var currentTime = localStorage.getItem('currentTime');

@@ -561,6 +561,7 @@ main .bottom_data .reminders .task_list li {
   background-color: #333;
   transition: opacity 0.5s ease;
   opacity: 1;
+  border: 1px solid #444;
 }
 
 #calendar-body.fade-out {
@@ -1424,6 +1425,18 @@ textarea {
   background-color: var(--light-danger);
 }
 
+.dark-mode #calendar-body {
+  border: 1px solid #fff;
+} 
+
+.dark-mode #calendar-header { 
+  color: #444;
+}
+
+.dark-mode #days {
+  color: #444;
+}
+
 .dark-mode .charts-container .pie-chart .header h3,
 .dark-mode .charts-container .most-ticket-user .header h3 {
   color: #FFFFFF;
@@ -1462,13 +1475,6 @@ textarea {
   background-color: #444;
 } 
 
-.dark-mode .content main .bottom_data .orders table tbody tr:nth-child(even) {
-  background-color: #393838;
-}
-
-.dark-mode .table-container .table tbody tr:nth-child(even) {
-  background-color: #393838;
-}
 .dark-mode th, .dark-mode td {
   border: 1px solid #fff;
 }
@@ -1478,7 +1484,47 @@ textarea {
 }
 
 .dark-mode table thead{
-  color: #444;
+  color: #fff;
+}
+
+.dark-mode table th{
+  background-color: #242424;
+  color: #fff;
+}
+
+.dark-mode table td{
+  background-color: #444;
+  color: #fff;
+}
+
+.dark-mode .dataTables_wrapper th {
+  color: #fff !important;
+  background-color: #242424 !important;
+}
+
+.dark-mode .dataTables_wrapper tr th,
+.dark-mode .dataTables_wrapper tr td {
+  border-color: #000 !important;
+}
+
+.dark-mode tr th,
+.dark-mode tr td {
+  border-color: #000 !important;
+}
+
+.dark-mode .bottom_data .orders #pendingTable th {
+  color: #fff !important;
+  background-color: #242424 !important;
+}
+
+.dark-mode .bottom_data .orders #otherTable th {
+  color: #fff !important;
+  background-color: #242424 !important;
+}
+
+.dataTables thead th {
+  background-color: #242424;
+  color: #fff;
 }
 
 .dark-mode form {
@@ -1486,11 +1532,11 @@ textarea {
 }
 
 .dark-mode .title h1 {
-  color: #fff; /* Couleur du texte pour le titre en mode sombre */
+  color: #fff;
 }
 
 .dark-mode .form-container label {
-  color: #fff; /* Couleur du texte pour les labels en mode sombre */
+  color: #fff;
 }
 
 .dark-mode .card-ticket {
@@ -1501,7 +1547,6 @@ textarea {
   color: #fff;
 }
 
-/* Styles spécifiques pour la classe .bottom_data en mode sombre */
 .dark-mode .ticket-pending main .bottom_data .orders,
 .dark-mode .ticket-other main .bottom_data .orders {
   background-color: #444;
@@ -1534,6 +1579,11 @@ textarea {
 
 .dark-mode .form-group input[type="submit"] {
   background-color: #333;
+  color: #fff;
+}
+
+.dark-mode .form-group input[type="submit"]:hover {
+  background-color: #1f1e1e;
   color: #fff;
 }
 
@@ -1618,6 +1668,20 @@ input:checked + .slider:before {
   color: #444;
 }
 
+.dark-mode input {
+  background-color: #313131;
+  color: #fff;
+}
+
+.dark-mode select {
+  background-color: #313131;
+  color: #fff;
+}
+
+.dark-mode textarea {
+  background-color: #313131;
+  color: #fff;
+}
 /* ------------------*/
 /*                   */
 /*                   */

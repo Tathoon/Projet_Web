@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', function() {
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     audioPath = '/Projet_Web/images/music/driftveil.mp3';
   } else {
-    audioPath = '/wwwroot/images/music/driftveil.mp3';
+    audioPath = '/images/music/driftveil.mp3';
   }
   
   var audio = new Audio(audioPath);

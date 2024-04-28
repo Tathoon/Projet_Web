@@ -399,7 +399,3 @@ document.addEventListener('DOMContentLoaded', function() {
       myChartCAM.update();
   });
 });
-
-} else {
-  console.error('Aucune donnée disponible pour afficher le graphique.');
-}

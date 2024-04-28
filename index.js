@@ -10,11 +10,11 @@ window.addEventListener('DOMContentLoaded', function() {
   var avatar = document.querySelector('img[src="../../images/avatar/dancing-toothless-tothless.gif"]');
   var otherAvatars = document.querySelectorAll('img:not([src="../../images/avatar/dancing-toothless-tothless.gif"])');
   var isPlaying = localStorage.getItem('isPlaying') === 'true';
-  var audioPath;
+  var audioPath = images/music/driftveil.mp3
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     audioPath = '/Projet_Web/images/music/driftveil.mp3';
   } else {
-    audioPath = 'images/music/driftveil.mp3';
+    audioPath = '/wwwroot/images/music/driftveil.mp3';
   }
 
   var audio = new Audio(audioPath);

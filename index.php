@@ -94,9 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo 'Redirection effectuée';
 
                 // Stockez les informations de l'utilisateur dans la session
-                $_SESSION['role'] = $row['role'];
-                $_SESSION['nom'] = $row['nom'];
-                $_SESSION['prenom'] = $row['prenom'];
+                
                 exit();
             } else {
                 // Affichez un message d'erreur si les informations de connexion sont incorrectes

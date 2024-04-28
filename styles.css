@@ -1573,7 +1573,7 @@ textarea {
   color: #fff;
 }
 .dark-mode .title {
-  color: #fff; /* Couleur de texte blanche en mode sombre */
+  color: #fff; 
 }
 
 .dark-mode .form-group input[type="submit"] {
@@ -1681,6 +1681,16 @@ input:checked + .slider:before {
   background-color: #313131;
   color: #fff;
 }
+
+.dark-mode .delete-button {
+  background-color: var(--danger);
+  color: #972f2f;
+}
+
+.dark-mode .delete-button:hover {
+  background-color: #f0a5a5;
+}
+
 /* ------------------*/
 /*                   */
 /*                   */
@@ -1761,7 +1771,7 @@ input:checked + .slider:before {
     display: block;
     width: calc(100% - 0%);
     position: relative;
-    bottom: 1.6%;
+    bottom: 1.9%;
   }
 
   .nav_bar{

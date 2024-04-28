@@ -139,6 +139,11 @@
           </div>
         </div>
       </div>
+      <label class="switch" for="dark-mode-toggle">
+        <input type="checkbox" id="dark-mode-toggle">
+        <span class="slider round"></span>
+      </label>
+      <a href="#" id="dark-mode-toggle"><i class="far fa-moon"></i><span>Nightmode</span></a>
     </main>
   </div>
 

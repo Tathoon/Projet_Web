@@ -1,6 +1,48 @@
 /* ------------------*/
 /*                   */
 /*                   */
+/*     DARK MODE     */
+/*                   */
+/*                   */
+/*-------------------*/
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  function applyDarkModeOnLoad() {
+      const isDarkMode = localStorage.getItem('darkMode') === 'true';
+      const body = document.body;
+
+      const darkModeToggle = document.getElementById('dark-mode-toggle');
+      if (darkModeToggle) {
+          darkModeToggle.checked = isDarkMode;
+      }
+
+      if (isDarkMode) {
+          body.classList.add('dark-mode');
+      } else {
+          body.classList.remove('dark-mode');
+      }
+  }
+
+  applyDarkModeOnLoad();
+
+  function toggleDarkMode() {
+      const body = document.body;
+      const isDarkMode = body.classList.toggle('dark-mode');
+
+      localStorage.setItem('darkMode', isDarkMode);
+  }
+
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  if (darkModeToggle) {
+      darkModeToggle.addEventListener('change', toggleDarkMode);
+  }
+});
+
+
+/* ------------------*/
+/*                   */
+/*                   */
 /*      NAVBAR       */
 /*                   */
 /*                   */

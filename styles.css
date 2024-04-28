@@ -1789,7 +1789,7 @@ input:checked + .slider:before {
     display: block;
     width: calc(100% - 0%);
     position: relative;
-    bottom: 1.9%;
+    bottom: 2.5%;
   }
 
   .nav_bar{

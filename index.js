@@ -6,6 +6,46 @@
 /*                   */
 /*-------------------*/
 
+window.addEventListener('DOMContentLoaded', function() {
+  var avatar = document.querySelector('img[src="../../images/avatar/dancing-toothless-tothless.gif"]');
+  var otherAvatars = document.querySelectorAll('img:not([src="../../images/avatar/dancing-toothless-tothless.gif"])');
+  var isPlaying = localStorage.getItem('isPlaying') === 'true';
+  var audio = new Audio('/Projet_Web/images/music/driftveil.mp3');
+  audio.volume = 0.05;
+  audio.loop = true;
+  
+  if (isPlaying) {
+    audio.play();
+  }
+
+  if (avatar) {
+    document.addEventListener('click', function(event) {
+      if (event.target.src === avatar.src) {
+        if (!isPlaying) {
+          audio.play();
+          isPlaying = true;
+        } else {
+          audio.pause();
+          audio.currentTime = 0;
+          isPlaying = false;
+        }
+        localStorage.setItem('isPlaying', isPlaying);
+      }
+    });
+  }
+
+  otherAvatars.forEach(function(otherAvatar) {
+    otherAvatar.addEventListener('click', function() {
+      if (isPlaying) {
+        audio.pause();
+        audio.currentTime = 0;
+        isPlaying = false;
+        localStorage.setItem('isPlaying', isPlaying);
+      }
+    });
+  });
+});
+
 document.addEventListener('DOMContentLoaded', function() {
 
   function applyDarkModeOnLoad() {

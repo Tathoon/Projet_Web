@@ -824,6 +824,14 @@ main .bottom_data .reminders {
   grid-gap: 1.5rem;
 }
 
+.bottom_data .orders th#status {
+  text-align: center;
+}
+
+.bottom_data .orders td#status {
+  text-align: center;
+}
+
 /* -------CALENDRIER-----------*/
 #calendar {
   width: 97%;
@@ -1388,6 +1396,16 @@ textarea {
   border-radius: 20px;
   font-weight: 700;
 }
+
+.bottom_data .orders #otherTable #pendingtable th#status {
+  text-align: center;
+}
+
+.bottom_data .orders #otherTable #pendingTable td#status {
+  text-align: center;
+}
+
+
 
 /* ------------------*/
 /*                   */

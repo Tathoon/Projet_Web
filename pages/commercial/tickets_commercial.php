@@ -427,7 +427,7 @@
                       exit();
                     }
                     
-                    $rowCount = count($pending_data_data);
+                    $rowCount = count($pending_data);
 
                     if ($rowCount < 10) {
                       $emptyRows = 10 - $rowCount;
@@ -497,8 +497,8 @@
               </thead>
               <tbody>
                 <?php
-                  
                   // Définir les informations de connexion au service Blob Storage
+                  $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=OVp/sacfyyfrlCyj0SEAl/k8jS6r5G+wQ86UeD5oR6W9i2d395JqqmUEi7ZwVrDU6BYkqh5t6OPW+ASttYtsEg==;EndpointSuffix=core.windows.net";
                   $blobClient = BlobRestProxy::createBlobService($connectionString);
                   $containerName = "justificatifs";
                   $justificatifs = "justificatifs";

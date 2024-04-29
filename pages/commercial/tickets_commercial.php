@@ -268,6 +268,30 @@
           }
         ?>
       </form>
+      <script>
+          $("#ticketForm").on("submit", function(e) {
+              e.preventDefault();
+
+              $.ajax({
+                  url: "tickets_commercial.php", // ou le chemin vers le script PHP qui traite l'ajout de ticket
+                  type: "post",
+                  data: new FormData(this),
+                  contentType: false,
+                  cache: false,
+                  processData:false,
+                  success: function(data){
+                      // Ajoutez le nouveau ticket au tableau
+                      $("#ticketTable tbody").append(data);
+
+                      // Effacez le formulaire
+                      $("#ticketForm")[0].reset();
+                  },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                      console.error(textStatus, errorThrown);
+                  }
+              });
+          });
+      </script>
     </div>
   </div>
 

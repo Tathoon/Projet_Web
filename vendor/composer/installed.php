@@ -3,7 +3,7 @@
         'name' => 'azure/azure-blob-wrapper',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'cf12878f0da1ad6ff5d26e8bcd02feabb888e6ad',
+        'reference' => 'f0c1303b04cc56d808334c6f9e8b799783e6819f',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'azure/azure-blob-wrapper' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'cf12878f0da1ad6ff5d26e8bcd02feabb888e6ad',
+            'reference' => 'f0c1303b04cc56d808334c6f9e8b799783e6819f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

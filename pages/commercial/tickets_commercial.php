@@ -282,6 +282,8 @@
                       $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
                       $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
                       $stmt_delete->execute();
+
+                      $blobClient = BlobRestProxy::createBlobService($connectionString);
                   
                       // Supprimer le justificatif du dossier "justificatifs"
                       if (!empty($justificatif_filename)) {
@@ -291,6 +293,19 @@
                       // Rediriger vers la page précédente ou une autre page après la suppression
                       header('Location: tickets_commercial.php');
                       exit();
+                    }
+                    
+                    $rowCount = count($other_data);
+
+                    if ($rowCount < 10) {
+                      $emptyRows = 10 - $rowCount;
+
+                      for ($i = 0; $i < $emptyRows; $i++) {
+                        echo "<tr><td colspan='8'>&nbsp;</td></tr>";
+                      }
+                    }
+
+                    foreach ($other_data as $row) {
                     }
                   }
                 ?>

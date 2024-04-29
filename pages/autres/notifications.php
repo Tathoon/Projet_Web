@@ -53,9 +53,9 @@
     </div>
     <div class="mobile_nav_items">
       <a href="#" class="active"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-      <a href="settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+      <a href="settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
       <a href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i></i><span>Retour</span></a>
-      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
     </div>
   </div>
 
@@ -65,9 +65,9 @@
       <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
     </div>
     <a href="#" class="active"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-    <a href="settings.php"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+    <a href="settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
     <a href="javascript:goBack()" class="back"><i class="fa-solid fa-arrow-left"></i><span>Retour</span></a>
-    <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+    <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
 
     <?php
       $role = $_SESSION['role'];

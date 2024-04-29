@@ -1495,7 +1495,9 @@ textarea {
 .dark-mode th, .dark-mode td {
   border: 1px solid #fff;
 }
-
+.drak-mode .sorting{
+  background-color: #444;
+}
 .dark-mode .box-general {
   background-color: #444;
 }

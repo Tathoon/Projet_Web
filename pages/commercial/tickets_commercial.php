@@ -296,7 +296,7 @@
                   $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=OVp/sacfyyfrlCyj0SEAl/k8jS6r5G+wQ86UeD5oR6W9i2d395JqqmUEi7ZwVrDU6BYkqh5t6OPW+ASttYtsEg==;EndpointSuffix=core.windows.net";
                   $blobClient = BlobRestProxy::createBlobService($connectionString);
                   $containerName = "justificatifs"; 
-                  $justificatifs = "<justificatifs>";
+                  $justificatifs = "justificatifs";
                   $accountName = "e11event";
 
                   error_reporting(E_ALL);
@@ -487,8 +487,8 @@
                   
                   // Définir les informations de connexion au service Blob Storage
                   $blobClient = BlobRestProxy::createBlobService($connectionString);
-                  $containerName = "<justificatifs>";
-                  $justificatifs = "<justificatifs>";
+                  $containerName = "justificatifs";
+                  $justificatifs = "justificatifs";
                   $accountName = "e11event";
                   
                   $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');

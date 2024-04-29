@@ -262,7 +262,10 @@
                       element.parentNode.removeChild(element);
                       }, 3000);
                       </script>';
-            }}
+            }
+            header('Location: tickets_commercial.php');
+            exit();
+          }
         ?>
       </form>
     </div>
@@ -422,7 +425,7 @@
                       // Rediriger vers la page précédente ou une autre page après la suppression
                       header('Location: tickets_commercial.php');
                       exit();
-                    }                
+                    }
                   }
                 ?>
               </tbody>

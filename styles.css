@@ -531,129 +531,8 @@ main .bottom_data .reminders .task_list li {
   justify-content: space-between;
 }
 
-#calendar {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-#calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: var(--light-danger);
-  color: #fff;
-}
-
-#days {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: #f18390;
-  color: #fff;
-}
-
-#calendar-body {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
-  background-color: #333;
-  transition: opacity 0.5s ease;
-  opacity: 1;
-  border: 1px solid #444;
-}
-
-#calendar-body.fade-out {
-  opacity: 0;
-}
-
-#calendar-body div {
-  padding: 20px;
-  background-color: #fff;
-  text-align: center;
-}
-
-#calendar-body div.today {
-  background-color: var(--light-danger);
-  color: black;
-}
-
 .change-month {
   cursor: pointer;
-}
-
-.graph {
-  width: 100%; /* Ajustez la largeur selon vos préférences */
-  max-width: 100%; /* Définissez une largeur maximale pour éviter que le graphique ne devienne trop large */
-  height: auto; 
-}
-
-/* ========Orders Details Start=================== */
-.content main .bottom_data {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  grid-gap: 20px;
-  margin-top: 24px;
-  color: var(--dark);
-  position: relative;
-  left: 0.4%;
-}
-
-.content main .bottom_data > div {
-  border-radius: 10px;
-  background-color: var(--light);
-  padding: 24px;
-  overflow-x: auto;
-}
-
-main .bottom_data .header {
-  display: flex;
-  align-items: center;
-  grid-gap: 16px;
-  margin-bottom: 24px;
-}
-
-main .bottom_data .header h3 {
-  font-size: 24px;
-  font-weight: 600px;
-}
-
-main .bottom_data .orders {
-  flex-grow: 7;
-  flex-basis: 500;
-}
-
-/* -------CALENDRIER-----------*/
-#calendar {
-  width: 97%;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto; 
-  margin-top: 12%;
-}
-
-#calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: var(--light-danger);
-  color: #fff;
-}
-
-#calendar-body {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 1px;
-  background-color: #333;
-  transition: opacity 0.5s ease;
-  opacity: 1;
-}
-
-#calendar-body.fade-out {
-  opacity: 0;
 }
 
 .graph {
@@ -668,6 +547,12 @@ main .bottom_data .orders {
   display: flex;
   align-items: center;
   grid-gap: 1.5rem;
+}
+
+.graph {
+  width: 100%;
+  max-width: 100%;
+  height: auto; 
 }
 
 .charts-container {
@@ -737,6 +622,86 @@ main .bottom_data .orders {
 .page-redirection {
   white-space: nowrap;
 }
+
+/* -------CALENDRIER-----------*/
+#calendar {
+  width: 97%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto; 
+  margin-top: 12%;
+}
+
+#calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--light-danger);
+  color: #fff;
+}
+
+#calendar-body {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  background-color: #333;
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+#calendar-body.fade-out {
+  opacity: 0;
+}
+
+#calendar {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--light-danger);
+  color: #fff;
+}
+
+#days {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f18390;
+  color: #fff;
+}
+
+#calendar-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background-color: #333;
+  transition: opacity 0.5s ease;
+  opacity: 1;
+  border: 1px solid #444;
+}
+
+#calendar-body.fade-out {
+  opacity: 0;
+}
+
+#calendar-body div {
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+#calendar-body div.today {
+  background-color: var(--light-danger);
+  color: black;
+}
+
 
 /* ========Tickets Admin =================== */
 main .bottom_data .orders table {
@@ -816,14 +781,6 @@ main .bottom_data .reminders {
   flex-basis: 300px;
 }
 
-#camembertChart {
-  padding: 1.8rem;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  grid-gap: 1.5rem;
-}
-
 .bottom_data .orders th#status {
   text-align: center;
 }
@@ -832,24 +789,6 @@ main .bottom_data .reminders {
   text-align: center;
 }
 
-/* -------CALENDRIER-----------*/
-#calendar {
-  width: 97%;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto; 
-  margin-top: 12%;
-}
-
-#calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: var(--light-danger);
-  color: #fff;
-}
-/* Personnalisation de la pagination */
 .dataTables_paginate {
   padding: 12px 10px;
   font-size: 1rem;
@@ -867,19 +806,6 @@ main .bottom_data .reminders {
   margin-right: 5px;
 }
 
-
-#calendar-body {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 1px;
-  background-color: #333;
-  transition: opacity 0.5s ease;
-  opacity: 1;
-}
-
-#calendar-body.fade-out {
-  opacity: 0;
-}
 .dataTables_paginate .paginate_button:hover {
   background-color: var(--primary);
 }
@@ -926,6 +852,46 @@ main .bottom_data .reminders {
   border-radius: 5px;
   box-sizing: border-box;
 }
+
+.center-content {
+  text-align: center;
+}
+
+.content main .bottom_data {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  grid-gap: 20px;
+  margin-top: 24px;
+  color: var(--dark);
+  position: relative;
+  left: 0.4%;
+}
+
+.content main .bottom_data > div {
+  border-radius: 10px;
+  background-color: var(--light);
+  padding: 24px;
+  overflow-x: auto;
+}
+
+main .bottom_data .header {
+  display: flex;
+  align-items: center;
+  grid-gap: 16px;
+  margin-bottom: 24px;
+}
+
+main .bottom_data .header h3 {
+  font-size: 24px;
+  font-weight: 600px;
+}
+
+main .bottom_data .orders {
+  flex-grow: 7;
+  flex-basis: 500;
+}
+
 /* ========Utilisateurs Admin =================== */
 
 .form-card {
@@ -1071,9 +1037,9 @@ main .bottom_data .reminders {
 
 /* ======== Tickets COMMERCIAL =================== */
 body, html {
-  height: 100%; /* Set the height to 100% */
-  overflow-x: hidden; /* Hide horizontal overflow */
-  overflow-y: auto; /* Allow vertical scrolling only when necessary */
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 
@@ -1342,7 +1308,7 @@ textarea {
   border-radius: 10px;
   background-color: var(--light);
   max-width: 95%;
-  padding: 12px; /* Ajustez le rembourrage */
+  padding: 12px;
 }
 
 .ticket-pending main .bottom_data .orders table td .status {
@@ -1720,477 +1686,489 @@ input:checked + .slider:before {
 /*-------------------*/
 
 @media only screen and (min-width: 1200px) {
-    .img-login {
-        width: 500px;
-        top: 25%;
-    }
-
-    form {
-        width: 20%;
-    }
-
-    #wave {
-        left: 600px;
-    }
-}
-
-/* Styles pour les écrans moyens */
-@media only screen and (max-width: 1200px) {
-    .img-login {
-        width: 400px;
-        top: 20%;
-    }
-
-    form {
-        width: 30%;
-    }
-
-    #wave {
-        left: 400px;
-    }
-}
-
-/* Styles pour les petits écrans */
-@media only screen and (max-width: 768px) {
-    .img-login {
-        width: 300px;
-        top: 10%;
-        z-index: -1;
-    }
-
-    form {
-        width: 70% !important;
-    }
-
-    #wave {
-        display: none;
-    }
-    .error-alert {
-      font-size: 16px;
-      white-space: pre-line;
-    }
-    #calendar {
-      margin-top: 8%;
-    }
-    .switch {
-      left: 70%;
-      top: 2%;
-    }
-}
-
-@media screen and (max-width: 780px){
-  .sidebar{
-    display: none;
+  .img-login {
+      width: 500px;
+      top: 25%;
   }
 
-  #sidebar_btn{
-    display: none;
+  form {
+      width: 20%;
   }
 
-  .mobile_nav{
-    display: block;
-    width: calc(100% - 0%);
-    position: relative;
-    bottom: 2.5%;
-  }
-
-  .nav_bar{
-    background: #222;
-    width: (100% - 0px);
-    margin-top: 51px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-  }
-
-  .nav_bar .mobile_profile_image{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-
-  .nav_bar .nav_btn{
-    color: #fff;
-    font-size: 22px;
-    cursor: pointer;
-    transition: 0.5s;
-    transition-property: color;
-  }
-
-  .nav_bar .nav_btn:hover{
-    color: #19B3D3;
-  }
-
-  .mobile_nav_items{
-    background: #2F323A;
-    display: none;
-  }
-
-  .mobile_nav_items a{
-    color: #fff;
-    display: block;
-    text-align: center;
-    letter-spacing: 1px;
-    line-height: 60px;
-    text-decoration: none;
-    box-sizing: border-box;
-    transition: 0.5s;
-    transition-property: background;
-  }
-
-  .mobile_nav_items a:hover{
-    background: #19B3D3;
-  }
-
-  .mobile_nav_items i{
-    padding-right: 10px;
-  }
-
-  .active{
-    display: block;
-  }
-  .error-alert {
-    font-size: 14px;
-    white-space: pre-line;
-  }
-}
-
-/* responsive */
-@media (max-width: 768px) {
-  .content {
-    width: calc(100% - 60px);
-    left: 0;
-  }
-  .cards {
-    position: relative;
-    right: 12px;
-  }
-
-}
-
-@media (max-width: 576px) {
-
-  main .cards {
-    grid-template-columns: 1fr;
-    position: relative;
-    right: 4.5%;
-  }
-
-  .orders {
-    position: relative;
-    right: 5.5%;
-  }
-
-  main .bottom_data .header {
-    min-width: unset;
-  }
-
-  main .bottom_data .orders table {
-    min-width: unset;
-  }
-
-  main .bottom_data .reminders .task_list {
-    min-width: unset;
-  }
-}
-
-/* Responsive pour tablettes */
-@media (max-width: 768px) {
-  #calendar {
-    max-width: 90%; /* Ajuster la largeur maximale pour s'adapter à la taille de l'écran */
-    position: relative;
-    bottom: 10%;
-  }
-}
-
-/* Responsive pour téléphones */
-@media (max-width: 576px) {
-  #calendar {
-    width: 90%; /* Ajuster la largeur pour s'adapter à la taille de l'écran */
-  }
-
-  #calendar-header {
-    font-size: 14px; /* Réduire la taille de la police */
-  }
-
-  #days {
-    font-size: 12px; /* Réduire la taille de la police */
-  }
-
-  #calendar-body div {
-    padding: 10px; /* Réduire l'espacement à l'intérieur des cellules */
-    font-size: 12px; /* Réduire la taille de la police */
-  }
-  
-  .switch{
-    right: 20%;
-    position: sticky;
-  }
-}
-
-@media (max-width: 576px) {
-  .form-card input[type="text"],
-  .form-card input[type="password"],
-  .form-card input[type="email"],
-  .form-card select {
-    width: 130%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
-  }
-  .table-container {
-    overflow-x: auto; /* Activer le défilement horizontal */
-    -webkit-overflow-scrolling: touch; /* Activer le défilement tactile pour les navigateurs WebKit */
-    width: 100%; /* Ajuster la largeur pour s'adapter à l'écran */
-  }
-  .form-card select {
-    width: 216%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
-  }
-
-  .ticket-card input[type="text"],
-  .ticket-card select {
-    width: 100%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
-  }
-
-  .ticket-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%; /* Modifier la largeur de la boîte pour occuper toute la largeur de l'écran */
-    margin-left: 0; /* Réinitialiser la marge gauche */
-    padding: 15px 5px; /* Augmenter la marge intérieure de la boîte */
+  #wave {
+      left: 600px;
   }
 
   .box-general {
-    width: 100%; /* Modifier la largeur de la boîte pour occuper toute la largeur de l'écran */
-    margin-left: 0; /* Réinitialiser la marge gauche */
-    padding: 15px 5px; /* Augmenter la marge intérieure de la boîte */
-  }
-
-  .form-ticket {
-    width: 100%; /* Modifier la largeur de la boîte pour occuper toute la largeur de l'écran */
-    margin-left: 0; /* Réinitialiser la marge gauche */
-    padding: 15px 5px; /* Augmenter la marge intérieure de la boîte */
-  }
-
-  /* Ajouter un padding au tableau */
-  .table {
-    padding-left: 10px; /* Ajouter un padding à gauche du tableau */
-  }
-}
-
-@media screen and (max-width: 780px) {
-  .title {
-    margin-left: 10%; /* Ajuster la marge gauche du titre pour une meilleure mise en page */
-  }
-}
-
-@media only screen and (max-width: 1200px) {
-  .box-general {
-    width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
-    margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
+    width: 80%;
+    margin-left: 10%;
   }
   .form-ticket {
-    width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
-    margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
+    width: 80%;
+    margin-left: 10%;
   }
 
   .form-card {
-    width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
-    margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
+    width: 80%;
+    margin-left: 10%;
   }
 
   .ticket-card {
-    width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
-    margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
+    width: 80%;
+    margin-left: 10%;
   }
 
   .ticket-container {
-    width: 80%; /* Réduire légèrement la largeur de la boîte pour s'adapter à des écrans plus petits */
-    margin-left: 10%; /* Ajuster la marge gauche pour centrer la boîte */
+    width: 80%;
+    margin-left: 10%;
   }
 }
 
-/* Styles pour les écrans de taille moyenne */
-@media screen and (max-width: 768px) {
-  .charts-container {
+
+
+
+
+/* Styles pour les écrans moyens*/
+@media only screen and (max-width: 768px) {
+  .img-login {
+      width: 300px;
+      top: 10%;
+      z-index: -1;
+  }
+
+  form {
+      width: 70% !important;
+  }
+
+  #wave {
+      display: none;
+  }
+  .error-alert {
+    font-size: 16px;
+    white-space: pre-line;
+  }
+  #calendar {
+    margin-top: 8%;
+  }
+  .switch {
+    left: 70%;
+    top: 2%;
+  }
+
+.sidebar{
+  display: none;
+}
+
+#sidebar_btn{
+  display: none;
+}
+
+.mobile_nav{
+  display: block;
+  width: calc(100% - 0%);
+  position: relative;
+  bottom: 2.5%;
+}
+
+.nav_bar{
+  background: #222;
+  width: (100% - 0px);
+  margin-top: 51px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.nav_bar .mobile_profile_image{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.nav_bar .nav_btn{
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.5s;
+  transition-property: color;
+}
+
+.nav_bar .nav_btn:hover{
+  color: #19B3D3;
+}
+
+.mobile_nav_items{
+  background: #2F323A;
+  display: none;
+}
+
+.mobile_nav_items a{
+  color: #fff;
+  display: block;
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 60px;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: 0.5s;
+  transition-property: background;
+}
+
+.mobile_nav_items a:hover{
+  background: #19B3D3;
+}
+
+.mobile_nav_items i{
+  padding-right: 10px;
+}
+
+.active{
+  display: block;
+}
+.error-alert {
+  font-size: 14px;
+  white-space: pre-line;
+}
+
+.content {
+  width: calc(100% - 60px);
+  left: 0;
+}
+.cards {
+  position: relative;
+  right: 12px;
+}
+
+#calendar {
+  max-width: 90%;
+  position: relative;
+  bottom: 10%;
+}
+
+.title {
+    margin-left: 10%;
+  }
+
+.charts-container {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-
-  .pie-chart,
-  .most-ticket-user {
+  
+.pie-chart,
+.most-ticket-user {
     width: 100%;
   }
-}
 
-/* Styles pour les téléphones */
-@media screen and (max-width: 480px) {
-  .charts-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-/* Styles pour les écrans de taille moyenne */
-@media screen and (max-width: 768px) {
   .bottom_data {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-
+  
   .orders,
   .reminders {
     width: 100%;
   }
-
+  
   .reminders {
     position: relative;
     right: 5.5%;
   }
+  
 }
 
-/* Styles pour les téléphones */
-@media screen and (max-width: 480px) {
-  .bottom_data {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+
+
+
+
+
+
+@media (max-width: 576px) {
+
+main .cards {
+  grid-template-columns: 1fr;
+  position: relative;
+  right: 4.5%;
 }
 
+.orders {
+  position: relative;
+  right: 5.5%;
+}
+
+main .bottom_data .header {
+  min-width: unset;
+}
+
+main .bottom_data .orders table {
+  min-width: unset;
+}
+
+main .bottom_data .reminders .task_list {
+  min-width: unset;
+}
+
+#calendar {
+  width: 90%;
+}
+
+#calendar-header {
+  font-size: 14px;
+}
+
+#days {
+  font-size: 12px;
+}
+
+#calendar-body div {
+  padding: 10px;
+  font-size: 12px;
+}
+
+.switch{
+  right: 20%;
+  position: sticky;
+}
+
+.form-card input[type="text"],
+.form-card input[type="password"],
+.form-card input[type="email"],
+.form-card select {
+  width: 130%;
+}
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+.form-card select {
+  width: 216%;
+}
+
+.ticket-card input[type="text"],
+.ticket-card select {
+  width: 100%;
+}
+
+.ticket-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-left: 0;
+  padding: 15px 5px;
+}
+
+.box-general {
+  width: 100%;
+  margin-left: 0;
+  padding: 15px 5px;
+}
+
+.form-ticket {
+  width: 100%;
+  margin-left: 0;
+  padding: 15px 5px;
+}
+
+.table {
+  padding-left: 10px;
+}
+
+}
+
+
+
+
+/* Styles pour les petits téléphones */
 @media screen and (max-width: 480px) {
-  .ticket-container {
-      width: 96%; /* Utiliser la largeur totale de l'écran */
-      margin-left: 5px; /* Aucun décalage à gauche */
-      margin-right: 5px; /* Aucun décalage à droite */
-      float: none; /* Aucun flottement */
-  }
+.charts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .ticket-card,
-  .card-ticket {
-      width: 90%; /* Utiliser 90% de la largeur de l'écran */
-      max-width: none; /* Pas de largeur maximale */
-      margin: auto; /* Centrer horizontalement */
-  }
+.bottom_data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .ticket-card input[type="text"] {
-      width: 140%; /* Utiliser la largeur totale disponible */
-  }
-
-  .form-type-frais select[name="categorie"] {
-      width: 64% !important; /* Utiliser la largeur totale disponible */
-  }
-
-  .ticket-card [name="description"] {
-      width: 153%;
-      height: 85px; /* Ajuster la hauteur du champ de texte */
-  }
-
-  .ticket-card button[type="submit"] {
-      margin-right: auto; /* Centrer horizontalement */
-      margin-left: auto; /* Centrer horizontalement */
-  }
-
-  .ticket-pending {
-    width: 95% !important;
+.ticket-container {
+    width: 96%;
     margin-left: 5px;
     margin-right: 5px;
-    margin-top: 0;
     float: none;
-    display: flex; /* Utiliser flexbox */
-    flex-direction: column; /* Afficher les éléments en colonne */
 }
 
-  .ticket-other {
-      width: 90% !important;
-      margin-left: 5px;
-      margin-right: 5px;
-      margin-top: 10%;
-      float: none;
-      display: flex; /* Utiliser flexbox */
-      flex-direction: column; /* Afficher les éléments en colonne */
-  }
+.ticket-card,
+.card-ticket {
+    width: 90%;
+    max-width: none;
+    margin: auto;
+}
 
-  .pending-ticket-title,
-  .other-ticket-title {
-      margin-left: 0;
-      text-align: center; /* Centrer le texte */
-  }
+.ticket-card input[type="text"] {
+    width: 140%;
+}
 
-  .ticket-pending main .bottom_data {
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%; /* Utiliser la largeur totale */
-      grid-gap: 20px;
-      color: var(--dark);
-      position: relative;
-      left: 0.4%;
-      justify-content: center; /* Centrer horizontalement */
-  }
+.form-type-frais select[name="categorie"] {
+    width: 64% !important;
+}
 
-  .ticket-other main .bottom_data {
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%; /* Utiliser la largeur totale */
-      grid-gap: 20px;
-      color: var(--dark);
-      position: relative;
-      left: 0.4%;
-      justify-content: center; /* Centrer horizontalement */
-  }
+.ticket-card [name="description"] {
+    width: 153%;
+    height: 85px;
+}
 
-  .ticket-pending main .bottom_data > div {
-      border-radius: 10px;
-      background-color: var(--light);
-      width: 100%;
-      padding: 12px; /* Ajuster le rembourrage */
-      overflow-x: auto;
-      flex-basis: 100%; /* Utiliser toute la largeur disponible */
-      max-width: 100%; /* Utiliser toute la largeur disponible */
-  }
+.ticket-card button[type="submit"] {
+    margin-right: auto;
+    margin-left: auto;
+}
 
-  .ticket-other main .bottom_data > div {
-      border-radius: 10px;
-      background-color: var(--light);
-      width: 100%;
-      padding: 12px; /* Ajuster le rembourrage */
-      overflow-x: auto;
-      flex-basis: 100%; /* Utiliser toute la largeur disponible */
-      max-width: 100%; /* Pas de largeur maximale */
-  }
+.ticket-pending {
+  width: 95% !important;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 0;
+  float: none;
+  display: flex;
+  flex-direction: column;
+}
 
-  .ticket-pending main .bottom_data .orders table td .status,
-  .ticket-other main .bottom_data .orders table td .status {
-      font-size: 10px;
-      padding: 6px 16px;
-      color: var(--light);
-      border-radius: 20px;
-      font-weight: 700;
-      max-width: 95% !important;
-  }
+.ticket-other {
+    width: 90% !important;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 10%;
+    float: none;
+    display: flex;
+    flex-direction: column;
+}
 
-  .ticket-pending .bottom_data .orders table th,
-  .ticket-other main .bottom_data .orders table th {
-      font-size: 14px; /* Ajuster la taille de la police */
-  }
+.pending-ticket-title,
+.other-ticket-title {
+    margin-left: 0;
+    text-align: center;
+}
 
-  .text-ticket {
-      font-size: 11px !important; /* Ajuster la taille de la police */
-  }
+.ticket-pending main .bottom_data {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    grid-gap: 20px;
+    color: var(--dark);
+    position: relative;
+    left: 0.4%;
+    justify-content: center;
+}
 
-  .button-row {
-      padding: 1px 0; /* Ajouter de l'espace autour des boutons */
-  }
+.ticket-other main .bottom_data {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    grid-gap: 20px;
+    color: var(--dark);
+    position: relative;
+    left: 0.4%;
+    justify-content: center;
+}
 
-  .ticket-submit {  
-      margin-right: -5% !important; /* Aucun décalage à droite */
-  }
+.ticket-pending main .bottom_data > div {
+    border-radius: 10px;
+    background-color: var(--light);
+    width: 100%;
+    padding: 12px;
+    overflow-x: auto;
+    flex-basis: 100%;
+    max-width: 100%;
+}
+
+.ticket-other main .bottom_data > div {
+    border-radius: 10px;
+    background-color: var(--light);
+    width: 100%;
+    padding: 12px;
+    overflow-x: auto;
+    flex-basis: 100%;
+    max-width: 100%;
+}
+
+.ticket-pending main .bottom_data .orders table td .status,
+.ticket-other main .bottom_data .orders table td .status {
+    font-size: 10px;
+    padding: 6px 16px;
+    color: var(--light);
+    border-radius: 20px;
+    font-weight: 700;
+    max-width: 95% !important;
+}
+
+.ticket-pending .bottom_data .orders table th,
+.ticket-other main .bottom_data .orders table th {
+    font-size: 14px;
+}
+
+.text-ticket {
+    font-size: 11px !important;
+}
+
+.button-row {
+    padding: 1px 0;
+}
+
+.ticket-submit {  
+    margin-right: -5% !important;
+}
 }
 
 @media screen and (max-width: 768px) {
-  .user-table tr:nth-child(n+3) {
-      display: none;
-  }
+.user-table tr:nth-child(n+3) {
+    display: none;
+}
+}
+
+@media screen and (max-width: 576px){
+.bottom_data .orders {
+  width: 100%;
+}
+
+.bottom_data .orders table th,
+.bottom_data .orders table td {
+  padding: 8px 6px;
+  font-size: 0.9rem;
+}
+
+.content main .bottom_data .orders table .img_content {
+  padding-left: 4px;
+}
+
+.content main .bottom_data .orders table td .status {
+  font-size: 9px;
+  padding: 4px 10px;
+  width: auto;
+}
+
+.dataTables_paginate,
+.dataTables_info,
+.dataTables_filter,
+.dataTables_length {
+  padding: 8px 6px;
+  font-size: 0.9rem;
+}
+
+.dataTables_paginate .paginate_button {
+  padding: 4px 8px;
+  margin-right: 3px;
+}
+
+.dataTables_filter input[type="search"] {
+  width: 70%;
+}
+
+.dataTables_length select {
+  width: 15%;
+}
 }

@@ -1,0 +1,6 @@
+{
+    "require": {
+        "microsoft/azure-storage-blob": "*",
+        "microsoft/azure-storage-common": "*"
+    }
+}

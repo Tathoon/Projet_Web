@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => '__root__',
+        'name' => 'azure/azure-blob-wrapper',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '1b876d59a6a914ab8eec93ff1df1f52418faab74',
+        'reference' => 'cf12878f0da1ad6ff5d26e8bcd02feabb888e6ad',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
+        'azure/azure-blob-wrapper' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '1b876d59a6a914ab8eec93ff1df1f52418faab74',
+            'reference' => 'cf12878f0da1ad6ff5d26e8bcd02feabb888e6ad',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

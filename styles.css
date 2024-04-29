@@ -201,18 +201,22 @@ header{
 
 .logout {
   margin-top: 110%;
+  position: sticky;
 }
 
 .logout-comptable {
   margin-top: 135%;
+  position: sticky;
 }
 
 .logout-commercial {
   margin-top: 160%;
+  position: sticky;
 }
 
 .back {
   margin-top: 158%;
+  position: sticky;
 }
 
 .sidebar{
@@ -270,56 +274,8 @@ header{
   padding-right: 10px;
 }
 
-label #sidebar_btn{
-  z-index: 1;
-  color: #fff;
-  position: fixed;
-  cursor: pointer;
-  left: 300px;
-  font-size: 20px;
-  margin: 5px 0;
-  transition: 0.5s;
-  transition-property: color;
-}
-
-label #sidebar_btn:hover{
-  color: #19B3D3;
-}
-
 .active {
   background-color: #19B3D3;
-}
-
-#check:checked ~ .sidebar{
-  left: -185px;
-}
-
-#check:checked ~ .sidebar a span{
-  display: none;
-}
-
-#check:checked ~ .sidebar a{
-  font-size: 20px;
-  margin-left: 165px;
-  width: 100%;
-}
-
-#check:checked ~ .sidebar .logout,
-#check:checked ~ .sidebar .logout-comptable,
-#check:checked ~ .sidebar .logout-commercial,
-#check:checked ~ .sidebar .logout-notif,
-#check:checked ~ .sidebar .logout-settings,
-#check:checked ~ .sidebar .back{
-  position: relative;
-  top: 19%;
-}
-
-#check:checked ~ .sidebar .profile_info{
-  display: none;
-}
-
-#check{
-  display: none;
 }
 
 .mobile_nav{

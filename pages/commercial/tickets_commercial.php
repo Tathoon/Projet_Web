@@ -235,7 +235,7 @@
                 $id_ticket = $db->lastInsertId();
         
                 // Envoi du fichier justificatif vers Azure Blob Storage
-                $connectionString = "DefaultEndpointsProtocol=https;AccountName=<e11event>;AccountKey=<OVp/sacfyyfrlCyj0SEAl/k8jS6r5G+wQ86UeD5oR6W9i2d395JqqmUEi7ZwVrDU6BYkqh5t6OPW+ASttYtsEg==>";
+                $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=zsZOSpoagHKUPcRe/SVjKGVph9Sc5rA2OMbzRyn9OLFUWrp2kFR0e3lUAThxepBHHpVQBTKeuRPa+AStbzTSDA==;EndpointSuffix=core.windows.net";
                 $blobClient = BlobRestProxy::createBlobService($connectionString);
         
                 $containerName = "<justificatifs>"; // Remplacez par le nom de votre conteneur

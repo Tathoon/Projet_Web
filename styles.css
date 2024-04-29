@@ -1362,7 +1362,7 @@ textarea {
   font-weight: 700;
 }
 
-.bottom_data .orders #otherTable #pendingtable th#status {
+.bottom_data .orders #otherTable #pendingtable th{
   text-align: center;
 }
 

@@ -585,15 +585,11 @@
 
   <script>
     $(document).ready(function () {
-      $('#otherTable').DataTable({
+      $('#otherTable, #pendingTable').DataTable({
           "language": {
               "url": "../../Json/French.json"
-          }
-      });
-      $('#pendingTable').DataTable({
-          "language": {
-              "url": "../../Json/French.json"
-          }
+          },
+          "order": [[0, "desc"]]
       });
     });
     

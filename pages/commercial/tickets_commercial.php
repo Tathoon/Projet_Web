@@ -282,8 +282,6 @@
                       $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
                       $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
                       $stmt_delete->execute();
-
-                      $blobClient = BlobRestProxy::createBlobService($connectionString);
                   
                       // Supprimer le justificatif du dossier "justificatifs"
                       if (!empty($justificatif_filename)) {
@@ -295,7 +293,7 @@
                       exit();
                     }
                     
-                    $rowCount = count($other_data);
+                    $rowCount = count($pending_data_data);
 
                     if ($rowCount < 10) {
                       $emptyRows = 10 - $rowCount;
@@ -305,7 +303,7 @@
                       }
                     }
 
-                    foreach ($other_data as $row) {
+                    foreach ($pending_data as $row) {
                     }
                   }
                 ?>

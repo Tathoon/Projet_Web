@@ -1,3 +1,20 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['role']) || ($_SESSION['role'] != 1 && $_SESSION['role'] != 3 && $_SESSION['role'] != 2)) {
+      header('Location: ../../index.php');
+      session_destroy();
+      exit();
+    }
+
+    if(isset($_GET['logout'])) {
+      session_destroy();
+      header('Location: ../../index.php');
+      exit();
+     }
+
+     $role = $_SESSION['role'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,22 +27,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
 </head>
 <body>
-  <?php
-    session_start();
-    echo $_SESSION['nom'];
-
-    if (!isset($_SESSION['role']) || ($_SESSION['role'] != 1 && $_SESSION['role'] != 3 && $_SESSION['role'] != 2)) {
-      header('Location: ../../index.php');
-      session_destroy();
-      exit();
-    }
-
-    if(isset($_GET['logout'])) {
-      session_destroy();
-      header('Location: ../../index.php');
-      exit();
-     }
-  ?>
 
   <input type="checkbox" id="check">
   <header>
@@ -45,9 +46,9 @@
     </div>
     <div class="mobile_nav_items">
       <a href="notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-      <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+      <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
       <a href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i></i><span>Retour</span></a>
-      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
     </div>
   </div>
 
@@ -57,13 +58,10 @@
       <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
     </div>
     <a href="notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-    <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+    <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
     <a href="javascript:goBack()" class="back"><i class="fa-solid fa-arrow-left"></i><span>Retour</span></a>
-    <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+    <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
 
-    <?php
-      $role = $_SESSION['role'];
-    ?>
     <script>
     function goBack() {
       switch (<?php echo $role; ?>) {
@@ -141,6 +139,11 @@
           </div>
         </div>
       </div>
+      <label class="switch" for="dark-mode-toggle">
+        <input type="checkbox" id="dark-mode-toggle">
+        <span class="slider round"></span>
+      </label>
+      <a href="#" id="dark-mode-toggle"><i class="far fa-moon"></i><span>Nightmode</span></a>
     </main>
   </div>
 

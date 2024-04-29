@@ -172,11 +172,12 @@
         </script>
               
         <?php
-        require_once 'vendor/autoload.php'; // Assurez-vous d'avoir installé le SDK Azure Storage pour PHP via Composer
+        require_once '../../vendor/autoload.php'; // Assurez-vous d'avoir installé le SDK Azure Storage pour PHP via Composer
 
         use MicrosoftAzure\Storage\Blob\BlobRestProxy;
         use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
         use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
+        use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
 
         $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
         
@@ -234,7 +235,7 @@
                 $id_ticket = $db->lastInsertId();
         
                 // Envoi du fichier justificatif vers Azure Blob Storage
-                $connectionString = "DefaultEndpointsProtocol=https;AccountName=<E11event\$E11event>;AccountKey=<7xpJPs961iBt5v3cF1yZZsFy4rpndQ8dyW5Hw4J4f7nfCQwq20yd6wA9uAdh>";
+                $connectionString = "DefaultEndpointsProtocol=https;AccountName=<e11event>;AccountKey=<OVp/sacfyyfrlCyj0SEAl/k8jS6r5G+wQ86UeD5oR6W9i2d395JqqmUEi7ZwVrDU6BYkqh5t6OPW+ASttYtsEg==>";
                 $blobClient = BlobRestProxy::createBlobService($connectionString);
         
                 $containerName = "<justificatifs>"; // Remplacez par le nom de votre conteneur
@@ -303,9 +304,11 @@
               <tbody>
                 <?php                  
                   // Définir les informations de connexion au service Blob Storage
-                  $connectionString = "DefaultEndpointsProtocol=https;AccountName=<E11event\$E11event>;AccountKey=<7xpJPs961iBt5v3cF1yZZsFy4rpndQ8dyW5Hw4J4f7nfCQwq20yd6wA9uAdh>";
+                  $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=OVp/sacfyyfrlCyj0SEAl/k8jS6r5G+wQ86UeD5oR6W9i2d395JqqmUEi7ZwVrDU6BYkqh5t6OPW+ASttYtsEg==;EndpointSuffix=core.windows.net";
                   $blobClient = BlobRestProxy::createBlobService($connectionString);
                   $containerName = "<justificatifs>";
+                  $justificatifs = "<justificatifs>";
+                  $accountName = "e11event";
                   
                   $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
@@ -424,7 +427,7 @@
                       if (!empty($row['justificatif'])) {
                           // Vérifier si le justificatif existe dans le conteneur Blob Storage
                           if (in_array($row['justificatif'], $justificatif_files)) {
-                              $justificatifIcon = "<a href='https://<E11event\$E11event>.blob.core.windows.net/$justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                              $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
                           }
                       }
                       // Afficher les tickets avec les justificatifs
@@ -606,7 +609,7 @@
                           $justificatifIcon = '';
                           if (!empty($row['justificatif'])) {
                               // Lien vers le justificatif dans le conteneur Azure Blob Storage
-                              $justificatifIcon = "<a href='https://<E11event\$E11event>.blob.core.windows.net/<justificatifs>/" . $row['justificatif'] . "' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                              $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/" . $row['justificatif'] . "' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
                           }
                   
                           // Affichage des lignes de tableau avec les données et les justificatifs

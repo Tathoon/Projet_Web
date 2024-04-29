@@ -262,7 +262,10 @@
                       element.parentNode.removeChild(element);
                       }, 3000);
                       </script>';
-            }}
+            }
+            header('Location: tickets_commercial.php');
+            exit();
+          }
         ?>
       </form>
     </div>
@@ -422,7 +425,7 @@
                       // Rediriger vers la page précédente ou une autre page après la suppression
                       header('Location: tickets_commercial.php');
                       exit();
-                    }                
+                    }
                   }
                 ?>
               </tbody>
@@ -548,31 +551,31 @@
                       $other_data = array_reverse($other_tickets->fetchAll());
                   
                       foreach ($other_data as $row) {
-                          $justificatifIcon = '';
-                          if (!empty($row['justificatif'])) {
-                              // Lien vers le justificatif dans le conteneur Azure Blob Storage
-                              $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/" . $row['justificatif'] . "' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
-                          }
-
-                          $statusClass = '';
-                          if ($row['status'] == 'Accepté') {
-                              $statusClass = 'completed';
-                          } elseif ($row['status'] == 'Refusé') {
-                              $statusClass = 'processing';
-                          }
-                  
-                          // Affichage des lignes de tableau avec les données et les justificatifs
-                          echo "<tr>
-                                  <td>".$row['id_ticket']."</td>
-                                  <td>".$row['date']."</td>
-                                  <td>".$row['lieu']."</td>
-                                  <td>".$row['categorie']."</td>
-                                  <td>".$row['prix']."€</td>
-                                  <td>".$row['description']."</td>
-                                  <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                                  <td id='status' class='center-content'><span class='status completed processing'>" .$row['status']."</span></td>
-                              </tr>";
-                      }
+                        $justificatifIcon = '';
+                        if (!empty($row['justificatif'])) {
+                            // Lien vers le justificatif dans le conteneur Azure Blob Storage
+                            $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/" . $row['justificatif'] . "' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                        }
+                    
+                        $statusClass = '';
+                        if ($row['status'] == 'Accepté') {
+                            $statusClass = 'completed';
+                        } elseif ($row['status'] == 'Refusé') {
+                            $statusClass = 'processing';
+                        }
+                    
+                        // Affichage des lignes de tableau avec les données et les justificatifs
+                        echo "<tr>
+                                <td>".$row['id_ticket']."</td>
+                                <td>".$row['date']."</td>
+                                <td>".$row['lieu']."</td>
+                                <td>".$row['categorie']."</td>
+                                <td>".$row['prix']."€</td>
+                                <td>".$row['description']."</td>
+                                <td>".$row['justificatif']." ".$justificatifIcon."</td>
+                                <td id='status'><span class='status ".$statusClass."'>" .$row['status']."</span></td>
+                            </tr>";
+                    }
                   }
                 ?>
               </tbody>

@@ -244,39 +244,26 @@
                 $nouveau_nom_image = "justificatif$id_ticket.$extension";
         
                 try {
-                    $content = fopen($_FILES["justificatif"]["tmp_name"], "r");
-                    $blobClient->createBlockBlob($containerName, $nouveau_nom_image, $content);
-        
                     // Met à jour le nom du justificatif dans la base de données
                     $stmt_image = $db->prepare("UPDATE ticket SET justificatif = :justificatif WHERE id_ticket = :id_ticket");
                     $stmt_image->bindParam(':justificatif', $nouveau_nom_image);
                     $stmt_image->bindParam(':id_ticket', $id_ticket);
                     $stmt_image->execute();
-                } catch(ServiceException $e) {
-                    // Gérer l'exception
+
+                    echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                          <strong>La note de frais a bien été ajoutée.</strong>
+                          </div>';
+                    echo '<script type="text/javascript">
+                          setTimeout(function() {
+                              var element = document.getElementById("success-alert");
+                              element.parentNode.removeChild(element);
+                          }, 3000);
+                          </script>';
+                } catch(PDOException $e) {
+                    // Gérer l'exception si la mise à jour de la base de données échoue
+                    echo "Erreur lors de la mise à jour du nom du justificatif dans la base de données : " . $e->getMessage();
                 }
-        
-                echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                      <strong>La note de frais a bien été ajoutée.</strong>
-                      </div>';
-                echo '<script type="text/javascript">
-                      setTimeout(function() {
-                          var element = document.getElementById("success-alert");
-                          element.parentNode.removeChild(element);
-                      }, 3000);
-                      </script>';
-            } else {
-                echo '<div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
-                      <strong>Erreur lors de l\'envoi du formulaire : veuillez vous connecter.</strong>
-                      </div>';
-                echo '<script type="text/javascript">
-                      setTimeout(function() {
-                          var element = document.getElementById("error-alert");
-                          element.parentNode.removeChild(element);
-                      }, 3000);
-                      </script>';
-            }
-        }
+            }}
         ?>
       </form>
     </div>
@@ -312,21 +299,6 @@
                   
                   $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
-                  if(isset($_GET['id'])) {
-                      $id_ticket_to_delete = $_GET['id'];
-                      
-                      // Connexion à la base de données
-                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-                  
-                      // Supprimer le ticket de la base de données
-                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
-                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
-                      $stmt_delete->execute();
-                      
-                      // Rediriger vers la page précédente ou une autre page après la suppression
-                      header('Location: tickets_commercial.php');
-                      exit();
-                  }
                   if(isset($_GET['id'])) {
                       $id_ticket_to_delete = $_GET['id'];
                       
@@ -471,18 +443,17 @@
                       // Rediriger vers la page précédente ou une autre page après la suppression
                       header('Location: tickets_commercial.php');
                       exit();
-                  }
+                    }
 
-                  
-                  $rowCount = count($pending_data);
-                  
-                  if ($rowCount < 10) {
-                      $emptyRows = 10 - $rowCount;
-                  
-                      for ($i = 0; $i < $emptyRows; $i++) {
-                          echo "<tr><td colspan='8'>&nbsp;</td></tr>";
-                      }
-                  }
+                    $rowCount = count($pending_data);
+                    
+                    if ($rowCount < 10) {
+                        $emptyRows = 10 - $rowCount;
+                    
+                        for ($i = 0; $i < $emptyRows; $i++) {
+                            echo "<tr><td colspan='8'>&nbsp;</td></tr>";
+                        }
+                    }
                   }
                 ?>
               </tbody>
@@ -545,6 +516,8 @@
                   // Définir les informations de connexion au service Blob Storage
                   $blobClient = BlobRestProxy::createBlobService($connectionString);
                   $containerName = "<justificatifs>";
+                  $justificatifs = "<justificatifs>";
+                  $accountName = "e11event";
                   
                   $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 

@@ -1841,7 +1841,10 @@ input:checked + .slider:before {
     position: relative;
     right: 5.5%;
   }
-  
+    .user-table tr:nth-child(n+3) {
+        display: none;
+    }
+    
 }
 
 
@@ -1942,6 +1945,47 @@ main .bottom_data .reminders .task_list {
   padding-left: 10px;
 }
 
+  .bottom_data .orders {
+    width: 100%;
+  }
+  
+  .bottom_data .orders table th,
+  .bottom_data .orders table td {
+    padding: 8px 6px;
+    font-size: 0.9rem;
+  }
+  
+  .content main .bottom_data .orders table .img_content {
+    padding-left: 4px;
+  }
+  
+  .content main .bottom_data .orders table td .status {
+    font-size: 9px;
+    padding: 4px 10px;
+    width: auto;
+  }
+  
+  .dataTables_paginate,
+  .dataTables_info,
+  .dataTables_filter,
+  .dataTables_length {
+    padding: 8px 6px;
+    font-size: 0.9rem;
+  }
+  
+  .dataTables_paginate .paginate_button {
+    padding: 4px 8px;
+    margin-right: 3px;
+  }
+  
+  .dataTables_filter input[type="search"] {
+    width: 70%;
+  }
+  
+  .dataTables_length select {
+    width: 15%;
+  }
+  
 }
 
 
@@ -2086,54 +2130,5 @@ main .bottom_data .reminders .task_list {
 
 .ticket-submit {  
     margin-right: -5% !important;
-}
-}
-
-@media screen and (max-width: 768px) {
-.user-table tr:nth-child(n+3) {
-    display: none;
-}
-}
-
-@media screen and (max-width: 576px){
-.bottom_data .orders {
-  width: 100%;
-}
-
-.bottom_data .orders table th,
-.bottom_data .orders table td {
-  padding: 8px 6px;
-  font-size: 0.9rem;
-}
-
-.content main .bottom_data .orders table .img_content {
-  padding-left: 4px;
-}
-
-.content main .bottom_data .orders table td .status {
-  font-size: 9px;
-  padding: 4px 10px;
-  width: auto;
-}
-
-.dataTables_paginate,
-.dataTables_info,
-.dataTables_filter,
-.dataTables_length {
-  padding: 8px 6px;
-  font-size: 0.9rem;
-}
-
-.dataTables_paginate .paginate_button {
-  padding: 4px 8px;
-  margin-right: 3px;
-}
-
-.dataTables_filter input[type="search"] {
-  width: 70%;
-}
-
-.dataTables_length select {
-  width: 15%;
 }
 }

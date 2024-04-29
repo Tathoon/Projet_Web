@@ -424,16 +424,6 @@
                       header('Location: tickets_commercial.php');
                       exit();
                     }
-
-                    $rowCount = count($pending_data);
-                    
-                    if ($rowCount < 10) {
-                        $emptyRows = 10 - $rowCount;
-                    
-                        for ($i = 0; $i < $emptyRows; $i++) {
-                            echo "<tr><td colspan='8'>&nbsp;</td></tr>";
-                        }
-                    }
                   }
                 ?>
               </tbody>

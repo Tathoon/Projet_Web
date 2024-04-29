@@ -111,6 +111,14 @@
       <h3>E11<span>event</span></h3>
     </div>
   </header>
+  
+  <label class="switch" for="dark-mode-toggle">
+      <input type="checkbox" id="dark-mode-toggle">
+      <span class="slider round">
+        <i class="far fa-sun sun-icon darkmodetitleSUN"></i>
+        <i class="far fa-moon moon-icon darkmodetitleMOON"></i>
+      </span>
+    </label>
 
   <div class="mobile_nav">
     <div class="nav_bar">
@@ -172,7 +180,7 @@
           <li>
             <i class="bx bx-dollar-circle"></i>
             <span class="info">
-              <h3><?php echo $total_depense; ?> €</h3>
+              <h3><?php echo number_format($total_depense, 2); ?> €</h3>
               <p>Dépense</p>
             </span>
           </li>
@@ -207,7 +215,7 @@
               <div class="header">
                   <h3>Commerciaux avec le plus de tickets acceptés</h3>
               </div>
-              <table>
+              <table class="user-table">
                 <thead>
                     <tr>
                         <th>Nom</th>

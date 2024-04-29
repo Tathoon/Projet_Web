@@ -561,6 +561,7 @@ main .bottom_data .reminders .task_list li {
   background-color: #333;
   transition: opacity 0.5s ease;
   opacity: 1;
+  border: 1px solid #444;
 }
 
 #calendar-body.fade-out {
@@ -821,6 +822,14 @@ main .bottom_data .reminders {
   display: flex;
   align-items: center;
   grid-gap: 1.5rem;
+}
+
+.bottom_data .orders th#status {
+  text-align: center;
+}
+
+.bottom_data .orders td#status {
+  text-align: center;
 }
 
 /* -------CALENDRIER-----------*/
@@ -1349,7 +1358,6 @@ textarea {
   position: flex;
   width: calc(85% - 260px);
   margin-top: 50px;
-  margin-bottom: 75px;
   margin-left: 20%;
 }
 
@@ -1389,6 +1397,16 @@ textarea {
   font-weight: 700;
 }
 
+.bottom_data .orders #otherTable #pendingtable th#status {
+  text-align: center;
+}
+
+.bottom_data .orders #otherTable #pendingTable td#status {
+  text-align: center;
+}
+
+
+
 /* ------------------*/
 /*                   */
 /*                   */
@@ -1422,6 +1440,18 @@ textarea {
 
 .dark-mode #calendar-body div.today {
   background-color: var(--light-danger);
+}
+
+.dark-mode #calendar-body {
+  border: 1px solid #fff;
+} 
+
+.dark-mode #calendar-header { 
+  color: #444;
+}
+
+.dark-mode #days {
+  color: #444;
 }
 
 .dark-mode .charts-container .pie-chart .header h3,
@@ -1462,13 +1492,6 @@ textarea {
   background-color: #444;
 } 
 
-.dark-mode .content main .bottom_data .orders table tbody tr:nth-child(even) {
-  background-color: #393838;
-}
-
-.dark-mode .table-container .table tbody tr:nth-child(even) {
-  background-color: #393838;
-}
 .dark-mode th, .dark-mode td {
   border: 1px solid #fff;
 }
@@ -1480,7 +1503,47 @@ textarea {
 }
 
 .dark-mode table thead{
-  color: #444;
+  color: #fff;
+}
+
+.dark-mode table th{
+  background-color: #242424;
+  color: #fff;
+}
+
+.dark-mode table td{
+  background-color: #444;
+  color: #fff;
+}
+
+.dark-mode .dataTables_wrapper th {
+  color: #fff !important;
+  background-color: #242424 !important;
+}
+
+.dark-mode .dataTables_wrapper tr th,
+.dark-mode .dataTables_wrapper tr td {
+  border-color: #000 !important;
+}
+
+.dark-mode tr th,
+.dark-mode tr td {
+  border-color: #000 !important;
+}
+
+.dark-mode .bottom_data .orders #pendingTable th {
+  color: #fff !important;
+  background-color: #242424 !important;
+}
+
+.dark-mode .bottom_data .orders #otherTable th {
+  color: #fff !important;
+  background-color: #242424 !important;
+}
+
+.dataTables thead th {
+  background-color: #242424;
+  color: #fff;
 }
 
 .dark-mode form {
@@ -1488,11 +1551,11 @@ textarea {
 }
 
 .dark-mode .title h1 {
-  color: #fff; /* Couleur du texte pour le titre en mode sombre */
+  color: #fff;
 }
 
 .dark-mode .form-container label {
-  color: #fff; /* Couleur du texte pour les labels en mode sombre */
+  color: #fff;
 }
 
 .dark-mode .card-ticket {
@@ -1503,7 +1566,6 @@ textarea {
   color: #fff;
 }
 
-/* Styles spécifiques pour la classe .bottom_data en mode sombre */
 .dark-mode .ticket-pending main .bottom_data .orders,
 .dark-mode .ticket-other main .bottom_data .orders {
   background-color: #444;
@@ -1531,14 +1593,32 @@ textarea {
   color: #fff;
 }
 .dark-mode .title {
-  color: #fff; /* Couleur de texte blanche en mode sombre */
+  color: #fff; 
+}
+
+.dark-mode .form-group input[type="submit"] {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode .form-group input[type="submit"]:hover {
+  background-color: #1f1e1e;
+  color: #fff;
+}
+
+.dark-mode .form-group input {
+  background-color: #333;
+  color: #fff;
 }
 
 .switch {
-  position: relative;
+  position: sticky;
   display: inline-block;
   width: 60px;
   height: 34px;
+  left: 90%;
+  z-index: 1;
+  top: 2%;
 }
 
 .switch input {
@@ -1576,13 +1656,59 @@ textarea {
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #444;
 }
 
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+
+.darkmodetitleSUN {
+  position: relative;
+  left: 120%;
+  top: 20%;
+  color: #fff;
+}
+
+.darkmodetitleMOON {
+  position: relative;
+  left: 120%;
+  top: 20%;
+  color: #444;
+}
+
+.dark-mode .darkmodetitleMOON {
+  color: #fff;
+}
+
+.dark-mode .darkmodetitleSUN {
+  color: #444;
+}
+
+.dark-mode input {
+  background-color: #313131;
+  color: #fff;
+}
+
+.dark-mode select {
+  background-color: #313131;
+  color: #fff;
+}
+
+.dark-mode textarea {
+  background-color: #313131;
+  color: #fff;
+}
+
+.dark-mode .delete-button {
+  background-color: var(--danger);
+  color: #972f2f;
+}
+
+.dark-mode .delete-button:hover {
+  background-color: #f0a5a5;
 }
 
 /* ------------------*/
@@ -1646,6 +1772,10 @@ input:checked + .slider:before {
     #calendar {
       margin-top: 8%;
     }
+    .switch {
+      left: 70%;
+      top: 2%;
+    }
 }
 
 @media screen and (max-width: 780px){
@@ -1660,6 +1790,8 @@ input:checked + .slider:before {
   .mobile_nav{
     display: block;
     width: calc(100% - 0%);
+    position: relative;
+    bottom: 2.5%;
   }
 
   .nav_bar{
@@ -1767,6 +1899,8 @@ input:checked + .slider:before {
 @media (max-width: 768px) {
   #calendar {
     max-width: 90%; /* Ajuster la largeur maximale pour s'adapter à la taille de l'écran */
+    position: relative;
+    bottom: 10%;
   }
 }
 
@@ -1787,6 +1921,11 @@ input:checked + .slider:before {
   #calendar-body div {
     padding: 10px; /* Réduire l'espacement à l'intérieur des cellules */
     font-size: 12px; /* Réduire la taille de la police */
+  }
+  
+  .switch{
+    right: 20%;
+    position: sticky;
   }
 }
 
@@ -2047,5 +2186,11 @@ input:checked + .slider:before {
 
   .ticket-submit {  
       margin-right: -5% !important; /* Aucun décalage à droite */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .user-table tr:nth-child(n+3) {
+      display: none;
   }
 }

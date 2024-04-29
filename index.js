@@ -6,6 +6,62 @@
 /*                   */
 /*-------------------*/
 
+window.addEventListener('DOMContentLoaded', function() {
+  var avatar = document.querySelector('img[src="../../images/avatar/dancing-toothless-tothless.gif"]');
+  var otherAvatars = document.querySelectorAll('img:not([src="../../images/avatar/dancing-toothless-tothless.gif"])');
+  var isPlaying = localStorage.getItem('isPlaying') === 'true';
+  var audioPath;
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    audioPath = '/Projet_Web/images/music/driftveil.mp3';
+  } else {
+    audioPath = '/images/music/driftveil.mp3';
+  }
+  
+  var audio = new Audio(audioPath);
+  audio.volume = 0.01;
+  audio.loop = true;
+
+  var currentTime = localStorage.getItem('currentTime');
+  if (currentTime) {
+    audio.currentTime = parseFloat(currentTime);
+  }
+
+  if (isPlaying) {
+    audio.play();
+  }
+
+  if (avatar) {
+    document.addEventListener('click', function(event) {
+      if (event.target.src === avatar.src) {
+        if (!isPlaying) {
+          audio.play();
+          isPlaying = true;
+        } else {
+          audio.pause();
+          audio.currentTime = 0;
+          isPlaying = false;
+        }
+        localStorage.setItem('isPlaying', isPlaying);
+      }
+    });
+  }
+
+  otherAvatars.forEach(function(otherAvatar) {
+    otherAvatar.addEventListener('click', function() {
+      if (isPlaying) {
+        audio.pause();
+        audio.currentTime = 0;
+        isPlaying = false;
+        localStorage.setItem('isPlaying', isPlaying);
+      }
+    });
+  });
+
+  window.addEventListener('beforeunload', function() {
+    localStorage.setItem('currentTime', audio.currentTime);
+  });
+});
+
 document.addEventListener('DOMContentLoaded', function() {
 
   function applyDarkModeOnLoad() {
@@ -37,6 +93,30 @@ document.addEventListener('DOMContentLoaded', function() {
   if (darkModeToggle) {
       darkModeToggle.addEventListener('change', toggleDarkMode);
   }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  function changeImage() {
+      const logoImage = document.getElementById('logo-image');
+      const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+      const isDarkMode = darkModeToggle.checked;
+
+
+      if (isDarkMode) {
+          logoImage.src = "images/Logo-WebDarkmode.jpg";
+      } else {
+          logoImage.src = "images/Logo-Web.png";
+      }
+  }
+
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  if (darkModeToggle) {
+      darkModeToggle.addEventListener('change', changeImage);
+  }
+
+  changeImage();
 });
 
 
@@ -227,101 +307,111 @@ document.getElementById('month-next').addEventListener('click', () => {
 
 renderCalendar();
 
-console.log(chartData);
 
-/* GRAPHIQUE */
+/* GRAPHIQUE EN BARS */
+document.addEventListener('DOMContentLoaded', function() {
 
-// Données pour le graphique
-const data = {
-  labels: ['Total Utilisateurs', 'Nombre de Tickets', 'Dépense', 'Tickets en Attente'],
-  datasets: [
-    {
-      label: 'Total Utilisateurs',
-      data: [chartData.total_utilisateurs, null, null, null,],
-      backgroundColor: 'rgba(54, 162, 235, 0.2)',
-      borderColor: 'rgba(54, 162, 235, 1)',
-      borderWidth: 1
-    },
-    {
-      label: 'Nombre de Tickets',
-      data: [null, chartData.total_tickets, null, null],
-      backgroundColor: 'rgba(255, 206, 86, 0.2)',
-      borderColor: 'rgba(255, 206, 86, 1)',
-      borderWidth: 1
-    },
-    {
-      label: 'Dépense',
-      data: [null, null, chartData.total_depense, null],
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderColor: 'rgba(75, 192, 192, 1)',
-      borderWidth: 1
-    },
-    {
-      label: 'Tickets en Attente',
-      data: [null, null, null, chartData.total_tickets_attente],
-      backgroundColor: 'rgba(255, 99, 132, 0.2)',
-      borderColor: 'rgba(255, 99, 132, 1)',
-      borderWidth: 1
-    }
-  ]
-};
+  const darkModeSwitch = document.getElementById('dark-mode-toggle');
 
-const config = {
-  type: 'bar',
-  data: data,
-  options: {
-    scales: {
-      y: {
-        type: 'logarithmic',
-        ticks: {
-          callback: function (value, index, values) {
-            return Number(value.toString());
-          }
-        }
-      }
-    },
-    barPercentage: 11,
-    categoryPercentage: 0.2,
-  }
-};
+  let labelColor = darkModeSwitch.checked ? 'white' : 'black';
 
-// Création du graphique
-const myChart = new Chart(
-  document.getElementById('myChart'),
-  config
-);
-
-// Vérifier si les données sont correctement récupérées
-const dataAvailable = categoryLabels.length > 0 && pricesPerCategory.length > 0;
-
-if (dataAvailable) {
-  const myData = {
-    labels: categoryLabels, 
-    datasets: [{
-      label: 'Dépense total ',
-      data: pricesPerCategory,
-      backgroundColor: [
-        'rgb(254, 205, 211)', 
-        'rgb(207, 232, 255)', 
-        'rgb(187, 247, 208)', 
-        'rgb(252, 252, 174)', 
-        'rgb(140, 162, 245)', 
-        'rgb(252, 201, 146)',  
-        'rgb(250, 175, 217)',
-        'rgba(173, 148, 235)' 
-      ],
-      hoverOffset: 4
-    }]
+  const data = {
+    labels: ['Total Utilisateurs', 'Nombre de Tickets', 'Dépense', 'Tickets en Attente'],
+    datasets: [
+        { label: 'Total Utilisateurs', data: [chartData.total_utilisateurs, null, null, null,], backgroundColor: 'rgba(54, 162, 235, 0.2)', borderColor: 'rgba(54, 162, 235, 1)', borderWidth: 1 },
+        { label: 'Nombre de Tickets', data: [null, chartData.total_tickets, null, null], backgroundColor: 'rgba(255, 206, 86, 0.2)', borderColor: 'rgba(255, 206, 86, 1)', borderWidth: 1 },
+        { label: 'Dépense', data: [null, null, chartData.total_depense, null], backgroundColor: 'rgba(75, 192, 192, 0.2)', borderColor: 'rgba(75, 192, 192, 1)', borderWidth: 1 },
+        { label: 'Tickets en Attente', data: [null, null, null, chartData.total_tickets_attente], backgroundColor: 'rgba(255, 99, 132, 0.2)', borderColor: 'rgba(255, 99, 132, 1)', borderWidth: 1 }
+    ]
   };
 
-  if (typeof Chart !== 'undefined') {
-    var myChartCAM = new Chart(
-      document.getElementById('camembertChart'),
-      { type: 'pie', data: myData }
-    );
+  const config = {
+    type: 'bar',
+    data,
+    options: {
+        scales: { 
+            y: { type: 'logarithmic', ticks: { callback: value => Number(value.toString()) } },
+            x: { ticks: { color: labelColor } }
+        },
+        barPercentage: 11,
+        categoryPercentage: 0.2,
+        plugins: { legend: { labels: { color: labelColor } } }
+    }
+  };
+
+  const myChart = new Chart(document.getElementById('myChart'), config);
+
+  darkModeSwitch.addEventListener('change', function() {
+    labelColor = this.checked ? 'white' : 'black';
+    
+    myChart.options.plugins.legend.labels.color = labelColor;
+    myChart.options.scales.x.ticks.color = labelColor;
+    
+    myChart.update();
+  });
+});
+
+
+/* CAMEMBERT */
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  const darkModeSwitch = document.getElementById('dark-mode-toggle');
+
+  let labelColor = darkModeSwitch.checked ? 'white' : 'black';
+
+  const dataAvailable = categoryLabels.length > 0 && pricesPerCategory.length > 0;
+
+  if (dataAvailable) {
+    const myData = {
+      labels: categoryLabels, 
+      datasets: [{
+        label: 'Dépense total ',
+        data: pricesPerCategory,
+        backgroundColor: [
+          'rgb(254, 205, 211)', 
+          'rgb(207, 232, 255)', 
+          'rgb(187, 247, 208)', 
+          'rgb(252, 252, 174)', 
+          'rgb(140, 162, 245)', 
+          'rgb(252, 201, 146)',  
+          'rgb(250, 175, 217)',
+          'rgba(173, 148, 235)' 
+        ],
+        hoverOffset: 4
+      }]
+    };
+
+    if (typeof Chart !== 'undefined') {
+      var myChartCAM = new Chart(
+        document.getElementById('camembertChart'),
+        { 
+          type: 'pie', 
+          data: myData,
+          options: {
+            plugins: {
+              legend: {
+                labels: {
+                  color: labelColor 
+                }
+              }
+            }
+          }
+        }
+      );
+    } else {
+      console.error('La bibliothèque Chart.js n\'est pas chargée.');
+    }
   } else {
-    console.error('La bibliothèque Chart.js n\'est pas chargée.');
+    console.error('Aucune donnée disponible pour afficher le graphique.');
   }
-} else {
-  console.error('Aucune donnée disponible pour afficher le graphique.');
-}
+
+  darkModeSwitch.addEventListener('change', function() {
+    
+      labelColor = this.checked ? 'white' : 'black';
+      
+      myChartCAM.options.plugins.legend.labels.color = labelColor;
+      
+      myChartCAM.update();
+  });
+});

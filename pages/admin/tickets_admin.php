@@ -1,6 +1,5 @@
 <?php
     session_start();
-    echo $_SESSION['nom'];
 
     if (!isset($_SESSION['role']) || ($_SESSION['role'] != 1 )) {
       header('Location: ../../index.php');
@@ -56,6 +55,14 @@
       <h3>E11<span>event</span></h3>
     </div>
   </header>
+
+  <label class="switch" for="dark-mode-toggle">
+      <input type="checkbox" id="dark-mode-toggle">
+      <span class="slider round">
+        <i class="far fa-sun sun-icon darkmodetitleSUN"></i>
+        <i class="far fa-moon moon-icon darkmodetitleMOON"></i>
+      </span>
+    </label>
 
   <div class="mobile_nav">
     <div class="nav_bar">
@@ -239,7 +246,6 @@
                               <td><a href='tickets_commercial.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td> 
                             </tr>";
                     }
-
                     
                     if(isset($_GET['id'])) {
                       $id_ticket_to_delete = $_GET['id'];
@@ -270,6 +276,19 @@
                       // Rediriger vers la page précédente ou une autre page après la suppression
                       header('Location: tickets_commercial.php');
                       exit();
+                
+                    echo "<tr>
+                            <td>".$row['id_ticket']."</td>
+                            <td>".$row['nom']."</td>
+                            <td>".$row['mail']."</td>
+                            <td>".$row['date']."</td>
+                            <td>".$row['lieu']."</td>
+                            <td>".$row['categorie']."</td>
+                            <td>".$row['prix']."€</td>
+                            <td>".$row['description']."</td>
+                            <td>".$row['justificatif']." ".$justificatifIcon."</td>
+                            <td id='status'><span class='status ".$statusClass."'>".$row['status']."</span></td>
+                          </tr>";
                   }
 
                   

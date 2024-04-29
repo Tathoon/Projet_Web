@@ -919,7 +919,7 @@ main .bottom_data .reminders {
 }
 
 .dataTables_length select {
-  width: 4%;
+  width: 5%;
   padding: 5px;
   margin-bottom: 5px;
   border: 1px solid #ccc;
@@ -927,6 +927,21 @@ main .bottom_data .reminders {
   box-sizing: border-box;
 }
 /* ========Utilisateurs Admin =================== */
+
+table.tab {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 12px 10px;
+}
+
+table.tab th,
+table.tab td {
+  padding: 12px 10px;
+}
+
+.tab td#status {
+  text-align: center;
+}
 
 .form-card {
   margin: 20px auto; 
@@ -961,7 +976,7 @@ main .bottom_data .reminders {
   background-position-x: calc(100% - 10px);
   background-position-y: center;
   padding-right: 30px;
-  width: 366%;
+  width: 379%;
   cursor: pointer;
 }
 
@@ -1026,17 +1041,11 @@ main .bottom_data .reminders {
 
 .box-general {
   padding: 15px;
-  min-height: 100px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 80.7%;
   background-color: var(--light);
-  border-radius: 5px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  margin-left: 21.6%;
+  border-radius: 10px;
+  margin-left: 15.3%;
 }
 
 .most-ticket-user td img {
@@ -1940,7 +1949,7 @@ input:checked + .slider:before {
     width: 100%; /* Ajuster la largeur pour s'adapter à l'écran */
   }
   .form-card select {
-    width: 216%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
+    width: 223%; /* Modifier la largeur des champs de saisie pour occuper toute la largeur de l'écran */
   }
 
   .ticket-card input[type="text"],

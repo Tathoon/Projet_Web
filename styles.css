@@ -467,8 +467,6 @@ main .cards li .info p {
   color: var(--dark);
 }
 
-
-/* ========Graph Details Start=================== */
 main .bottom_data .reminders {
   flex-grow: 1;
   flex-basis: 300px;
@@ -543,7 +541,6 @@ main .bottom_data .reminders .task_list li {
   height: auto; 
 }
 
-/* ========Orders Details Start=================== */
 .content main .bottom_data {
   display: flex;
   flex-wrap: wrap;
@@ -661,7 +658,6 @@ main .bottom_data .orders {
   white-space: nowrap;
 }
 
-/* -------CALENDRIER-----------*/
 #calendar {
   width: 97%;
   max-width: 600px;
@@ -691,7 +687,9 @@ main .bottom_data .orders {
 #calendar-body.fade-out {
   opacity: 0;
 }
+
 /* ========Tickets Admin =================== */
+
 main .bottom_data .orders table {
   width: 100%;
   border-collapse: collapse;
@@ -840,6 +838,7 @@ main .bottom_data .reminders {
   border-radius: 5px;
   box-sizing: border-box;
 }
+
 /* ========Utilisateurs Admin =================== */
 
 table.tab {
@@ -993,6 +992,7 @@ table.tab td {
 /*-------------------*/
 
 /* ======== Tickets COMMERCIAL =================== */
+
 body, html {
   height: 100%;
   overflow-x: hidden;

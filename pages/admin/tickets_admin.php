@@ -239,8 +239,8 @@
                               <td>".$row['prix']."</td>
                               <td>".$row['description']."</td>
                               <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                              <td><span class='status pending'>".$row['status']."</span></td>
-                              <td><a href='tickets_commercial.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td> 
+                              <td class='center-content'><span class='status pending'>".$row['status']."</span></td>
+                              <td class='center-content'><a href='tickets_commercial.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td> 
                             </tr>";
                     }
                     
@@ -284,20 +284,12 @@
                             <td>".$row['prix']."€</td>
                             <td>".$row['description']."</td>
                             <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                            <td id='status'><span class='status ".$statusClass."'>".$row['status']."</span></td>
+                            <td class='center-content' id='status'><span class='status ".$statusClass."'>".$row['status']."</span></td>
                           </tr>";
                   }
 
                   
-                  $rowCount = count($pending_data);
                   
-                  if ($rowCount < 10) {
-                      $emptyRows = 10 - $rowCount;
-                  
-                      for ($i = 0; $i < $emptyRows; $i++) {
-                          echo "";
-                      }
-                  }
                   }
                 ?>
               </tbody>
@@ -440,7 +432,7 @@
                               <td>".$row['prix']."</td>
                               <td>".$row['description']."</td>
                               <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                              <td><span class='status completed processing".$statusClass."'>".$row['status']."</span></td>
+                              <td class='center-content'><span class='status completed processing".$statusClass."'>".$row['status']."</span></td>
                             </tr>";
                     }
                   }
@@ -457,7 +449,8 @@
     $('#pending, #other').DataTable({
         "language": {
             "url": "../../Json/French.json"
-        }
+        },
+        "order": [[0, "desc"]]
     });
 });
   var mobileProfileImage = document.querySelector('.mobile_profile_image');

@@ -236,10 +236,12 @@
         
                 // Envoi du fichier justificatif vers Azure Blob Storage
                 $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=zsZOSpoagHKUPcRe/SVjKGVph9Sc5rA2OMbzRyn9OLFUWrp2kFR0e3lUAThxepBHHpVQBTKeuRPa+AStbzTSDA==;EndpointSuffix=core.windows.net";
-                $blobClient = BlobRestProxy::createBlobService($connectionString);
-        
                 $containerName = "<justificatifs>"; // Remplacez par le nom de votre conteneur
-        
+                
+                $blobClient = BlobRestProxy::createBlobService($connectionString);
+                $content = fopen($_FILES['justificatif']['tmp_name'], "r");
+                $blobClient->createBlockBlob($containerName, $_FILES['justificatif']['name'], $content);
+                
                 $extension = pathinfo($_FILES["justificatif"]["name"], PATHINFO_EXTENSION);
                 $nouveau_nom_image = "justificatif$id_ticket.$extension";
         

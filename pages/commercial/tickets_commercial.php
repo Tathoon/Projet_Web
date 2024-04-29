@@ -177,6 +177,8 @@
         use MicrosoftAzure\Storage\Blob\BlobRestProxy;
         use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
         use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
+
+        $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
         
         // Vérifie si les champs POST requis sont définis
         if (isset($_POST['categorie']) && isset($_POST['cout']) && isset($_POST['description']) && isset($_POST['lieu']) && isset($_FILES['justificatif'])) {
@@ -299,11 +301,7 @@
                 </tr>
               </thead>
               <tbody>
-                <?php
-                  require_once 'vendor/autoload.php';
-
-                  use MicrosoftAzure\Storage\Blob\BlobRestProxy;
-                  
+                <?php                  
                   // Définir les informations de connexion au service Blob Storage
                   $connectionString = "DefaultEndpointsProtocol=https;AccountName=<E11event\$E11event>;AccountKey=<7xpJPs961iBt5v3cF1yZZsFy4rpndQ8dyW5Hw4J4f7nfCQwq20yd6wA9uAdh>";
                   $blobClient = BlobRestProxy::createBlobService($connectionString);
@@ -446,7 +444,7 @@
                     
                     if(isset($_GET['id'])) {
                       $id_ticket_to_delete = $_GET['id'];
-                      
+                  
                       // Connexion à la base de données
                       $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
                   
@@ -460,13 +458,13 @@
                       // Supprimer le ticket de la base de données
                       $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
                       $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
-                      $stmt_delete->execute();                  
+                      $stmt_delete->execute();
                   
                       // Supprimer le justificatif du dossier "justificatifs"
                       if (!empty($justificatif_filename) && in_array($justificatif_filename, $justificatif_files)) {
                           $blobClient->deleteBlob($justificatifs, $justificatif_filename);
                       }
-                      
+                  
                       // Rediriger vers la page précédente ou une autre page après la suppression
                       header('Location: tickets_commercial.php');
                       exit();
@@ -540,12 +538,8 @@
               </thead>
               <tbody>
                 <?php
-                  require_once 'vendor/autoload.php';
-
-                  use MicrosoftAzure\Storage\Blob\BlobRestProxy;
                   
                   // Définir les informations de connexion au service Blob Storage
-                  $connectionString = "DefaultEndpointsProtocol=https;AccountName=<E11event\$E11event>;AccountKey=<7xpJPs961iBt5v3cF1yZZsFy4rpndQ8dyW5Hw4J4f7nfCQwq20yd6wA9uAdh>";
                   $blobClient = BlobRestProxy::createBlobService($connectionString);
                   $containerName = "<justificatifs>";
                   

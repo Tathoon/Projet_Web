@@ -293,7 +293,7 @@
                   // Définir les informations de connexion au service Blob Storage
                   $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=OVp/sacfyyfrlCyj0SEAl/k8jS6r5G+wQ86UeD5oR6W9i2d395JqqmUEi7ZwVrDU6BYkqh5t6OPW+ASttYtsEg==;EndpointSuffix=core.windows.net";
                   $blobClient = BlobRestProxy::createBlobService($connectionString);
-                  $containerName = "<justificatifs>";
+                  $containerName = "justificatifs"; 
                   $justificatifs = "<justificatifs>";
                   $accountName = "e11event";
 

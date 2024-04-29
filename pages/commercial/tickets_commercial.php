@@ -418,7 +418,7 @@
                       $stmt_delete->execute();
                   
                       // Supprimer le justificatif du dossier "justificatifs"
-                      if (!empty($justificatif_filename) && in_array($justificatif_filename, $justificatif_files)) {
+                      if (!empty($justificatif_filename)) {
                           $blobClient->deleteBlob($justificatifs, $justificatif_filename);
                       }
                   

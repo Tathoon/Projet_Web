@@ -394,8 +394,8 @@
                               <td>".$row['prix']."€</td>
                               <td>".$row['description']."</td>
                               <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                              <td id='status'><span class='status pending'>".$row['status']."</span></td>
-                              <td><a href='tickets_commercial.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td> 
+                              <td id='status' class='center-content'><span class='status pending'>".$row['status']."</span></td>
+                              <td class='center-content'><a href='tickets_commercial.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td> 
                           </tr>";
                     }
         
@@ -570,7 +570,7 @@
                                   <td>".$row['prix']."€</td>
                                   <td>".$row['description']."</td>
                                   <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                                  <td id='status'><span class='status completed processing'>" .$row['status']."</span></td>
+                                  <td id='status' class='center-content'><span class='status completed processing'>" .$row['status']."</span></td>
                               </tr>";
                       }
                   }

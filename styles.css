@@ -838,7 +838,9 @@ main .bottom_data .reminders {
   border-radius: 5px;
   box-sizing: border-box;
 }
-
+.center-content {
+  text-align: center;
+}
 /* ========Utilisateurs Admin =================== */
 
 table.tab {

@@ -30,9 +30,6 @@
 
   <input type="checkbox" id="check">
   <header>
-    <label for="check">
-      <i class="fas fa-bars" id="sidebar_btn"></i>
-    </label>
     <div class="left_area">
       <h3>E11<span>event</span></h3>
     </div>
@@ -54,9 +51,9 @@
     </div>
     <div class="mobile_nav_items">
       <a href="notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-      <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
-      <a href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i></i><span>Retour</span></a>
-      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
+      <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+      <a href="javascript:goBack()" class=""><i class="fa-solid fa-arrow-left"></i><span>Retour</span></a>
+      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
     </div>
   </div>
 

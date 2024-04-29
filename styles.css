@@ -201,18 +201,22 @@ header{
 
 .logout {
   margin-top: 110%;
+  position: sticky;
 }
 
 .logout-comptable {
   margin-top: 135%;
+  position: sticky;
 }
 
 .logout-commercial {
   margin-top: 160%;
+  position: sticky;
 }
 
 .back {
   margin-top: 158%;
+  position: sticky;
 }
 
 .sidebar{
@@ -270,56 +274,8 @@ header{
   padding-right: 10px;
 }
 
-label #sidebar_btn{
-  z-index: 1;
-  color: #fff;
-  position: fixed;
-  cursor: pointer;
-  left: 300px;
-  font-size: 20px;
-  margin: 5px 0;
-  transition: 0.5s;
-  transition-property: color;
-}
-
-label #sidebar_btn:hover{
-  color: #19B3D3;
-}
-
 .active {
   background-color: #19B3D3;
-}
-
-#check:checked ~ .sidebar{
-  left: -185px;
-}
-
-#check:checked ~ .sidebar a span{
-  display: none;
-}
-
-#check:checked ~ .sidebar a{
-  font-size: 20px;
-  margin-left: 165px;
-  width: 100%;
-}
-
-#check:checked ~ .sidebar .logout,
-#check:checked ~ .sidebar .logout-comptable,
-#check:checked ~ .sidebar .logout-commercial,
-#check:checked ~ .sidebar .logout-notif,
-#check:checked ~ .sidebar .logout-settings,
-#check:checked ~ .sidebar .back{
-  position: relative;
-  top: 19%;
-}
-
-#check:checked ~ .sidebar .profile_info{
-  display: none;
-}
-
-#check{
-  display: none;
 }
 
 .mobile_nav{
@@ -845,7 +801,7 @@ main .bottom_data .reminders {
 }
 
 .dataTables_length select {
-  width: 4%;
+  width: 5%;
   padding: 5px;
   margin-bottom: 5px;
   border: 1px solid #ccc;
@@ -894,6 +850,21 @@ main .bottom_data .orders {
 
 /* ========Utilisateurs Admin =================== */
 
+table.tab {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 12px 10px;
+}
+
+table.tab th,
+table.tab td {
+  padding: 12px 10px;
+}
+
+.tab td#status {
+  text-align: center;
+}
+
 .form-card {
   margin: 20px auto; 
   max-width: 400px;
@@ -927,7 +898,7 @@ main .bottom_data .orders {
   background-position-x: calc(100% - 10px);
   background-position-y: center;
   padding-right: 30px;
-  width: 366%;
+  width: 379%;
   cursor: pointer;
 }
 
@@ -992,17 +963,11 @@ main .bottom_data .orders {
 
 .box-general {
   padding: 15px;
-  min-height: 100px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 80.7%;
   background-color: var(--light);
-  border-radius: 5px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  margin-left: 21.6%;
+  border-radius: 10px;
+  margin-left: 15.3%;
 }
 
 .most-ticket-user td img {

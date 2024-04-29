@@ -24,14 +24,14 @@
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
 </head>
 <body>
 
   <input type="checkbox" id="check">
   <header>
-    <label for="check">
-      <i class="fas fa-bars" id="sidebar_btn"></i>
-    </label>
     <div class="left_area">
       <h3>E11<span>event</span></h3>
     </div>
@@ -115,14 +115,13 @@
     </select>
     </div>
     
-    
     <div style="margin-bottom: 10px;"></div>
 
     <input type="submit" class="" value="Enregistrer">
 
     <div style="margin-bottom: 5px;"></div>
 
-    </form>
+  </form>
 
     <?php
 
@@ -156,64 +155,58 @@
     }
     
     ?>
-    <div class=" table-container">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">id</th>
-          <th scope="col">Mail</th>
-          <th scope="col">Mot de Passe</th>
-          <th scope="col">Nom</th>
-          <th scope="col">Prénom</th>
-          <th scope="col">Role</th>
-          <th scope="col">Supprimer</th>
-        </tr>
-      </thead>
-      <tbody>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var deleteButtons = document.querySelectorAll('.delete-button');
-                deleteButtons.forEach(function(button) {
-                    button.addEventListener('click', function() {
-                        var id = this.getAttribute('data-id');
-                        window.location.href = '?id_utilisateur=' + id;
-                    });
-                });
-            });
-        </script>
+    <script>
+    $(document).ready(function() {
+        var table = $('#Tab').DataTable({
+            "language": {
+                "url": "../../Json/French.json"
+            }
+        });
 
-        <?php
+        table.on('click', '.delete-button', function() {
+            var id = $(this).data('id');
+            window.location.href = '?id_utilisateur=' + id;
+        });
+    });
+    </script>
 
-          $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!'); 
+    <?php
 
-          $data = $db->query("SELECT utilisateur.*, role.nom_role FROM utilisateur INNER JOIN role ON utilisateur.role = role.id_role ORDER BY utilisateur.id_utilisateur ASC")->fetchAll();
+        $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!'); 
 
-          foreach ($data as $row) {
-            echo "<tr id='row-".$row['id_utilisateur']."'><td>".$row['id_utilisateur']."</td><td>".$row['mail']."</td><td>".$row['mdp']."</td><td>".$row['nom']."</td><td>".$row['prenom']."</td><td>".$row['nom_role']."</td><td><input class='delete-button' type='button' value='Supprimer' data-id='".$row['id_utilisateur']."'></td></tr>";
+        $data = $db->query("SELECT utilisateur.*, role.nom_role FROM utilisateur INNER JOIN role ON utilisateur.role = role.id_role ORDER BY utilisateur.id_utilisateur ASC")->fetchAll();
+
+        echo "<table id='Tab' class='tab'>";
+        echo "<thead><tr><th>ID</th><th>Mail</th><th>Mot de passe</th><th>Nom</th><th>Prénom</th><th>Rôle</th><th>Action</th></tr></thead>";
+        echo "<tbody>";
+        foreach ($data as $row) {
+            echo "<tr id='row-".$row['id_utilisateur']."'><td>".$row['id_utilisateur']."</td><td>".$row['mail']."</td><td>".$row['mdp']."</td><td>".$row['nom']."</td><td>".$row['prenom']."</td><td>".$row['nom_role']."</td><td id='status'><input class='delete-button' type='button' value='Supprimer' data-id='".$row['id_utilisateur']."'></td></tr>";
         }
-        
+        echo "</tbody>";
+        echo "</table>";
+
         if (isset($_GET['id_utilisateur'])) {  //supprime un utilisateur
-          $id = $_GET['id_utilisateur'];
-          try {
-              $db->beginTransaction();
-      
-              $stmt = $db->prepare("DELETE FROM utilisateur WHERE id_utilisateur = :id_utilisateur");
-              $stmt->bindParam(':id_utilisateur', $id);
-              $stmt->execute();
-      
-              $db->commit();
-      
-              // Si la requête est une requête AJAX, renvoyer une réponse HTTP appropriée
-              if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-                  echo "Utilisateur supprimé";
-                  exit;
-              }
-          } catch (Exception $e) {
-              $db->rollBack();
-              echo "Erreur : " . $e->getMessage();
-          }
-      }
+            $id = $_GET['id_utilisateur'];
+            try {
+                $db->beginTransaction();
+
+                $stmt = $db->prepare("DELETE FROM utilisateur WHERE id_utilisateur = :id_utilisateur");
+                $stmt->bindParam(':id_utilisateur', $id);
+                $stmt->execute();
+
+                $db->commit();
+
+                // Si la requête est une requête AJAX, renvoyer une réponse HTTP appropriée
+                if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+                    echo "Utilisateur supprimé";
+                    exit;
+                }
+            } catch (Exception $e) {
+                $db->rollBack();
+                echo "Failed: " . $e->getMessage();
+            }
+        }
         
         // permet de supprimer un utilisateur sans recharger la page (l'utilisateur est supprimé de la base de données et du tableau sans avoir à la recharger)
         echo "<script type='text/javascript'> 
@@ -238,22 +231,25 @@
         </script>";
         ?>
 
-      </tbody>
-    </table>
-  </div></div>
-
-<script>
+  </div>
   
-var mobileProfileImage = document.querySelector('.mobile_profile_image');
-    var profileImage = document.querySelector('.profile_image');
+  <script>
+    
+  var mobileProfileImage = document.querySelector('.mobile_profile_image');
+      var profileImage = document.querySelector('.profile_image');
 
-    // Récupérez l'avatar sélectionné du stockage local, s'il existe
-    var selectedAvatar = localStorage.getItem('selectedAvatar');
-    if (selectedAvatar) {
-        mobileProfileImage.src = selectedAvatar;
-        profileImage.src = selectedAvatar;
-    }
-    </script>
+      // Récupérez l'avatar sélectionné du stockage local, s'il existe
+      var selectedAvatar = localStorage.getItem('selectedAvatar');
+      if (selectedAvatar) {
+          mobileProfileImage.src = selectedAvatar;
+          profileImage.src = selectedAvatar;
+      }
+
+  </script>
+
+  </div>
+
 <script type="text/javascript" src="../../index.js"></script>
+
 </body>
 </html>

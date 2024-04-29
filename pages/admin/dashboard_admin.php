@@ -28,11 +28,11 @@
     $sql_tickets_attente = "SELECT COUNT(DISTINCT id_ticket) AS total_tickets_attente FROM ticket WHERE status = 3";
     $result_tickets_attente = $db->query($sql_tickets_attente);
 
-    $sql_user_by_number_tickets = "SELECT u.nom, u.prenom, COUNT(t.id_ticket) AS nombre_tickets 
-                               FROM utilisateur u 
-                               LEFT JOIN ticket t ON u.id_utilisateur = t.utilisateur 
+    $sql_user_by_number_tickets = "SELECT u.nom, u.prenom, COUNT(t.id_ticket) AS nombre_tickets
+                               FROM utilisateur u
+                               LEFT JOIN ticket t ON u.id_utilisateur = t.utilisateur
                                WHERE t.status = 1
-                               GROUP BY u.id_utilisateur 
+                               GROUP BY u.id_utilisateur
                                ORDER BY nombre_tickets DESC";
 
     $result_user_by_number_tickets = $db->query($sql_user_by_number_tickets);
@@ -104,9 +104,6 @@
     
   <input type="checkbox" id="check">
   <header>
-    <label for="check">
-      <i class="fas fa-bars" id="sidebar_btn"></i>
-    </label>
     <div class="left_area">
       <h3>E11<span>event</span></h3>
     </div>

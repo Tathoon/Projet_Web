@@ -780,6 +780,7 @@ main .bottom_data .reminders {
   font-size: 1rem;
   text-align: center;
   color: dark;
+  margin-top: 15px;
 }
 
 .dataTables_paginate .paginate_button {
@@ -797,10 +798,7 @@ main .bottom_data .reminders {
 }
 
 .dataTables_info {
-  padding: 12px 10px;
-  font-size: 1rem;
-  text-align: center;
-  color: dark;
+  display: none;
 }
 
 .dataTables_filter {
@@ -811,10 +809,7 @@ main .bottom_data .reminders {
 }
 
 .dataTables_length {
-  padding: 12px 10px;
-  font-size: 1rem;
-  text-align: left;
-  color: dark;
+  display: none;
 }
 
 .sorting {
@@ -830,17 +825,11 @@ main .bottom_data .reminders {
   box-sizing: border-box;
 }
 
-.dataTables_length select {
-  width: 5%;
-  padding: 5px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
+
 .center-content {
   text-align: center;
 }
+
 /* ========Utilisateurs Admin =================== */
 
 table.tab {
@@ -968,12 +957,6 @@ table.tab td {
   height: 36px;
   border-radius: 50%;
   object-fit: cover;
-}
-.dataTables_length {
-  padding: 12px 10px;
-  font-size: 1rem;
-  text-align: left;
-  color: dark;
 }
 
 .form-container {
@@ -1960,9 +1943,7 @@ main .bottom_data .reminders .task_list {
 }
 
 .dataTables_paginate,
-.dataTables_info,
-.dataTables_filter,
-.dataTables_length {
+.dataTables_filter {
   padding: 8px 6px;
   font-size: 0.9rem;
 }
@@ -1976,9 +1957,6 @@ main .bottom_data .reminders .task_list {
   width: 70%;
 }
 
-.dataTables_length select {
-  width: 15%;
-}
 }
 
 

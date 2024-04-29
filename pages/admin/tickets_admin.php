@@ -334,7 +334,7 @@
         </div>
       </main>
     </div>
-
+    
     <div class="content">
       <main>
         <div class="bottom_data">

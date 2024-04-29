@@ -422,20 +422,7 @@
                       // Rediriger vers la page précédente ou une autre page après la suppression
                       header('Location: tickets_commercial.php');
                       exit();
-                    }
-                    
-                    $rowCount = count($pending_data);
-
-                    if ($rowCount < 10) {
-                      $emptyRows = 10 - $rowCount;
-
-                      for ($i = 0; $i < $emptyRows; $i++) {
-                        echo "<tr><td colspan='8'>&nbsp;</td></tr>";
-                      }
-                    }
-
-                    foreach ($pending_data as $row) {
-                    }
+                    }                
                   }
                 ?>
               </tbody>
@@ -566,6 +553,13 @@
                               // Lien vers le justificatif dans le conteneur Azure Blob Storage
                               $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/" . $row['justificatif'] . "' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
                           }
+
+                          $statusClass = '';
+                          if ($row['status'] == 'Accepté') {
+                              $statusClass = 'completed';
+                          } elseif ($row['status'] == 'Refusé') {
+                              $statusClass = 'processing';
+                          }
                   
                           // Affichage des lignes de tableau avec les données et les justificatifs
                           echo "<tr>
@@ -579,19 +573,6 @@
                                   <td id='status'><span class='status completed processing'>" .$row['status']."</span></td>
                               </tr>";
                       }
-
-                    $rowCount = count($other_data);
-
-                    if ($rowCount < 10) {
-                      $emptyRows = 10 - $rowCount;
-
-                      for ($i = 0; $i < $emptyRows; $i++) {
-                        echo "<tr><td colspan='8'>&nbsp;</td></tr>";
-                      }
-                    }
-
-                    foreach ($other_data as $row) {
-                    }
                   }
                 ?>
               </tbody>

@@ -235,7 +235,7 @@
                 $id_ticket = $db->lastInsertId();
         
                 // Envoi du fichier justificatif vers Azure Blob Storage
-                $connectionString = "DefaultEndpointsProtocol=https;AccountName=<e11event>;AccountKey=<OVp/sacfyyfrlCyj0SEAl/k8jS6r5G+wQ86UeD5oR6W9i2d395JqqmUEi7ZwVrDU6BYkqh5t6OPW+ASttYtsEg==>";
+                $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=zsZOSpoagHKUPcRe/SVjKGVph9Sc5rA2OMbzRyn9OLFUWrp2kFR0e3lUAThxepBHHpVQBTKeuRPa+AStbzTSDA==;EndpointSuffix=core.windows.net";
                 $blobClient = BlobRestProxy::createBlobService($connectionString);
         
                 $containerName = "<justificatifs>"; // Remplacez par le nom de votre conteneur
@@ -250,19 +250,19 @@
                     $stmt_image->bindParam(':id_ticket', $id_ticket);
                     $stmt_image->execute();
 
-                    echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                          <strong>La note de frais a bien été ajoutée.</strong>
-                          </div>';
-                    echo '<script type="text/javascript">
-                          setTimeout(function() {
-                              var element = document.getElementById("success-alert");
-                              element.parentNode.removeChild(element);
-                          }, 3000);
-                          </script>';
                 } catch(PDOException $e) {
                     // Gérer l'exception si la mise à jour de la base de données échoue
                     echo "Erreur lors de la mise à jour du nom du justificatif dans la base de données : " . $e->getMessage();
                 }
+                echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                      <strong>La note de frais a bien été ajoutée.</strong>
+                      </div>';
+                echo '<script type="text/javascript">
+                      setTimeout(function() {
+                      var element = document.getElementById("success-alert");
+                      element.parentNode.removeChild(element);
+                      }, 3000);
+                      </script>';
             }}
         ?>
       </form>
@@ -296,24 +296,11 @@
                   $containerName = "<justificatifs>";
                   $justificatifs = "<justificatifs>";
                   $accountName = "e11event";
+
+                  error_reporting(E_ALL);
+                  ini_set('display_errors', 1);
                   
                   $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-
-                  if(isset($_GET['id'])) {
-                      $id_ticket_to_delete = $_GET['id'];
-                      
-                      // Connexion à la base de données
-                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-
-                      // Supprimer le ticket de la base de données
-                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
-                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
-                      $stmt_delete->execute();
-                      
-                      // Rediriger vers la page précédente ou une autre page après la suppression
-                      header('Location: tickets_commercial.php');
-                      exit();
-                  }
 
                   if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
                     $nom = $_SESSION['nom'];
@@ -322,9 +309,6 @@
                     // Vérifie si l'ID du ticket est défini et s'il est numérique
                     if(isset($_GET['id']) && is_numeric($_GET['id'])) {
                       $id_ticket_to_delete = $_GET['id'];
-                      
-                      // Connexion à la base de données
-                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
                       
                       // Supprimer le ticket de la base de données
                       $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
@@ -415,14 +399,10 @@
                               <td><a href='tickets_commercial.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td> 
                           </tr>";
                     }
-
-                    
+        
                     if(isset($_GET['id'])) {
                       $id_ticket_to_delete = $_GET['id'];
-                  
-                      // Connexion à la base de données
-                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-                  
+   
                       // Récupérer le nom du fichier justificatif avant de supprimer le ticket
                       $stmt = $db->prepare("SELECT justificatif FROM ticket WHERE id_ticket = :id_ticket");
                       $stmt->bindParam(':id_ticket', $id_ticket_to_delete);
@@ -459,32 +439,32 @@
               </tbody>
             </table>
             <script>
-              $(document).ready(function() {
-                  // Lorsqu'un bouton Supprimer est cliqué
-                  $('.btn-delete').click(function(e) {
-                    e.preventDefault(); // Empêche le comportement par défaut du lien
+            $(document).ready(function() {
+                // When a Delete button is clicked
+                $('.btn-delete').click(function(e) {
+                    e.preventDefault(); // Prevent the default link behavior
 
-                    // Récupère l'URL du lien pour obtenir l'ID du ticket à supprimer
+                    // Get the URL of the link to get the ID of the ticket to delete
                     var url = $(this).attr('href');
 
-                    // Effectue une requête AJAX pour supprimer le ticket
+                    // Perform an AJAX request to delete the ticket
                     $.ajax({
-                      type: 'GET',
-                      url: url,
-                      success: function(data) {
-                        // If the deletion is successful, remove the corresponding row from the table
-                        $(e.target).closest('tr').remove();
+                        type: 'POST',
+                        url: url,
+                        success: function(data) {
+                            // If the deletion is successful, remove the corresponding row from the table
+                            $(e.target).closest('tr').remove();
 
-                        // Add a new empty row to the table
-                        $('table tbody').append("<tr><td colspan='8'>&nbsp;</td></tr>");
-                      },
-                      error: function(xhr, status, error) {
-                        // Handle errors if the deletion fails
-                        console.error(xhr.responseText);
-                      }
+                            // Add a new empty row to the table
+                            $('table tbody').append("<tr><td colspan='8'>&nbsp;</td></tr>");
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle errors if the deletion fails
+                            console.error(xhr.responseText);
+                        }
                     });
-                  });
                 });
+            });
             </script>
           </div>
         </div>

@@ -115,7 +115,7 @@
                   <th>Prix</th>
                   <th>Description</th>
                   <th>Justificatif</th>
-                  <th>Status</th>
+                  <th id='status'>Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -161,10 +161,10 @@
                             <td>".$row['date']."</td>
                             <td>".$row['lieu']."</td>
                             <td>".$row['categorie']."</td>
-                            <td>".$row['prix']."</td>
+                            <td>".$row['prix']."€</td>
                             <td>".$row['description']."</td>
                             <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                            <td><span class='status ".$statusClass."'>".$row['status']."</span></td>
+                            <td id='status'><span class='status ".$statusClass."'>".$row['status']."</span></td>
                           </tr>";
                   }
                   ?>

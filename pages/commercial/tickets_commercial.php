@@ -172,6 +172,15 @@
         </script>
               
         <?php
+        require_once 'vendor/autoload.php'; // Assurez-vous d'avoir installé le SDK Azure Storage pour PHP via Composer
+
+        use MicrosoftAzure\Storage\Blob\BlobRestProxy;
+        use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
+        use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
+
+        $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+        
+        // Vérifie si les champs POST requis sont définis
         if (isset($_POST['categorie']) && isset($_POST['cout']) && isset($_POST['description']) && isset($_POST['lieu']) && isset($_FILES['justificatif'])) {
             $categorie = $_POST['categorie'];
             $cout = $_POST['cout'];
@@ -224,17 +233,26 @@
         
                 $id_ticket = $db->lastInsertId();
         
-                $target_dir = "../../images/justificatifs/";
+                // Envoi du fichier justificatif vers Azure Blob Storage
+                $connectionString = "DefaultEndpointsProtocol=https;AccountName=<E11event\$E11event>;AccountKey=<7xpJPs961iBt5v3cF1yZZsFy4rpndQ8dyW5Hw4J4f7nfCQwq20yd6wA9uAdh>";
+                $blobClient = BlobRestProxy::createBlobService($connectionString);
+        
+                $containerName = "<justificatifs>"; // Remplacez par le nom de votre conteneur
+        
                 $extension = pathinfo($_FILES["justificatif"]["name"], PATHINFO_EXTENSION);
                 $nouveau_nom_image = "justificatif$id_ticket.$extension";
-                $target_file = $target_dir . $nouveau_nom_image;
         
-                if (move_uploaded_file($_FILES["justificatif"]["tmp_name"], $target_file)) {
+                try {
+                    $content = fopen($_FILES["justificatif"]["tmp_name"], "r");
+                    $blobClient->createBlockBlob($containerName, $nouveau_nom_image, $content);
+        
+                    // Met à jour le nom du justificatif dans la base de données
                     $stmt_image = $db->prepare("UPDATE ticket SET justificatif = :justificatif WHERE id_ticket = :id_ticket");
                     $stmt_image->bindParam(':justificatif', $nouveau_nom_image);
                     $stmt_image->bindParam(':id_ticket', $id_ticket);
-        
                     $stmt_image->execute();
+                } catch(ServiceException $e) {
+                    // Gérer l'exception
                 }
         
                 echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -278,12 +296,17 @@
                   <th>Prix</th>
                   <th>Description</th>
                   <th>Justificatif</th>
-                  <th>Status</th>
+                  <th id="status">Status</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <?php
+                <?php                  
+                  // Définir les informations de connexion au service Blob Storage
+                  $connectionString = "DefaultEndpointsProtocol=https;AccountName=<E11event\$E11event>;AccountKey=<7xpJPs961iBt5v3cF1yZZsFy4rpndQ8dyW5Hw4J4f7nfCQwq20yd6wA9uAdh>";
+                  $blobClient = BlobRestProxy::createBlobService($connectionString);
+                  $containerName = "<justificatifs>";
+                  
                   $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
                   if(isset($_GET['id'])) {
@@ -390,28 +413,38 @@
 
                     $pending_data = array_reverse($pending_tickets->fetchAll());
 
+                    $blobList = $blobClient->listBlobs($containerName);
+                    $justificatif_files = [];
+                    foreach ($blobList->getBlobs() as $blob) {
+                        $justificatif_files[] = $blob->getName();
+                    }
+
                     foreach ($pending_data as $row) {
                       $justificatifIcon = '';
                       if (!empty($row['justificatif'])) {
-                        $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                          // Vérifier si le justificatif existe dans le conteneur Blob Storage
+                          if (in_array($row['justificatif'], $justificatif_files)) {
+                              $justificatifIcon = "<a href='https://<E11event\$E11event>.blob.core.windows.net/$justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                          }
                       }
+                      // Afficher les tickets avec les justificatifs
                       echo "<tr>
                               <td>".$row['id_ticket']."</td>
                               <td>".$row['date']."</td>
                               <td>".$row['lieu']."</td>
                               <td>".$row['categorie']."</td>
-                              <td>".$row['prix']."</td>
+                              <td>".$row['prix']."€</td>
                               <td>".$row['description']."</td>
                               <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                              <td><span class='status pending'>".$row['status']."</span></td>
+                              <td id='status'><span class='status pending'>".$row['status']."</span></td>
                               <td><a href='tickets_commercial.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td> 
-                            </tr>";
+                          </tr>";
                     }
 
                     
                     if(isset($_GET['id'])) {
                       $id_ticket_to_delete = $_GET['id'];
-                      
+                  
                       // Connexion à la base de données
                       $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
                   
@@ -425,16 +458,13 @@
                       // Supprimer le ticket de la base de données
                       $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
                       $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
-                      $stmt_delete->execute();                  
+                      $stmt_delete->execute();
                   
                       // Supprimer le justificatif du dossier "justificatifs"
-                      if (!empty($justificatif_filename)) {
-                          $justificatif_path = "../../images/justificatifs/".$justificatif_filename; // Chemin complet du fichier justificatif
-                          if (file_exists($justificatif_path)) {
-                              unlink($justificatif_path); // Supprimer le fichier justificatif
-                          }
+                      if (!empty($justificatif_filename) && in_array($justificatif_filename, $justificatif_files)) {
+                          $blobClient->deleteBlob($justificatifs, $justificatif_filename);
                       }
-                      
+                  
                       // Rediriger vers la page précédente ou une autre page après la suppression
                       header('Location: tickets_commercial.php');
                       exit();
@@ -503,12 +533,17 @@
                   <th>Prix</th>
                   <th>Description</th>
                   <th>Justificatif</th>
-                  <th>Status</th>
+                  <th id="status">Status</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
-                $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+                  
+                  // Définir les informations de connexion au service Blob Storage
+                  $blobClient = BlobRestProxy::createBlobService($connectionString);
+                  $containerName = "<justificatifs>";
+                  
+                  $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
                   if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
                     $nom = $_SESSION['nom'];
@@ -567,30 +602,25 @@
                     
                       $other_data = array_reverse($other_tickets->fetchAll());
                   
-                    foreach ($other_data as $row) {
-                      $justificatifIcon = '';
-                      if (!empty($row['justificatif'])) {
-                        $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                      foreach ($other_data as $row) {
+                          $justificatifIcon = '';
+                          if (!empty($row['justificatif'])) {
+                              // Lien vers le justificatif dans le conteneur Azure Blob Storage
+                              $justificatifIcon = "<a href='https://<E11event\$E11event>.blob.core.windows.net/<justificatifs>/" . $row['justificatif'] . "' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                          }
+                  
+                          // Affichage des lignes de tableau avec les données et les justificatifs
+                          echo "<tr>
+                                  <td>".$row['id_ticket']."</td>
+                                  <td>".$row['date']."</td>
+                                  <td>".$row['lieu']."</td>
+                                  <td>".$row['categorie']."</td>
+                                  <td>".$row['prix']."€</td>
+                                  <td>".$row['description']."</td>
+                                  <td>".$row['justificatif']." ".$justificatifIcon."</td>
+                                  <td id='status'><span class='status completed processing'>" .$row['status']."</span></td>
+                              </tr>";
                       }
-                    
-                      $statusClass = '';
-                      if ($row['status'] == 'Refusé') {
-                        $statusClass = 'status processing';
-                      } elseif ($row['status'] == 'Accepté') {
-                        $statusClass = 'status completed';
-                      }
-                    
-                      echo "<tr>
-                              <td>".$row['id_ticket']."</td>
-                              <td>".$row['date']."</td>
-                              <td>".$row['lieu']."</td>
-                              <td>".$row['categorie']."</td>
-                              <td>".$row['prix']."</td>
-                              <td>".$row['description']."</td>
-                              <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                              <td><span class='status completed processing".$statusClass."'>".$row['status']."</span></td>
-                            </tr>";
-                    }
 
                     $rowCount = count($other_data);
 

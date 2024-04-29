@@ -824,6 +824,14 @@ main .bottom_data .reminders {
   grid-gap: 1.5rem;
 }
 
+.bottom_data .orders th#status {
+  text-align: center;
+}
+
+.bottom_data .orders td#status {
+  text-align: center;
+}
+
 /* -------CALENDRIER-----------*/
 #calendar {
   width: 97%;
@@ -1389,6 +1397,16 @@ textarea {
   font-weight: 700;
 }
 
+.bottom_data .orders #otherTable #pendingtable th#status {
+  text-align: center;
+}
+
+.bottom_data .orders #otherTable #pendingTable td#status {
+  text-align: center;
+}
+
+
+
 /* ------------------*/
 /*                   */
 /*                   */
@@ -1573,7 +1591,7 @@ textarea {
   color: #fff;
 }
 .dark-mode .title {
-  color: #fff; /* Couleur de texte blanche en mode sombre */
+  color: #fff; 
 }
 
 .dark-mode .form-group input[type="submit"] {
@@ -1681,6 +1699,16 @@ input:checked + .slider:before {
   background-color: #313131;
   color: #fff;
 }
+
+.dark-mode .delete-button {
+  background-color: var(--danger);
+  color: #972f2f;
+}
+
+.dark-mode .delete-button:hover {
+  background-color: #f0a5a5;
+}
+
 /* ------------------*/
 /*                   */
 /*                   */
@@ -1761,7 +1789,7 @@ input:checked + .slider:before {
     display: block;
     width: calc(100% - 0%);
     position: relative;
-    bottom: 1.6%;
+    bottom: 2.5%;
   }
 
   .nav_bar{
@@ -1869,6 +1897,8 @@ input:checked + .slider:before {
 @media (max-width: 768px) {
   #calendar {
     max-width: 90%; /* Ajuster la largeur maximale pour s'adapter à la taille de l'écran */
+    position: relative;
+    bottom: 10%;
   }
 }
 
@@ -2154,5 +2184,11 @@ input:checked + .slider:before {
 
   .ticket-submit {  
       margin-right: -5% !important; /* Aucun décalage à droite */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .user-table tr:nth-child(n+3) {
+      display: none;
   }
 }

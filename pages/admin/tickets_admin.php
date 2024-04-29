@@ -457,7 +457,8 @@
     $('#pending, #other').DataTable({
         "language": {
             "url": "../../Json/French.json"
-        }
+        },
+        "order": [[0, "desc"]]
     });
 });
   var mobileProfileImage = document.querySelector('.mobile_profile_image');

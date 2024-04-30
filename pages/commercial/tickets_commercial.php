@@ -405,13 +405,12 @@
                         $justificatif_files[] = $blob->getName();
                     }
 
-                    foreach ($pending_data as $row) {
-                      $justificatifIcon = '';
-                      if (!empty($row['justificatif'])) {
-                          // Vérifier si le justificatif existe dans le conteneur Blob Storage
-                          if (in_array($row['justificatif'], $justificatif_files)) {
-                              $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
-                          }
+                    $justificatifIcon = '';
+                    if (!empty($row['justificatif'])) {
+                        // Vérifier si le justificatif existe dans le conteneur Blob Storage
+                        if (in_array($row['justificatif'], $justificatif_files)) {
+                            $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                        }
                       }
                       // Afficher les tickets avec les justificatifs
                       echo "<tr>
@@ -569,12 +568,11 @@
                       $other_data = array_reverse($other_tickets->fetchAll());
                   
                       $justificatifIcon = '';
-                        if (!empty($row['justificatif'])) {
-                            // Vérifier si le justificatif existe dans le conteneur Blob Storage
-                            if (in_array($row['justificatif'], $justificatif_files)) {
-                                $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
-                            }
-                        }
+                      if (!empty($row['justificatif'])) {
+                          // Vérifier si le justificatif existe dans le conteneur Blob Storage
+                          if (in_array($row['justificatif'], $justificatif_files)) {
+                              $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                          }
                     
                         $statusClass = '';
                         if ($row['status'] == 'Accepté') {
@@ -595,6 +593,7 @@
                                 <td id='status'><span class='status ".$statusClass."'>" .$row['status']."</span></td>
                             </tr>";
                     }
+                  }
                 ?>
               </tbody>
             </table>

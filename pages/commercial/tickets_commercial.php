@@ -132,7 +132,7 @@
         </div>
 
         <script>
-            $('#justificatif').on('change', function(e){
+           $('#justificatif').on('change', function(e){
                 // Define fileName outside of the if statement
                 var fileName = '';
 
@@ -230,33 +230,39 @@
                 $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=zsZOSpoagHKUPcRe/SVjKGVph9Sc5rA2OMbzRyn9OLFUWrp2kFR0e3lUAThxepBHHpVQBTKeuRPa+AStbzTSDA==;EndpointSuffix=core.windows.net";
                 $containerName = "justificatifs"; // Remplacez par le nom de votre conteneur
 
-                $extension = pathinfo($_FILES["justificatif"]["name"], PATHINFO_EXTENSION);
-                $nouveau_nom_image = "justificatif$id_ticket.$extension";
-                
-                $blobClient = BlobRestProxy::createBlobService($connectionString);
-                $content = fopen($_FILES['justificatif']['tmp_name'], "r");
-                $blobClient->createBlockBlob($containerName, $nouveau_nom_image, $content);
-        
-                try {
-                    // Met à jour le nom du justificatif dans la base de données
-                    $stmt_image = $db->prepare("UPDATE ticket SET justificatif = :justificatif WHERE id_ticket = :id_ticket");
-                    $stmt_image->bindParam(':justificatif', $nouveau_nom_image);
-                    $stmt_image->bindParam(':id_ticket', $id_ticket);
-                    $stmt_image->execute();
+                // Envoi du fichier justificatif vers Azure Blob Storage (si fourni)
+                if ($_FILES['justificatif']['size'] > 0) {
 
-                } catch(PDOException $e) {
-                    // Gérer l'exception si la mise à jour de la base de données échoue
-                    echo "Erreur lors de la mise à jour du nom du justificatif dans la base de données : " . $e->getMessage();
+                  // Traitement du justificatif uniquement s'il a été fourni
+                  $extension = pathinfo($_FILES["justificatif"]["name"], PATHINFO_EXTENSION);
+                  $nouveau_nom_image = "justificatif$id_ticket.$extension";
+                  
+                  $blobClient = BlobRestProxy::createBlobService($connectionString);
+                  $content = fopen($_FILES['justificatif']['tmp_name'], "r");
+                  $blobClient->createBlockBlob($containerName, $nouveau_nom_image, $content);
+
+                  try {
+                      // Mettre à jour le nom du justificatif dans la base de données
+                      $stmt_image = $db->prepare("UPDATE ticket SET justificatif = :justificatif WHERE id_ticket = :id_ticket");
+                      $stmt_image->bindParam(':justificatif', $nouveau_nom_image);
+                      $stmt_image->bindParam(':id_ticket', $id_ticket);
+                      $stmt_image->execute();
+                  } catch(PDOException $e) {
+                      // Gérer l'exception si la mise à jour de la base de données échoue
+                      echo "Erreur lors de la mise à jour du nom du justificatif dans la base de données : " . $e->getMessage();
+                  }
                 }
+
+                // Affichage du message de succès
                 echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
                       <strong>La note de frais a bien été ajoutée.</strong>
-                      </div>';
+                    </div>';
                 echo '<script type="text/javascript">
                       setTimeout(function() {
-                      var element = document.getElementById("success-alert");
-                      element.parentNode.removeChild(element);
+                          var element = document.getElementById("success-alert");
+                          element.parentNode.removeChild(element);
                       }, 3000);
-                      </script>';
+                    </script>';
             }
           }
         ?>

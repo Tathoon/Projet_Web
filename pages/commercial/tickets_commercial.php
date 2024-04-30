@@ -124,8 +124,10 @@
             <div class="button-row">
               <label class="file-label text-ticket" for="justificatif">Ajouter un fichier</label>
               <input type="file" name="justificatif" id="justificatif">
-              <button type="submit" class="submit-button ticket-submit text-ticket">Ajouter la note</button>
             </div>
+          </div>
+          <div class="space text-center">
+            <button type="submit" class="btn-ticket">Ajouter la note de frais</button>
           </div>
         </div>
 

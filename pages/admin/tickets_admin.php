@@ -386,16 +386,16 @@
                     $stmt_user->execute();
                     $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
 
-                     // Récupère le rôle de l'utilisateur à partir de la base de données
-                     $stmt_user = $db->prepare("SELECT role FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
-                     $stmt_user->bindParam(':nom', $nom);
-                     $stmt_user->bindParam(':prenom', $prenom);
-                     $stmt_user->execute();
+                    // Récupère le rôle de l'utilisateur à partir de la base de données
+                    $stmt_user = $db->prepare("SELECT role FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_user->bindParam(':nom', $nom);
+                    $stmt_user->bindParam(':prenom', $prenom);
+                    $stmt_user->execute();
  
-                     $role = $stmt_user->fetch()['role']; 
+                    $role = $stmt_user->fetch()['role']; 
 
-                     if ($role == '1') {
-                          $other_tickets = $db->prepare("
+                    if ($role == '1') {
+                        $other_tickets = $db->prepare("
                               SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                               FROM ticket AS t
                               INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
@@ -403,8 +403,8 @@
                               INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                               WHERE ts.nom_status != 'En attente'
                           ");
-                      } else {
-                          $other_tickets = $db->prepare("
+                    } else {
+                        $other_tickets = $db->prepare("
                               SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                               FROM ticket AS t
                               INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
@@ -412,8 +412,8 @@
                               INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                               WHERE t.utilisateur = :id_utilisateur AND ts.nom_status != 'En attente'
                           ");
-                          $other_tickets->bindParam(':id_utilisateur', $id_utilisateur);
-                      }
+                        $other_tickets->bindParam(':id_utilisateur', $id_utilisateur);
+                    }
                       $other_tickets->execute();
                       $other_data = $other_tickets->fetchAll();
                   

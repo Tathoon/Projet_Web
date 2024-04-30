@@ -268,7 +268,7 @@ try {
               <tbody>
                 <?php
 
-$db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+                  $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
                   if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
                     $nom = $_SESSION['nom'];

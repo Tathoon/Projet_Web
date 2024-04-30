@@ -112,7 +112,7 @@
                   <th>Prix</th>
                   <th>Description</th>
                   <th>Justificatif</th>
-                  <th>Status</th>
+                  <th class="center-content">Status</th>
                   <th></th>
                 </tr>
               </thead>
@@ -354,7 +354,7 @@
                   <th>Prix</th>
                   <th>Description</th>
                   <th>Justificatif</th>
-                  <th>Status</th>
+                  <th class="center-content">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -461,10 +461,9 @@
         "order": [[0, "desc"]]
     });
 });
-  var mobileProfileImage = document.querySelector('.mobile_profile_image');
+    var mobileProfileImage = document.querySelector('.mobile_profile_image');
     var profileImage = document.querySelector('.profile_image');
 
-    // Récupérez l'avatar sélectionné du stockage local, s'il existe
     var selectedAvatar = localStorage.getItem('selectedAvatar');
     if (selectedAvatar) {
         mobileProfileImage.src = selectedAvatar;

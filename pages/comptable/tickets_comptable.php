@@ -14,28 +14,11 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] != 3 && $_SESSION['role'] !=
      }
 
 try {
-  $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
+  $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
   // Set the PDO error mode to exception
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(PDOException $e) {
   die("Connection failed: " . $e->getMessage());
-}
-
-
-function getStatus($status) {
-  switch ($status) {
-    case 'Complété':
-      return '<span class="status completed">Complété</span>';
-      break;
-    case 'En attente':
-      return '<span class="status pending">En attente</span>';
-      break;
-    case 'Rejeté':
-      return '<span class="status processing">Rejeté</span>';
-      break;
-    default:
-      return '';
-  }
 }
 ?>
 
@@ -45,9 +28,13 @@ function getStatus($status) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tickets - Comptable</title>
+  <link rel="icon" href="../../images/Logo_onglet.png" type="image/x-icon">
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
 <body>
 
@@ -103,7 +90,7 @@ function getStatus($status) {
           <div class="header">
             <h3>Recent Orders</h3>
           </div>
-          <table id="myTable">
+          <table id="pending">
             <thead>
               <tr>
                 <th>ID</th>
@@ -114,31 +101,138 @@ function getStatus($status) {
                 <th>Catégorie</th>
                 <th>Prix</th>
                 <th>Description</th>
-                <th>Status</th>
+                <th>Justificatif</th>
+                <th id="status">Status</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <?php
-              $sql = "SELECT * FROM ticket";
-              $result = $db->query($sql);
               
-              if ($result && $result->rowCount() > 0) {
-                  while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                      echo "<tr>";
-                      echo "<td>" . (isset($row["id"]) ? $row["id"] : "") . "</td>";
-                      echo "<td>" . (isset($row["name"]) ? $row["name"] : "") . "</td>";
-                      echo "<td>" . (isset($row["email"]) ? $row["email"] : "") . "</td>";
-                      echo "<td>" . $row["date"] . "</td>";
-                      echo "<td>" . $row["lieu"] . "</td>";
-                      echo "<td>" . $row["nom_categorie"] . "</td>";
-                      echo "<td>" . $row["prix"] . "€</td>";
-                      echo "<td>" . $row["description"] . "</td>";
-                      echo "<td>" . getStatus($row["status"]) . "</td>";
-                      echo "</tr>";
-                  }
-              } else {
-                  echo "<tr><td colspan='9'>0 results</td></tr>";
+              if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
+                $nom = $_SESSION['nom'];
+                $prenom = $_SESSION['prenom'];
               }
+
+              // update_ticket_status.php
+            if (isset($_POST['ticket_id'])) {
+              $ticket_id = $_POST['ticket_id'];
+            } else {
+            }
+
+            if (isset($_POST['status'])) {
+              $status = $_POST['status'];
+            } else {
+                // Handle the case where 'status' is not set
+            }
+                // Vérifie si l'ID du ticket est défini et s'il est numérique
+                if(isset($_GET['id']) && is_numeric($_GET['id'])) {
+                  $id_ticket_to_delete = $_GET['id'];
+                  
+                  // Connexion à la base de données
+                  $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+                  
+                  // Supprimer le ticket de la base de données
+                  $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
+                  $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
+                  $stmt_delete->execute();
+                  
+                  // Renvoyer une réponse pour indiquer que la suppression a réussi
+                  echo "Ticket supprimé avec succès";
+                }
+
+                // Récupère le nom de l'utilisateur à partir de la base de données
+                $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                $stmt_nom->bindParam(':nom', $nom);
+                $stmt_nom->bindParam(':prenom', $prenom);
+                $stmt_nom->execute();
+                $nom = $stmt_nom->fetch()['nom'];
+
+                // Récupère l'adresse mail de l'utilisateur à partir de la base de données
+                $stmt_mail = $db->prepare("SELECT mail FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                $stmt_mail->bindParam(':nom', $nom);
+                $stmt_mail->bindParam(':prenom', $prenom);
+                $stmt_mail->execute();
+                $mail = $stmt_mail->fetch()['mail'];
+
+                // Récupère l'ID de l'utilisateur à partir de la base de données
+                $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                $stmt_user->bindParam(':nom', $nom);
+                $stmt_user->bindParam(':prenom', $prenom);
+                $stmt_user->execute();
+                $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
+
+                $pending_tickets = $db->prepare("
+                SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                FROM ticket AS t
+                INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                WHERE ts.nom_status = 'En attente'
+            ");
+            $pending_tickets->execute();
+            $pending_data = $pending_tickets->fetchAll();
+
+            foreach ($pending_data as $row) {
+              $justificatifIcon = '';
+              if (!empty($row['justificatif'])) {
+                $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+              }
+
+              $statusClass = '';
+              if ($row['status'] == 'Refusé') {
+                $statusClass = 'status processing';
+              } elseif ($row['status'] == 'Accepté') {
+                $statusClass = 'status completed';
+              }
+
+              echo "<tr>
+                      <td>".$row['id_ticket']."</td>
+                      <td>".$row['nom']."</td>
+                      <td>".$row['mail']."</td>
+                      <td>".$row['date']."</td>
+                      <td>".$row['lieu']."</td>
+                      <td>".$row['categorie']."</td>
+                      <td>".$row['prix']."</td>
+                      <td>".$row['description']."</td>
+                      <td>".$row['justificatif']." ".$justificatifIcon."</td>
+                      <td>
+                      <form action='tickets_comptable.php' method='post'>
+                          <select name='status'>
+                              <option value='status1'>Status 1</option>
+                              <option value='status2'>Status 2</option>
+                              <!-- Add more options as needed -->
+                          </select>
+                          <input type='hidden' name='ticket_id' value='".$row['id_ticket']."'/>
+                          <input type='submit' value='Update Status'/>
+                      </form>
+                  </td>
+                          </tr>";
+            }
+
+            
+
+            
+            // Connect to the database
+            $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+            
+            // Update the ticket status
+            $update = $db->prepare("UPDATE ticket SET status = ? WHERE id_ticket = ?");
+            $update->execute([$status, $ticket_id]);
+            
+            // Redirect back to the tickets page
+            header("Location: tickets_comptable.php");
+
+            // Connexion à la base de données
+            $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+                  
+            // Récupérer le nom du fichier justificatif avant de supprimer le ticket
+            $stmt = $db->prepare("SELECT justificatif FROM ticket WHERE id_ticket = :id_ticket");
+            $stmt->bindParam(':id_ticket', $id_ticket_to_delete);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $justificatif_filename = $row ? $row['justificatif'] : null;
+
               // Close the connection
               $db = null;
               ?>
@@ -149,13 +243,144 @@ function getStatus($status) {
     </main>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
-  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+  <div class="content">
+      <main>
+        <div class="bottom_data">
+          <div class="orders">
+            <div class="header">
+              <h3>Historique des tickets</h3>
+            </div>
+            <table id="other">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nom</th>
+                  <th>Email</th>
+                  <th>Date</th>
+                  <th>Lieu</th>
+                  <th>Catégorie</th>
+                  <th>Prix</th>
+                  <th>Description</th>
+                  <th>Justificatif</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+
+$db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+
+                  if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
+                    $nom = $_SESSION['nom'];
+                    $prenom = $_SESSION['prenom'];
+    
+                    // Récupère le nom de l'utilisateur à partir de la base de données
+                    $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_nom->bindParam(':nom', $nom);
+                    $stmt_nom->bindParam(':prenom', $prenom);
+                    $stmt_nom->execute();
+                    $nom = $stmt_nom->fetch()['nom'];
+    
+                    // Récupère l'adresse mail de l'utilisateur à partir de la base de données
+                    $stmt_mail = $db->prepare("SELECT mail FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_mail->bindParam(':nom', $nom);
+                    $stmt_mail->bindParam(':prenom', $prenom);
+                    $stmt_mail->execute();
+                    $mail = $stmt_mail->fetch()['mail'];
+    
+                    // Récupère l'ID de l'utilisateur à partir de la base de données
+                    $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_user->bindParam(':nom', $nom);
+                    $stmt_user->bindParam(':prenom', $prenom);
+                    $stmt_user->execute();
+                    $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
+
+                    // Récupère le rôle de l'utilisateur à partir de la base de données
+                    $stmt_user = $db->prepare("SELECT role FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
+                    $stmt_user->bindParam(':nom', $nom);
+                    $stmt_user->bindParam(':prenom', $prenom);
+                    $stmt_user->execute();
+ 
+                    $role = $stmt_user->fetch()['role']; 
+
+                        $other_tickets = $db->prepare("
+                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              FROM ticket AS t
+                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                              INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                              INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                              WHERE ts.nom_status != 'En attente'
+                          ");
+                    } else {
+                        $other_tickets = $db->prepare("
+                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              FROM ticket AS t
+                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                              INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                              INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                              WHERE t.utilisateur = :id_utilisateur AND ts.nom_status != 'En attente'
+                          ");
+                        $other_tickets->bindParam(':id_utilisateur', $id_utilisateur);
+                    }
+                      $other_tickets->execute();
+                      $other_data = $other_tickets->fetchAll();
+                  
+                    foreach ($other_data as $row) {
+                      $justificatifIcon = '';
+                      if (!empty($row['justificatif'])) {
+                        $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                      }
+                    
+                      $statusClass = '';
+                      if ($row['status'] == 'Refusé') {
+                        $statusClass = 'status processing';
+                      } elseif ($row['status'] == 'Accepté') {
+                        $statusClass = 'status completed';
+                      }
+                    
+                    
+                      echo "<tr>
+                              <td>".$row['id_ticket']."</td>
+                              <td>".$row['nom']."</td>
+                              <td>".$row['mail']."</td>
+                              <td>".$row['date']."</td>
+                              <td>".$row['lieu']."</td>
+                              <td>".$row['categorie']."</td>
+                              <td>".$row['prix']."</td>
+                              <td>".$row['description']."</td>
+                              <td>".$row['justificatif']." ".$justificatifIcon."</td>
+                              <td class='center-content'><span class='status completed processing".$statusClass."'>".$row['status']."</span></td>
+                            </tr>";
+                    }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
   <script>
-    $(document).ready(function () {
-      $('#myTable').DataTable();
+  $(document).ready(function () {
+      $('#pending, #other').DataTable({
+          "language": {
+              "url": "../../Json/French.json"
+          },
+          "order": [[0, "desc"]]
+      });
     });
+    
+    var mobileProfileImage = document.querySelector('.mobile_profile_image');
+    var profileImage = document.querySelector('.profile_image');
+
+    // Récupérez l'avatar sélectionné du stockage local, s'il existe
+    var selectedAvatar = localStorage.getItem('selectedAvatar');
+    if (selectedAvatar) {
+        mobileProfileImage.src = selectedAvatar;
+        profileImage.src = selectedAvatar;
+    }
   </script>
-  <script src="../../index.js"></script>
+  <script type="text/javascript" src="../../index.js"></script>
 </body>
 </html>

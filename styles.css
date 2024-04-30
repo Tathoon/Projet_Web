@@ -1012,6 +1012,7 @@ body, html {
   font-weight: 600;
   color: var(--dark);
   text-align: center;
+  margin-bottom: 0;
 }
 
 .table-ticket-container {
@@ -1274,6 +1275,7 @@ textarea {
   font-weight: 600;
   color: var(--dark);
   text-align: center;
+  margin-bottom: 0;
 }
 
 .ticket-other main .bottom_data .orders table tbody tr:nth-child(even) {

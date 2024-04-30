@@ -827,7 +827,7 @@ main .bottom_data .reminders {
 
 
 .center-content {
-  text-align: center;
+  text-align: center !important;
 }
 
 /* ========Utilisateurs Admin =================== */

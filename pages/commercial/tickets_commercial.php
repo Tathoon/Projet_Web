@@ -132,43 +132,35 @@
         </div>
 
         <script>
-          $(document).ready(function () {
-            // Lorsque le bouton de sélection de fichier change
             $('#justificatif').on('change', function(e){
-              // Récupérer le nom du fichier sélectionné
-              var fileName = e.target.files[0].name;
-              // Mettre à jour le texte de l'élément pour afficher le nom du fichier
-              $('#file-name').text(fileName);
-            });
-          });
+                // Define fileName outside of the if statement
+                var fileName = '';
 
-          $('#justificatif').on('change', function(e){
-              // Check if a file is selected
-              if (e.target.files.length > 0) {
-                // Récupérer le nom du fichier sélectionné
-                var fileName = e.target.files[0].name;
-                // Mettre à jour le texte de l'élément pour afficher le nom du fichier
-                $('#file-name').text(fileName);
-              }
-              
-              // Afficher le bouton de suppression si un justificatif est sélectionné
-              if(fileName !== ''){
-                $('#delete-justificatif').show();
-              } else {
-                $('#delete-justificatif').hide();
-              }
+                // Check if a file is selected
+                if (e.target.files.length > 0) {
+                    // Récupérer le nom du fichier sélectionné
+                    fileName = e.target.files[0].name;
+                    // Mettre à jour le texte de l'élément pour afficher le nom du fichier
+                    $('#file-name').text(fileName);
+                }
+                
+                // Afficher le bouton de suppression si un justificatif est sélectionné
+                if(fileName !== ''){
+                    $('#delete-justificatif').show();
+                } else {
+                    $('#delete-justificatif').hide();
+                }
             });
 
             // Lorsque le bouton de suppression de justificatif est cliqué
             $('#delete-justificatif').on('click', function(){
-              // Réinitialiser l'élément de sélection de fichier
-              $('#justificatif').val('');
-              // Réinitialiser le texte affichant le nom du fichier
-              $('#file-name').text('');
-              // Masquer le bouton de suppression
-              $(this).hide();
+                // Réinitialiser l'élément de sélection de fichier
+                $('#justificatif').val('');
+                // Réinitialiser le texte affichant le nom du fichier
+                $('#file-name').text('');
+                // Masquer le bouton de suppression
+                $(this).hide();
             });
-          });
         </script>
               
         <?php
@@ -594,7 +586,7 @@
                                 <td>".$row['justificatif']." ".$justificatifIcon."</td>
                                 <td id='status'><span class='status ".$statusClass."'>" .$row['status']."</span></td>
                             </tr>";
-                      }
+                    }
                   }
                 ?>
               </tbody>

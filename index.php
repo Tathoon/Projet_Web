@@ -1,9 +1,63 @@
+<?php
+session_start();  // Start the session at the beginning
+
+$errorMessage = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $usermail = $_POST['email'];
+    $userpasswd = $_POST['password'];
+
+    try {
+        $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $query = $db->prepare('SELECT * FROM utilisateur WHERE mail = :mail');
+        $query->execute(array('mail' => $usermail));
+        $row = $query->fetch();
+
+        if ($row && $userpasswd == $row['mdp']) {
+            $_SESSION['role'] = $row['role'];
+            $_SESSION['nom'] = $row['nom'];
+            $_SESSION['prenom'] = $row['prenom'];
+
+            switch ($row['role']) {
+                case 1:
+                    header('Location: pages/admin/dashboard_admin.php');
+                    break;
+                case 2:
+                    header('Location: pages/commercial/tickets_commercial.php');
+                    break;
+                case 3:
+                    header('Location: pages/comptable/dashboard_comptable.php');
+                    break;
+                default:
+                    header('Location: index.php');
+                    break;
+            }
+
+            exit();
+        } else {
+            $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
+                                <strong>Erreur</strong> le mail ou le mot de passe est incorrect.
+                            </div>';
+            error_log("Login error: $errorMessage");  // Log the error message
+        }
+    } catch (PDOException $e) {
+        $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
+                            <strong>Erreur de connexion à la base de données :</strong> ' . $e->getMessage() . '
+                        </div>';
+        error_log("Database error: " . $e->getMessage());  // Log the database error
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
+    <link rel="icon" href="../../images/Logo_onglet.png" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 </head>
@@ -27,8 +81,10 @@
         480C880,480,800,480,720,480C640,480,560,480,480,480C400,480,320,480,240,480C160,480,80,480,40,480L0,480Z">
     </path>
 </svg>
-<img src="images/Logo-Web.png" alt="Logo" class="img-login">
-    <form action="#" method="post" class="form-login">
+
+<input type="checkbox" id="dark-mode-toggle">
+<img src="images/Logo-Web.png" alt="Logo" class="img-login" id="logo-image">
+    <form action="index.php" method="post" class="form-login">
         <div class="form-group">
             <label for="email" hidden></label>
             <input type="email" id="email" name="email" class="placeholder-white" placeholder="&#xf2c0;   E-mail" required style="font-family:Arial, FontAwesome"> 
@@ -40,57 +96,8 @@
         <div class="form-group">
             <input type="submit" value="LOGIN">
         </div>
-        <?php
-            session_start();
-
-            echo ucfirst($_SESSION['role']);
-
-            if (isset($_POST['email']) && isset($_POST['password'])) {
-            $usermail = $_POST['email'];
-            $userpasswd = $_POST['password'];
-
-                $db = new PDO('mysql:host=localhost;dbname=e11event_bdd;charset=utf8mb4', 'root', '');
-
-                $query = $db->query('SELECT * FROM utilisateur');
-                $data = $query->fetchAll();
-
-                $success = false;
-                $userRole = null;
-
-                foreach ($data as $row) {
-                    if ($row['mail'] == $usermail && $row['mdp'] == $userpasswd) {
-                        $success = true;
-                        $userRole = $row['role'];
-                        $_SESSION['role'] = $row['role'];
-                        $_SESSION['nom'] = $row['nom'];
-                        $_SESSION['prenom'] = $row['prenom'];
-                        break;
-                    }
-                }
-
-                if ($success && $userRole){
-
-                    switch ($userRole) {
-                        case 1: 
-                            header('Location: pages/admin/dashboard_admin.php');
-                            break;
-                        case 2: 
-                            header('Location: pages/commercial/tickets_commercial.php');
-                            break;
-                        case 3:
-                            header('Location: pages/comptable/dashboard_comptable.php');
-                            break;
-                        default:
-                            break;
-                    }
-                } else {
-                    echo '<br><div class="error-alert" role="alert" style="color:white;">
-                        <strong>Erreur</strong> le mail ou le mot de passe est inccorect.
-                    </div>';
-                }
-            }
-        ?>
-    </form>
+    
+</form>
     <div class="target">
         <div class="center"></div>
         <div class="outer-circle"></div>

@@ -135,54 +135,45 @@ $(document).ready(function(){
   });
 });
 
-/* CHANGEMENT AVATAR NAVBAR */
 var radios = document.querySelectorAll('input[name="avatar"]');
 var mobileProfileImage = document.querySelector('.mobile_profile_image');
 var profileImage = document.querySelector('.profile_image');
 
-// Ajoutez un écouteur d'événements à chaque bouton radio
+var avatarPaths = {
+    'avatar1': '../../images/avatar/avatar1.png',
+    'avatar2': '../../images/avatar/avatar2.png',
+    'avatar3': '../../images/avatar/avatar3.png',
+    'avatar4': '../../images/avatar/avatar4.png',
+    'avatar5': '../../images/avatar/avatar5.png',
+    'avatar6': '../../images/avatar/dancing-toothless-tothless.gif',
+    'avatar7': '../../images/avatar/Donald-Duck.gif',
+    'avatar8': '../../images/avatar/Pedro.gif',
+    'avatar9': '../../images/avatar/PowerRanger.gif',
+    'avatar10': '../../images/avatar/angry-cat.gif',
+    'avatar11': '../../images/avatar/quokka.gif',
+    'avatar12': '../../images/avatar/avatar12.png',
+    'avatar13': '../../images/avatar/avatar13.png',
+    'avatar14': '../../images/avatar/avatar14.png',
+    'avatar15': '../../images/avatar/avatar15.png',
+    'avatar16': '../../images/avatar/avatar16.png',
+    'avatar17': '../../images/avatar/avatar17.png'
+};
+
 radios.forEach(function(radio) {
     radio.addEventListener('change', function() {
-        // Modifiez les attributs src des images lorsque le bouton radio est sélectionné
-        var avatarSrc;
-        if (this.checked) {
-            // Si un bouton radio est coché, mettez à jour les images en conséquence
-            if (this.id === 'avatar1') {
-                avatarSrc = '../../images/avatar/avatar1.png';
-            } else if (this.id === 'avatar2') {
-                avatarSrc = '../../images/avatar/avatar2.png';
-            } else if (this.id === 'avatar3') {
-                avatarSrc = '../../images/avatar/avatar3.png';
-            } else if (this.id === 'avatar4') {
-                avatarSrc = '../../images/avatar/avatar4.png';
-            } else if (this.id === 'avatar5') {
-                avatarSrc = '../../images/avatar/avatar5.png';
-            } else if (this.id === 'avatar6') {
-                avatarSrc = '../../images/avatar/dancing-toothless-tothless.gif';
-            } else if (this.id === 'avatar7') {
-                avatarSrc = '../../images/avatar/Donald-Duck.gif';
-            } else if (this.id === 'avatar8') {
-                avatarSrc = '../../images/avatar/Pedro.gif';
-            } else if (this.id === 'avatar9') {
-                avatarSrc = '../../images/avatar/PowerRanger.gif';
-            } else if (this.id === 'avatar10') {
-                avatarSrc = '../../images/avatar/angry-cat.gif';
-            } else if (this.id === 'avatar11') {
-                avatarSrc = '../../images/avatar/quokka.gif';
-            }
+
+        if (this.checked && avatarPaths.hasOwnProperty(this.id)) {
+            var avatarSrc = avatarPaths[this.id];
             mobileProfileImage.src = avatarSrc;
             profileImage.src = avatarSrc;
 
-            // Enregistrez l'avatar sélectionné dans le stockage local
             localStorage.setItem('selectedAvatar', avatarSrc);
         } else {
-            // Si aucun bouton radio n'est coché, définissez l'image de base
             mobileProfileImage.src = '../../images/user-icon.png';
             profileImage.src = '../../images/user-icon.png';
         }
     });
 });
-
 
 function showMoreAvatars() {
   document.getElementById('hiddenAvatars').style.display = 'flex';

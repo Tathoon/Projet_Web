@@ -81,9 +81,9 @@
           <p>Les champs marqués d'un * sont obligatoires.</p>
         </div>
 
-        <div class="mb-3 space">
+        <div class="space form-control">
           <label for="categorie">Type de frais<span style="color: red;">*</span> <span> :</span></label>
-          <div class="form-type-frais">
+          <div>
             <select name="categorie" id="categorie" required>
                 <option value="" style="color: gray;">Renseignez le type de frais</option>
               <?php 
@@ -97,22 +97,22 @@
           </div>
         </div>
 
-        <div class="mb-3 space">
+        <div class="space form-control">
           <label for="cout">Coût du frais<span style="color: red;">*</span> <span> :</span></label>
           <input name="cout" type="text" id="cout" required>
         </div>
 
-        <div class="mb-3 space">
+        <div class="space form-control">
           <label for="description">Description du frais<span style="color: red;">*</span> <span> :</span></label>
           <textarea name="description" type="text" id="description" required></textarea>
         </div>
 
-        <div class="mb-3 space">
+        <div class="space form-control">
           <label for="lieu">Lieu du frais<span style="color: red;">*</span> <span> :</span></label>
           <input name="lieu" type="text" id="lieu" required>
         </div>
 
-        <div class="mb-3">
+        <div>
           <div class="space">
             <label for="justificatif">Justificatif : <span> (Optionnel)</span></label>
             <div id="file-info" style="display: flex; align-items: center;">

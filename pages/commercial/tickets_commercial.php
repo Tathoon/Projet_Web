@@ -142,13 +142,14 @@
             });
           });
 
-          $(document).ready(function () {
-            // Lorsque le bouton de sélection de fichier change
-            $('#justificatif').on('change', function(e){
-              // Récupérer le nom du fichier sélectionné
-              var fileName = e.target.files[0].name;
-              // Mettre à jour le texte de l'élément pour afficher le nom du fichier
-              $('#file-name').text(fileName);
+          $('#justificatif').on('change', function(e){
+              // Check if a file is selected
+              if (e.target.files.length > 0) {
+                // Récupérer le nom du fichier sélectionné
+                var fileName = e.target.files[0].name;
+                // Mettre à jour le texte de l'élément pour afficher le nom du fichier
+                $('#file-name').text(fileName);
+              }
               
               // Afficher le bouton de suppression si un justificatif est sélectionné
               if(fileName !== ''){
@@ -593,7 +594,7 @@
                                 <td>".$row['justificatif']." ".$justificatifIcon."</td>
                                 <td id='status'><span class='status ".$statusClass."'>" .$row['status']."</span></td>
                             </tr>";
-                    }
+                      }
                   }
                 ?>
               </tbody>

@@ -447,9 +447,6 @@
                           $blobClient->deleteBlob($justificatifs, $justificatif_filename);
                       }
                     }
-                    // Rediriger vers la page précédente ou une autre page après la suppression
-                    header('Location: tickets_commercial.php');
-                    exit();
                   }
                 ?>
               </tbody>
@@ -470,9 +467,6 @@
                         success: function(data) {
                             // If the deletion is successful, remove the corresponding row from the table
                             $(e.target).closest('tr').remove();
-
-                            // Add a new empty row to the table
-                            $('table tbody').append("<tr><td colspan='8'>&nbsp;</td></tr>");
                         },
                         error: function(xhr, status, error) {
                             // Handle errors if the deletion fails

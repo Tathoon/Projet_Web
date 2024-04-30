@@ -75,7 +75,7 @@
   <div class="ticket-container">
     <div class="card-ticket">
       <h1 class="pending-ticket-title">Formulaire de dépôt de note de frais</h1>
-      <form action="tickets_commercial.php" method="post" enctype="multipart/form-data" class="form-user ticket-card form-container">
+      <form action="tickets_commercial.php" id="ticketForm" method="post" enctype="multipart/form-data" class="form-user ticket-card form-container">
 
         <div class="text-obligatoire">
           <p>Les champs marqués d'un * sont obligatoires.</p>
@@ -283,7 +283,7 @@
                   processData:false,
                   success: function(data){
                       // Ajoutez le nouveau ticket au tableau
-                      $("#ticketTable tbody").append(data);
+                      $("#pendingTable tbody").append(data);
 
                       // Effacez le formulaire
                       $("#ticketForm")[0].reset();

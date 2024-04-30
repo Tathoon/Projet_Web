@@ -827,7 +827,7 @@ main .bottom_data .reminders {
 
 
 .center-content {
-  text-align: center !important;
+  text-align: center;
 }
 
 /* ========Utilisateurs Admin =================== */
@@ -1137,7 +1137,8 @@ textarea {
 
 .ticket-container button[type="submit"] {
   display: inline-block; 
-  margin: 30px auto 0;
+  margin: 30px 70% 0;
+  width: 100%;
   padding: 10px 20px;
   background-color: #6aa3ff;
   color: #fff;
@@ -2006,8 +2007,7 @@ main .bottom_data .reminders .task_list {
 }
 
 .ticket-card button[type="submit"] {
-    margin-right: auto;
-    margin-left: auto;
+    margin: 20px 40%;
 }
 
 .ticket-pending {

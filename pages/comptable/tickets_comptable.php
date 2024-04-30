@@ -73,7 +73,6 @@
     var mobileProfileImage = document.querySelector('.mobile_profile_image');
     var profileImage = document.querySelector('.profile_image');
 
-    // Récupérez l'avatar sélectionné du stockage local, s'il existe
     var selectedAvatar = localStorage.getItem('selectedAvatar');
     if (selectedAvatar) {
         mobileProfileImage.src = selectedAvatar;

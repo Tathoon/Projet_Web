@@ -174,12 +174,10 @@
 
   <script>
 
-    // Sélectionnez les boutons radio et les images
     var radios = document.querySelectorAll('input[type=radio][name="avatar"]');
     var mobileProfileImage = document.querySelector('.mobile_profile_image');
     var profileImage = document.querySelector('.profile_image');
 
-    // Récupérez l'avatar sélectionné du stockage local, s'il existe
     var selectedAvatar = localStorage.getItem('selectedAvatar');
     if (selectedAvatar) {
         mobileProfileImage.src = selectedAvatar;

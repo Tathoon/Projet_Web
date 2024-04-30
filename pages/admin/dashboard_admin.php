@@ -38,7 +38,7 @@
     $result_user_by_number_tickets = $db->query($sql_user_by_number_tickets);
 
 
-    if ($result_users !== false && $result_tickets !== false && $result_depense !== false && $result_tickets_attente !== false){
+    if ($result_users !== false && $result_tickets !== false && $result_depense !== false && $result_tickets_attente !== false && $result_user_by_number_tickets !== false){
         $row_users = $result_users->fetch(PDO::FETCH_ASSOC);
         $row_tickets = $result_tickets->fetch(PDO::FETCH_ASSOC);
         $row_depense = $result_depense->fetch(PDO::FETCH_ASSOC);

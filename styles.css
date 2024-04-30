@@ -1138,7 +1138,8 @@ textarea {
 .ticket-container button[type="submit"] {
   display: inline-block;
   padding: 10px 20px;
-  margin-right: -41%; 
+  margin-top: 30px;
+  justify-content: center;
   background-color: #6aa3ff;
   color: #fff;
   border: none;

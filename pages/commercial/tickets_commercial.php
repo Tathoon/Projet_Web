@@ -265,8 +265,6 @@
                       }, 3000);
                       </script>';
             }
-            header('Location: tickets_commercial.php');
-            exit();
           }
         ?>
       </form>
@@ -448,11 +446,10 @@
                       if (!empty($justificatif_filename)) {
                           $blobClient->deleteBlob($justificatifs, $justificatif_filename);
                       }
-                  
-                      // Rediriger vers la page précédente ou une autre page après la suppression
-                      header('Location: tickets_commercial.php');
-                      exit();
                     }
+                    // Rediriger vers la page précédente ou une autre page après la suppression
+                    header('Location: tickets_commercial.php');
+                    exit();
                   }
                 ?>
               </tbody>

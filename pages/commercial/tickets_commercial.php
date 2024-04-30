@@ -126,7 +126,7 @@
               <input type="file" name="justificatif" id="justificatif">
             </div>
           </div>
-          <div class="space text-center">
+          <div class="space">
             <button type="submit" class="btn-ticket">Ajouter la note de frais</button>
           </div>
         </div>

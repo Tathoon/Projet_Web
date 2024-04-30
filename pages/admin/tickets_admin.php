@@ -112,7 +112,7 @@
                   <th>Prix</th>
                   <th>Description</th>
                   <th>Justificatif</th>
-                  <th>Status</th>
+                  <th class="center-content">Status</th>
                   <th></th>
                 </tr>
               </thead>
@@ -354,7 +354,7 @@
                   <th>Prix</th>
                   <th>Description</th>
                   <th>Justificatif</th>
-                  <th>Status</th>
+                  <th class="center-content">Status</th>
                 </tr>
               </thead>
               <tbody>

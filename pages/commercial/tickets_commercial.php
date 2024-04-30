@@ -411,7 +411,6 @@
                         if (in_array($row['justificatif'], $justificatif_files)) {
                             $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
                         }
-                      }
                       // Afficher les tickets avec les justificatifs
                       echo "<tr>
                               <td>".$row['id_ticket']."</td>

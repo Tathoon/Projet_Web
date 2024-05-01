@@ -2110,3 +2110,25 @@ main .bottom_data .reminders .task_list {
     margin-right: -5% !important;
 }
 }
+
+/* Styliser le select */
+select[name='status'] {
+    padding: 5px 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.bouton-ticket-status {
+    background-color: #6aa3ff;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer; 
+    font-size: 16px;
+}
+
+.bouton-ticket-status :hover {
+    background-color: #5395ff;
+}

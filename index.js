@@ -98,17 +98,20 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
 
   function changeImage() {
-      const logoImage = document.getElementById('logo-image');
-      const darkModeToggle = document.getElementById('dark-mode-toggle');
-
-      const isDarkMode = darkModeToggle.checked;
-
-
-      if (isDarkMode) {
-          logoImage.src = "images/Logo-WebDarkmode.jpg";
-      } else {
-          logoImage.src = "images/Logo-Web.png";
-      }
+    const logoImage = document.getElementById('logo-image');
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+  
+    if (!logoImage || !darkModeToggle) {
+      return;
+    }
+  
+    const isDarkMode = darkModeToggle.checked;
+  
+    if (isDarkMode) {
+      logoImage.src = "images/Logo-WebDarkmode.jpg";
+    } else {
+      logoImage.src = "images/Logo-Web.png";
+    }
   }
 
   const darkModeToggle = document.getElementById('dark-mode-toggle');

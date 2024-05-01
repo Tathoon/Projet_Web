@@ -254,15 +254,15 @@
                 }
 
                 // Affichage du message de succès
-                echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                      <strong>La note de frais a bien été ajoutée.</strong>
-                    </div>';
+                echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" style="text-align: center; font-size: 13px;" role="alert">
+                        <strong>La note de frais a bien été ajoutée.</strong>
+                      </div>';
                 echo '<script type="text/javascript">
-                      setTimeout(function() {
-                          var element = document.getElementById("success-alert");
-                          element.parentNode.removeChild(element);
-                      }, 3000);
-                    </script>';
+                        setTimeout(function() {
+                            var element = document.getElementById("success-alert");
+                            element.parentNode.removeChild(element);
+                        }, 3000);
+                      </script>';
             }
           }
         ?>

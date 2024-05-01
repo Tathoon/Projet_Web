@@ -119,89 +119,7 @@
               <tbody>
                 <?php
                   $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-
-                  if(isset($_GET['id'])) {
-                      $id_ticket_to_delete = $_GET['id'];
-                      
-                      // Connexion à la base de données
-                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-                  
-                      // Supprimer le ticket de la base de données
-                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
-                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
-                      $stmt_delete->execute();
-                      
-                      // Rediriger vers la page précédente ou une autre page après la suppression
-                      header('Location: tickets_commercial.php');
-                      exit();
-                  }
-                  if(isset($_GET['id'])) {
-                      $id_ticket_to_delete = $_GET['id'];
-                      
-                      // Connexion à la base de données
-                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-
-                      // Supprimer le ticket de la base de données
-                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
-                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
-                      $stmt_delete->execute();
-                      
-                      // Rediriger vers la page précédente ou une autre page après la suppression
-                      header('Location: tickets_commercial.php');
-                      exit();
-                  }
-
-                  if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
-                    $nom = $_SESSION['nom'];
-                    $prenom = $_SESSION['prenom'];
-
-                    // Vérifie si l'ID du ticket est défini et s'il est numérique
-                    if(isset($_GET['id']) && is_numeric($_GET['id'])) {
-                      $id_ticket_to_delete = $_GET['id'];
-                      
-                      // Connexion à la base de données
-                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-                      
-                      // Supprimer le ticket de la base de données
-                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
-                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
-                      $stmt_delete->execute();
-                      
-                      // Renvoyer une réponse pour indiquer que la suppression a réussi
-                      echo "Ticket supprimé avec succès";
-                    }
-    
-                    // Récupère le nom de l'utilisateur à partir de la base de données
-                    $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
-                    $stmt_nom->bindParam(':nom', $nom);
-                    $stmt_nom->bindParam(':prenom', $prenom);
-                    $stmt_nom->execute();
-                    $nom = $stmt_nom->fetch()['nom'];
-    
-                    // Récupère l'adresse mail de l'utilisateur à partir de la base de données
-                    $stmt_mail = $db->prepare("SELECT mail FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
-                    $stmt_mail->bindParam(':nom', $nom);
-                    $stmt_mail->bindParam(':prenom', $prenom);
-                    $stmt_mail->execute();
-                    $mail = $stmt_mail->fetch()['mail'];
-    
-                    // Récupère l'ID de l'utilisateur à partir de la base de données
-                    $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
-                    $stmt_user->bindParam(':nom', $nom);
-                    $stmt_user->bindParam(':prenom', $prenom);
-                    $stmt_user->execute();
-                    $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
-
-                    // Récupère le rôle de l'utilisateur à partir de la base de données
-                    $stmt_user = $db->prepare("SELECT role FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
-                    $stmt_user->bindParam(':nom', $nom);
-                    $stmt_user->bindParam(':prenom', $prenom);
-                    $stmt_user->execute();
-
-                    $role = $stmt_user->fetch()['role']; 
-
-                    
-                    if ($role == '1') {
+  
                         $pending_tickets = $db->prepare("
                             SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                             FROM ticket AS t
@@ -210,17 +128,7 @@
                             INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                             WHERE ts.nom_status = 'En attente'
                         ");
-                    } else {
-                        $pending_tickets = $db->prepare("
-                            SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
-                            FROM ticket AS t
-                            INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
-                            INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
-                            INNER JOIN ticket_status AS ts ON t.status = ts.id_status
-                            WHERE t.utilisateur = :id_utilisateur AND ts.nom_status = 'En attente'
-                        ");
-                        $pending_tickets->bindParam(':id_utilisateur', $id_utilisateur);
-                    }
+                    
                     $pending_tickets->execute();
                     $pending_data = $pending_tickets->fetchAll();
 
@@ -240,15 +148,12 @@
                               <td>".$row['description']."</td>
                               <td>".$row['justificatif']." ".$justificatifIcon."</td>
                               <td class='center-content'><span class='status pending'>".$row['status']."</span></td>
-                              <td class='center-content'><a href='tickets_commercial.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td> 
+                              <td class='center-content'><a href='tickets_admin.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td> 
                             </tr>";
                     }
                     
                     if(isset($_GET['id'])) {
                       $id_ticket_to_delete = $_GET['id'];
-                      
-                      // Connexion à la base de données
-                      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
                   
                       // Récupérer le nom du fichier justificatif avant de supprimer le ticket
                       $stmt = $db->prepare("SELECT justificatif FROM ticket WHERE id_ticket = :id_ticket");
@@ -267,11 +172,11 @@
                           $justificatif_path = "../../images/justificatifs/".$justificatif_filename; // Chemin complet du fichier justificatif
                           if (file_exists($justificatif_path)) {
                               unlink($justificatif_path); // Supprimer le fichier justificatif
-                          }
+                          
                       }
                       
                       // Rediriger vers la page précédente ou une autre page après la suppression
-                      header('Location: tickets_commercial.php');
+                      header('Location: tickets_admin.php');
                       exit();
                 
                     echo "<tr>
@@ -287,18 +192,7 @@
                             <td id='status' class='center-content'><span class='status ".$statusClass."'>".$row['status']."</span></td>
                           </tr>";
                   }
-
-                  
-                  $rowCount = count($pending_data);
-                  
-                  if ($rowCount < 10) {
-                      $emptyRows = 10 - $rowCount;
-                  
-                      for ($i = 0; $i < $emptyRows; $i++) {
-                          echo "";
-                      }
-                  }
-                  }
+                }
                 ?>
               </tbody>
             </table>
@@ -340,7 +234,7 @@
         <div class="bottom_data">
           <div class="orders">
             <div class="header">
-              <h3>Historique des tickets</h3>
+              <h3>Archive de tickets</h3>
             </div>
             <table id="other">
               <thead>
@@ -361,40 +255,6 @@
                 <?php
                 $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
-                  if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
-                    $nom = $_SESSION['nom'];
-                    $prenom = $_SESSION['prenom'];
-    
-                    // Récupère le nom de l'utilisateur à partir de la base de données
-                    $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
-                    $stmt_nom->bindParam(':nom', $nom);
-                    $stmt_nom->bindParam(':prenom', $prenom);
-                    $stmt_nom->execute();
-                    $nom = $stmt_nom->fetch()['nom'];
-    
-                    // Récupère l'adresse mail de l'utilisateur à partir de la base de données
-                    $stmt_mail = $db->prepare("SELECT mail FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
-                    $stmt_mail->bindParam(':nom', $nom);
-                    $stmt_mail->bindParam(':prenom', $prenom);
-                    $stmt_mail->execute();
-                    $mail = $stmt_mail->fetch()['mail'];
-    
-                    // Récupère l'ID de l'utilisateur à partir de la base de données
-                    $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
-                    $stmt_user->bindParam(':nom', $nom);
-                    $stmt_user->bindParam(':prenom', $prenom);
-                    $stmt_user->execute();
-                    $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
-
-                    // Récupère le rôle de l'utilisateur à partir de la base de données
-                    $stmt_user = $db->prepare("SELECT role FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
-                    $stmt_user->bindParam(':nom', $nom);
-                    $stmt_user->bindParam(':prenom', $prenom);
-                    $stmt_user->execute();
- 
-                    $role = $stmt_user->fetch()['role']; 
-
-                    if ($role == '1') {
                         $other_tickets = $db->prepare("
                               SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                               FROM ticket AS t
@@ -403,17 +263,7 @@
                               INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                               WHERE ts.nom_status != 'En attente'
                           ");
-                    } else {
-                        $other_tickets = $db->prepare("
-                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
-                              FROM ticket AS t
-                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
-                              INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
-                              INNER JOIN ticket_status AS ts ON t.status = ts.id_status
-                              WHERE t.utilisateur = :id_utilisateur AND ts.nom_status != 'En attente'
-                          ");
-                        $other_tickets->bindParam(':id_utilisateur', $id_utilisateur);
-                    }
+                    
                       $other_tickets->execute();
                       $other_data = $other_tickets->fetchAll();
                   
@@ -443,7 +293,6 @@
                               <td class='center-content'><span class='status completed processing".$statusClass."'>".$row['status']."</span></td>
                             </tr>";
                     }
-                  }
                 ?>
               </tbody>
             </table>
@@ -464,7 +313,6 @@
   var mobileProfileImage = document.querySelector('.mobile_profile_image');
     var profileImage = document.querySelector('.profile_image');
 
-    // Récupérez l'avatar sélectionné du stockage local, s'il existe
     var selectedAvatar = localStorage.getItem('selectedAvatar');
     if (selectedAvatar) {
         mobileProfileImage.src = selectedAvatar;

@@ -1140,7 +1140,7 @@ textarea {
 
 .ticket-container button[type="submit"] {
   display: inline-block; 
-  margin: 30px 70% 0;
+  margin-top: 30px;
   width: 100%;
   padding: 10px 20px;
   background-color: #6aa3ff;
@@ -1148,6 +1148,7 @@ textarea {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  align-self: center;
   transition: background-color 0.3s ease-in-out;
 }
 
@@ -2010,7 +2011,8 @@ main .bottom_data .reminders .task_list {
 }
 
 .ticket-card button[type="submit"] {
-    margin: 20px 40%;
+    margin-top: 20px;
+    align-self: center;
 }
 
 .ticket-pending {

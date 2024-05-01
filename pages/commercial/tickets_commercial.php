@@ -254,8 +254,8 @@
                 }
 
                 // Affichage du message de succès
-                echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" style="text-align: center; font-size: 13px;" role="alert">
-                        <strong>La note de frais a bien été ajoutée.</strong>
+                echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" style="margin-top: 10px; justify-content: center; text-align: center; font-size: 13px;" role="alert">
+                        <p>La note de frais a bien été ajoutée.</p>
                       </div>';
                 echo '<script type="text/javascript">
                         setTimeout(function() {

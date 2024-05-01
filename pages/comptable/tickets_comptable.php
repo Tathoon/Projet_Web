@@ -186,6 +186,15 @@ try {
                 $statusClass = 'status completed';
               }
 
+              $statusMap = [
+                'status1' => 1,
+                'status2' => 2,
+                // etc.
+            ];
+            
+            $status = $statusMap[$_POST['status']];
+            // code pour exécuter la requête SQL
+
               echo "<tr>
                       <td>".$row['id_ticket']."</td>
                       <td>".$row['nom']."</td>

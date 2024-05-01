@@ -155,27 +155,23 @@
                     if(isset($_GET['id'])) {
                       $id_ticket_to_delete = $_GET['id'];
                   
-                      // Récupérer le nom du fichier justificatif avant de supprimer le ticket
                       $stmt = $db->prepare("SELECT justificatif FROM ticket WHERE id_ticket = :id_ticket");
                       $stmt->bindParam(':id_ticket', $id_ticket_to_delete);
                       $stmt->execute();
                       $row = $stmt->fetch(PDO::FETCH_ASSOC);
                       $justificatif_filename = $row ? $row['justificatif'] : null;
                   
-                      // Supprimer le ticket de la base de données
                       $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
                       $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
                       $stmt_delete->execute();                  
                   
-                      // Supprimer le justificatif du dossier "justificatifs"
                       if (!empty($justificatif_filename)) {
-                          $justificatif_path = "../../images/justificatifs/".$justificatif_filename; // Chemin complet du fichier justificatif
+                          $justificatif_path = "../../images/justificatifs/".$justificatif_filename;
                           if (file_exists($justificatif_path)) {
-                              unlink($justificatif_path); // Supprimer le fichier justificatif
+                              unlink($justificatif_path);
                           
                       }
                       
-                      // Rediriger vers la page précédente ou une autre page après la suppression
                       header('Location: tickets_admin.php');
                       exit();
                 
@@ -198,26 +194,19 @@
             </table>
             <script>
               $(document).ready(function() {
-                  // Lorsqu'un bouton Supprimer est cliqué
                   $('.btn-delete').click(function(e) {
-                    e.preventDefault(); // Empêche le comportement par défaut du lien
+                    e.preventDefault();
 
-                    // Récupère l'URL du lien pour obtenir l'ID du ticket à supprimer
                     var url = $(this).attr('href');
 
-                    // Effectue une requête AJAX pour supprimer le ticket
                     $.ajax({
                       type: 'GET',
                       url: url,
                       success: function(data) {
-                        // If the deletion is successful, remove the corresponding row from the table
                         $(e.target).closest('tr').remove();
 
-                        // Add a new empty row to the table
-                        $('table tbody').append("<tr><td colspan='8'>&nbsp;</td></tr>");
                       },
                       error: function(xhr, status, error) {
-                        // Handle errors if the deletion fails
                         console.error(xhr.responseText);
                       }
                     });

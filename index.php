@@ -1,7 +1,11 @@
 <?php
-session_start();  // Start the session at the beginning
+session_start(); 
 
-$errorMessage = '';
+if(isset($_GET['logout'])) {
+  session_destroy();
+  header('Location: index.php');
+  exit();
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usermail = $_POST['email'];

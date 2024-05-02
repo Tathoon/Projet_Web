@@ -14,73 +14,101 @@
      }
 
 
-
+///////////////////////////////////////////////conexion base de donnée
 
      $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
      $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Requête SQL pour récupérer les mois par ticket pour le statut 1
+
+
+///////////////////////////////////////////////graphique nombre de ticket en attente et validé par mois
+
 $sql_last_months_per_ticket_status_1 = "SELECT DISTINCT id_ticket, MONTH(date) AS dernier_mois 
 FROM ticket 
 WHERE status = 1
 ORDER BY dernier_mois DESC";
-$result_last_months_per_ticket_status_1 = $db->query($sql_last_months_per_ticket_status_1);
-
-$months_per_ticket_status_1 = array();
-
-while ($row = $result_last_months_per_ticket_status_1->fetch(PDO::FETCH_ASSOC)) {
-$months_per_ticket_status_1[$row['id_ticket']] = $row['dernier_mois'];
-}
-
-$monthsJSON_status_1 = json_encode($months_per_ticket_status_1);
-
-// Requête SQL pour récupérer les mois par ticket pour le statut 2
 $sql_last_months_per_ticket_status_2 = "SELECT DISTINCT id_ticket, MONTH(date) AS dernier_mois 
 FROM ticket 
 WHERE status = 2
 ORDER BY dernier_mois DESC";
+
+
+$result_last_months_per_ticket_status_1 = $db->query($sql_last_months_per_ticket_status_1);
 $result_last_months_per_ticket_status_2 = $db->query($sql_last_months_per_ticket_status_2);
 
+
+$months_per_ticket_status_1 = array();
 $months_per_ticket_status_2 = array();
 
-while ($row = $result_last_months_per_ticket_status_2->fetch(PDO::FETCH_ASSOC)) {
-$months_per_ticket_status_2[$row['id_ticket']] = $row['dernier_mois'];
+while ($row = $result_last_months_per_ticket_status_1->fetch(PDO::FETCH_ASSOC)) {
+$months_per_ticket_status_1[$row['id_ticket']] = $row['dernier_mois'];
 }
+while ($row = $result_last_months_per_ticket_status_2->fetch(PDO::FETCH_ASSOC)) {
+    $months_per_ticket_status_2[$row['id_ticket']] = $row['dernier_mois'];
+    }
+    
 
+$monthsJSON_status_1 = json_encode($months_per_ticket_status_1);
 $monthsJSON_status_2 = json_encode($months_per_ticket_status_2);
 
 
 
 
+////////////////////////////////////// graphique dépense totale par mois
 
 
-// Exécutez la requête SQL pour récupérer les prix des tickets par mois
 $sql_prix_par_mois = "SELECT MONTH(date) AS mois, SUM(prix) AS prix_total
                       FROM ticket
                       WHERE status = 1
                       GROUP BY MONTH(date)";
+
 $result_prix_par_mois = $db->query($sql_prix_par_mois);
-
 $prix_par_mois = array();
-
-// Parcourez les résultats de la requête et stockez les prix dans un tableau associatif
 while ($row = $result_prix_par_mois->fetch(PDO::FETCH_ASSOC)) {
     $prix_par_mois[$row['mois']] = $row['prix_total'];
 }
-
-// Convertissez le tableau associatif en JSON pour l'utiliser dans JavaScript
 $prixParMoisJSON = json_encode($prix_par_mois);
 
 
 
 
+//////////////////////////////// pie chart Dépense totale par catégories
+
+    $sql_tickets_per_category = "SELECT tc.nom_categorie AS category, COUNT(t.id_ticket) AS ticket_count 
+                                FROM ticket_categorie tc 
+                                LEFT JOIN ticket t ON tc.id_category = t.categorie 
+                                WHERE t.status = 1 
+                                GROUP BY tc.nom_categorie";
+
+    $result_tickets_per_category = $db->query($sql_tickets_per_category);
+    $ticketCountsPerCategory = array();
+    while ($row = $result_tickets_per_category->fetch(PDO::FETCH_ASSOC)) {
+        $ticketCountsPerCategory[$row['category']] = $row['ticket_count'];
+    }
+    $ticketCountsPerCategoryJSON = json_encode($ticketCountsPerCategory);
 
 
 
 
+    //////////////////////pie chart Nombre de tickets par catégories
+
+    $sql_total_price_per_category = "SELECT tc.nom_categorie AS category, SUM(t.prix) AS total_price 
+                                    FROM ticket_categorie tc 
+                                    LEFT JOIN ticket t ON tc.id_category = t.categorie 
+                                    WHERE t.status = 1 
+                                    GROUP BY tc.nom_categorie";
+
+    $result_total_price_per_category = $db->query($sql_total_price_per_category);
+    $totalPricePerCategory = array();
+    while ($row = $result_total_price_per_category->fetch(PDO::FETCH_ASSOC)) {
+        $totalPricePerCategory[$row['category']] = $row['total_price'];
+    }
+    $totalPricePerCategoryJSON = json_encode($totalPricePerCategory);
 
 
 
+
+////////////////////////////////////////
  
      $sql_number_users = "SELECT COUNT(DISTINCT id_utilisateur) AS total_utilisateurs FROM utilisateur";
      $result_users = $db->query($sql_number_users);
@@ -152,7 +180,13 @@ $prixParMoisJSON = json_encode($prix_par_mois);
      $prices_per_category_json = json_encode($prices_per_category);
  
  ?>
- 
+
+
+
+
+
+
+
  <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -165,6 +199,13 @@ $prixParMoisJSON = json_encode($prix_par_mois);
    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
+
+
+
  </head>
  <body>
      
@@ -175,7 +216,7 @@ $prixParMoisJSON = json_encode($prix_par_mois);
     </div>
   </header>
   
-  <label class="switch" for="dark-mode-toggle">
+    <label class="switch" for="dark-mode-toggle">
       <input type="checkbox" id="dark-mode-toggle">
       <span class="slider round">
         <i class="far fa-sun sun-icon darkmodetitleSUN"></i>
@@ -183,11 +224,14 @@ $prixParMoisJSON = json_encode($prix_par_mois);
       </span>
     </label>
 
-  <div class="mobile_nav">
+
+
+
+<div class="mobile_nav">
     <div class="nav_bar">
-      <img src="../../images/user-icon.png" class="mobile_profile_image" alt="">
-      <h4 class="user-mobile"><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
-      <i class="fa fa-bars nav_btn"></i>
+        <img src="../../images/user-icon.png" class="mobile_profile_image" alt="">
+        <h4 class="user-mobile"><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
+        <i class="fa fa-bars nav_btn"></i>
     </div>
     <div class="mobile_nav_items">
       <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
@@ -196,75 +240,107 @@ $prixParMoisJSON = json_encode($prix_par_mois);
       <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
       <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
     </div>
-  </div>
+</div>
 
  
-   <div class="sidebar">
-     <div class="profile_info">
-       <img src="../../images/user-icon.png" class="profile_image" alt="">
-       <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
-     </div>
-       <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
-       <a href="tickets_comptable.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-       <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
+<div class="sidebar">
+    <div class="profile_info">
+        <img src="../../images/user-icon.png" class="profile_image" alt="">
+        <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
+    </div>
+    <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
+    <a href="tickets_comptable.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
+    <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
     <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
     <a href="../../index.php?logout=true" class="logout-comptable" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
-  </div>
+</div>
  
 
 
-   <body>
+
+
+
+
+<body>
     <div class="content">
         <main>
-        <ul class="cards">
-          <li>
-            <i class="bx bx-group"></i>
-            <span class="info">
-            <h3><?php echo $total_utilisateurs; ?></h3>
-              <p>Total Utilisateurs</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-movie"></i>
-            <span class="info">
-              <h3><?php echo $total_tickets; ?></h3>
-              <p>Nombre Tickets</p>
-            </span>
-          </li>
-          <li>
-          <i class='bx bxs-stopwatch'></i>
-            <span class="info">
-              <h3><?php echo $total_tickets_attente; ?></h3>
-              <p>Tickets en attente</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-dollar-circle"></i>
-            <span class="info">
-              <h3><?php echo $total_depense; ?> €</h3>
-              <p>Dépense</p>
-            </span>
-          </li>
-        </ul>
+
             <div class="header">
-                <h1><i class="fa-solid fa-gauge"></i> Dashboard</h1>
+            <h1><i class="fa-solid fa-gauge"></i> Dashboard</h1>
             </div>
+            <ul class="cards">
+                <li>
+                    <i class="bx bx-group"></i>
+                    <span class="info">
+                        <h3><?php echo $total_utilisateurs; ?></h3>
+                        <p>Total Utilisateurs</p>
+                    </span>
+                </li>
+                <li>
+                    <i class="bx bx-movie"></i>
+                    <span class="info">
+                        <h3><?php echo $total_tickets; ?></h3>
+                        <p>Nombre Tickets</p>
+                    </span>
+                </li>
+                <li>
+                    <i class='bx bxs-stopwatch'></i>
+                    <span class="info">
+                        <h3><?php echo $total_tickets_attente; ?></h3>
+                        <p>Tickets en attente</p>
+                    </span>
+                </li>
+                <li>
+                    <i class="bx bx-dollar-circle"></i>
+                    <span class="info">
+                        <h3><?php echo number_format($total_depense, 2); ?> €</h3>
+                        <p>Dépense</p>
+                    </span>
+                </li>
+            </ul>
+
             <div class="bottom_data">
                 <div class="orders">
                     <div class="header">
                         <h3>Graphique des dépenses</h3>
                     </div>
-                    <!-- Canvas pour le graphique des dépenses -->
                     <canvas id="ticketCountByMonthChart" class="graph"></canvas>
                 </div>
                 <div class="orders">
                     <div class="header">
                         <h3>Graphique des tickets</h3>
                     </div>
-                    <!-- Canvas pour le graphique des tickets -->
                     <canvas id="prixParMoisChart" class="graph"></canvas>
                 </div>
             </div>
+
+
+            <div class="charts-container">
+                <div class="pie-chart">
+                    <div class="header">
+                    <h3>Dépense totale par catégories</h3>
+                    </div>
+                    <canvas id="totalPriceByCategoryChart"></canvas>
+                </div>
+                <div class="pie-chart">
+                    <div class="header">
+                    <h3>Nombre de tickets par catégories</h3>
+                    </div>
+                    <canvas id="ticketCountByCategoryChart"></canvas>
+                </div>
+                <ul class="cards">
+                    <li>
+                    <i class='bx bxs-wallet' ></i>
+                        <a href="tickets_comptable.php">
+                            <span class="info">
+                                <h3 class="page-redirection"><i class="fa-solid fa-arrow-right"></i>    Tickets</h3>
+                                <p>Gestion de ticket du comptable</p>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
         </main>
     </div>
 
@@ -272,11 +348,9 @@ $prixParMoisJSON = json_encode($prix_par_mois);
 
  
    
-     <script>
+<script>
 
-
-
-
+///////////////////////////////////////////////graphique nombre de ticket en attente et validé par mois/////////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', function() {
     // Récupération des données des derniers mois par ticket pour le statut 1 depuis PHP
@@ -345,6 +419,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+////////////////////////////////////// graphique dépense totale par mois//////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', function() {
     // Récupération des données des prix par mois depuis PHP
@@ -383,7 +458,91 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+////////////////////////////////////////// pie chart Dépense totale par catégories///////////////////////////////////////////////
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Récupération des données depuis PHP
+    
+    const totalPricePerCategory = <?php echo $totalPricePerCategoryJSON; ?>;
+
+    // Préparation des données pour le graphique
+    const categories = Object.keys(totalPricePerCategory);
+    const totalPrices = Object.values(totalPricePerCategory);
+
+    // Création du graphique en secteurs (pie chart)
+    var ctx = document.getElementById('totalPriceByCategoryChart').getContext('2d');
+    var totalPriceByCategoryChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: categories,
+            datasets: [{
+                label: 'Prix total par catégorie',
+                data: totalPrices,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                    'rgba(255, 99, 132, 0.7)' // Ajoutez plus de couleurs si nécessaire
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'right' // Position de la légende
+            }
+        }
+    });
+});
+
+
+
+///////////////////////////////////////////////////pie chart Nombre de tickets par catégories//////////////////////////////////////////////////////////////////
+
+document.addEventListener('DOMContentLoaded', function() {
+    const darkModeSwitch = document.getElementById('dark-mode-toggle');
+
+let labelColor = darkModeSwitch.checked ? 'white' : 'black';
+    // Récupération des données depuis PHP
+    const ticketCountsPerCategory = <?php echo $ticketCountsPerCategoryJSON; ?>;
+
+    // Préparation des données pour le graphique
+    const categories = Object.keys(ticketCountsPerCategory);
+    const ticketCounts = Object.values(ticketCountsPerCategory);
+
+    // Création du graphique en secteurs (pie chart)
+    var ctx = document.getElementById('ticketCountByCategoryChart').getContext('2d');
+    var ticketCountByCategoryChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: categories,
+            datasets: [{
+                label: 'Nombre de tickets par catégorie',
+                data: ticketCounts,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                    'rgba(255, 99, 132, 0.7)' // Ajoutez plus de couleurs si nécessaire
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'right' // Position de la légende
+            }
+        }
+    });
+});
 
 
 
@@ -396,47 +555,47 @@ const categoryLabels = <?php echo $labelsJSON; ?>;
     const pricesPerCategory = <?php echo $prices_per_category_json; ?>;
     var chartData = <?php echo json_encode($data); ?>;
 
-    // Graphique des dépenses
-    var ctx1 = document.getElementById('totalExpensesChart').getContext('2d');
-    var totalExpensesChart = new Chart(ctx1, {
-        type: 'line',
-        data: {
-            labels: categoryLabels, // Utilisez les catégories comme étiquettes
-            datasets: [{
-                label: 'Dépenses par catégorie',
-                data: pricesPerCategory, // Utilisez les prix par catégorie comme données
-                borderColor: 'blue',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-        }
-    });
+//     // Graphique des dépenses
+//     var ctx1 = document.getElementById('totalExpensesChart').getContext('2d');
+//     var totalExpensesChart = new Chart(ctx1, {
+//         type: 'line',
+//         data: {
+//             labels: categoryLabels, // Utilisez les catégories comme étiquettes
+//             datasets: [{
+//                 label: 'Dépenses par catégorie',
+//                 data: pricesPerCategory, // Utilisez les prix par catégorie comme données
+//                 borderColor: 'blue',
+//                 borderWidth: 2
+//             }]
+//         },
+//         options: {
+//             responsive: true,
+//         }
+//     });
 
-    // Graphique des tickets
-    var ctx2 = document.getElementById('totalTicketsChart').getContext('2d');
-    var totalTicketsChart = new Chart(ctx2, {
-        type: 'bar',
-        data: {
-            labels: Object.keys(chartData), // Utilisez les clés de l'objet chartData comme étiquettes
-            datasets: [{
-                label: 'Nombre total de tickets',
-                data: Object.values(chartData), // Utilisez les valeurs de l'objet chartData comme données
-                backgroundColor: 'green'
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
+//     // Graphique des tickets
+//     var ctx2 = document.getElementById('totalTicketsChart').getContext('2d');
+//     var totalTicketsChart = new Chart(ctx2, {
+//         type: 'bar',
+//         data: {
+//             labels: Object.keys(chartData), // Utilisez les clés de l'objet chartData comme étiquettes
+//             datasets: [{
+//                 label: 'Nombre total de tickets',
+//                 data: Object.values(chartData), // Utilisez les valeurs de l'objet chartData comme données
+//                 backgroundColor: 'green'
+//             }]
+//         },
+//         options: {
+//             responsive: true,
+//             scales: {
+//                 yAxes: [{
+//                     ticks: {
+//                         beginAtZero: true
+//                     }
+//                 }]
+//             }
+//         }
+//     });
 
 
 
@@ -450,6 +609,10 @@ const categoryLabels = <?php echo $labelsJSON; ?>;
          mobileProfileImage.src = selectedAvatar;
          profileImage.src = selectedAvatar;
      }
+     
+
+
+
      
    </script>
    <script type="text/javascript" src="../../index.js"></script>

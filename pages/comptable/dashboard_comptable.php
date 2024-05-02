@@ -266,7 +266,7 @@ $prixParMoisJSON = json_encode($prix_par_mois);
         <main>
 
             <div class="header">
-            <h1><i class="fa-solid fa-gauge"></i> Dashboard</h1>
+            <h1><i class="fa-solid fa-gauge"></i> Dashboard Comptable</h1>
             </div>
             <ul class="cards">
                 <li>

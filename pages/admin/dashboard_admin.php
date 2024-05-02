@@ -150,7 +150,7 @@
   <div class="content">
       <main>
         <div class="header">
-          <h1><i class="fa-solid fa-gauge"></i> Dashboard</h1>
+          <h1><i class="fa-solid fa-gauge"></i> Dashboard Admin</h1>
         </div>
         <ul class="cards">
           <li>

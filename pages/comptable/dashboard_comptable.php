@@ -472,20 +472,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Création du graphique en secteurs (pie chart)
     var ctx = document.getElementById('totalPriceByCategoryChart').getContext('2d');
     var totalPriceByCategoryChart = new Chart(ctx, {
-        type: 'pie',
+        type: 'polarArea',
         data: {
             labels: categories,
             datasets: [{
                 label: 'Prix total par catégorie',
                 data: totalPrices,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
-                    'rgba(153, 102, 255, 0.7)',
-                    'rgba(255, 159, 64, 0.7)',
-                    'rgba(255, 99, 132, 0.7)' // Ajoutez plus de couleurs si nécessaire
+                    'rgb(254, 205, 211)', 
+          'rgb(207, 232, 255)', 
+          'rgb(187, 247, 208)', 
+          'rgb(252, 252, 174)', 
+          'rgb(140, 162, 245)', 
+          'rgb(252, 201, 146)',  
+          'rgb(250, 175, 217)',
+          'rgba(173, 148, 235)'
                 ],
                 borderWidth: 1
             }]
@@ -517,20 +518,21 @@ let labelColor = darkModeSwitch.checked ? 'white' : 'black';
     // Création du graphique en secteurs (pie chart)
     var ctx = document.getElementById('ticketCountByCategoryChart').getContext('2d');
     var ticketCountByCategoryChart = new Chart(ctx, {
-        type: 'pie',
+        type: 'doughnut',
         data: {
             labels: categories,
             datasets: [{
                 label: 'Nombre de tickets par catégorie',
                 data: ticketCounts,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
-                    'rgba(153, 102, 255, 0.7)',
-                    'rgba(255, 159, 64, 0.7)',
-                    'rgba(255, 99, 132, 0.7)' // Ajoutez plus de couleurs si nécessaire
+                    'rgb(254, 205, 211)', 
+          'rgb(207, 232, 255)', 
+          'rgb(187, 247, 208)', 
+          'rgb(252, 252, 174)', 
+          'rgb(140, 162, 245)', 
+          'rgb(252, 201, 146)',  
+          'rgb(250, 175, 217)',
+          'rgba(173, 148, 235)'
                 ],
                 borderWidth: 1
             }]

@@ -306,6 +306,7 @@ console.log(chartData);
 /* GRAPHIQUE */
 
 // Données pour le graphique
+document.addEventListener('DOMContentLoaded', function() {
 const data = {
   labels: ['Total Utilisateurs', 'Nombre de Tickets', 'Dépense', 'Tickets en Attente'],
   datasets: [
@@ -364,6 +365,7 @@ const data = {
     
     myChart.update();
   });
+})
 
 
 
@@ -406,4 +408,5 @@ document.addEventListener('DOMContentLoaded', function() {
     console.error('La bibliothèque Chart.js n\'est pas chargée.');
   }
 } else {
-  console.error('Aucune donnée disponible pour afficher le graphique.');}})
+  console.error('Aucune donnée disponible pour afficher le graphique.');
+}})

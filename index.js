@@ -185,16 +185,15 @@ document.getElementById('month-next').addEventListener('click', () => {
 
 renderCalendar();
 
-console.log(chartData);
 
 /* GRAPHIQUE */
 
 // Données pour le graphique
 const data = {
-  labels: ['Total Utilisateurs', 'Nombre de Tickets', 'Dépense', 'Tickets en Attente'],
+  labels: ['septembre', 'Nombre de Tickets', 'Dépense', 'Tickets en Attente'],
   datasets: [
     {
-      label: 'Total Utilisateurs',
+      label: 'septembre',
       data: [chartData.total_utilisateurs, null, null, null,],
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       borderColor: 'rgba(54, 162, 235, 1)',
@@ -283,3 +282,54 @@ if (dataAvailable) {
 } else {
   console.error('Aucune donnée disponible pour afficher le graphique.');
 }
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Votre code d'initialisation des graphiques ici
+
+    // Graphique des dépenses
+    var ctx1 = document.getElementById('totalExpensesChart').getContext('2d');
+    var totalExpensesChart = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: categoryLabels, // Utilisez les catégories comme étiquettes
+            datasets: [{
+                label: 'Dépenses par catégorie',
+                data: pricesPerCategory, // Utilisez les prix par catégorie comme données
+                borderColor: 'blue',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+
+    // Graphique des tickets
+    var ctx2 = document.getElementById('totalTicketsChart').getContext('2d');
+    var totalTicketsChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(chartData), // Utilisez les clés de l'objet chartData comme étiquettes
+            datasets: [{
+                label: 'Nombre total de tickets',
+                data: Object.values(chartData), // Utilisez les valeurs de l'objet chartData comme données
+                backgroundColor: 'green'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    });

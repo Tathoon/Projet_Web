@@ -30,13 +30,18 @@
 
   <input type="checkbox" id="check">
   <header>
-    <label for="check">
-      <i class="fas fa-bars" id="sidebar_btn"></i>
-    </label>
     <div class="left_area">
       <h3>E11<span>event</span></h3>
     </div>
   </header>
+
+  <label class="switch" for="dark-mode-toggle">
+      <input type="checkbox" id="dark-mode-toggle">
+      <span class="slider round">
+        <i class="far fa-sun sun-icon darkmodetitleSUN"></i>
+        <i class="far fa-moon moon-icon darkmodetitleMOON"></i>
+      </span>
+    </label>
 
   <div class="mobile_nav">
     <div class="nav_bar">
@@ -47,7 +52,7 @@
     <div class="mobile_nav_items">
       <a href="notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
       <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-      <a href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i></i><span>Retour</span></a>
+      <a href="javascript:goBack()" class=""><i class="fa-solid fa-arrow-left"></i><span>Retour</span></a>
       <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
     </div>
   </div>
@@ -58,9 +63,9 @@
       <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
     </div>
     <a href="notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-    <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+    <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
     <a href="javascript:goBack()" class="back"><i class="fa-solid fa-arrow-left"></i><span>Retour</span></a>
-    <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+    <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
 
     <script>
     function goBack() {
@@ -108,6 +113,30 @@
             <img src="../../images/avatar/avatar5.png" alt="Avatar 5">
             <input type="radio" id="avatar5" name="avatar" value="avatar5.jpg">
           </label>
+          <label for="avatar12">
+              <img src="../../images/avatar/avatar12.png" alt="Avatar 12">
+              <input type="radio" id="avatar12" name="avatar" value="avatar12.jpg">
+            </label>
+          <label for="avatar13">
+            <img src="../../images/avatar/avatar13.png" alt="Avatar 13">
+            <input type="radio" id="avatar13" name="avatar" value="avatar13.jpg">
+          </label>
+          <label for="avatar14">
+            <img src="../../images/avatar/avatar14.png" alt="Avatar 14">
+            <input type="radio" id="avatar14" name="avatar" value="avatar14.jpg">
+          </label>
+          <label for="avatar15">
+            <img src="../../images/avatar/avatar15.png" alt="Avatar 15">
+            <input type="radio" id="avatar15" name="avatar" value="avatar15.jpg">
+          </label>
+          <label for="avatar16">
+            <img src="../../images/avatar/avatar16.png" alt="Avatar 16">
+            <input type="radio" id="avatar16" name="avatar" value="avatar16.jpg">
+          </label>
+          <label for="avatar17">
+            <img src="../../images/avatar/avatar17.png" alt="Avatar 17">
+            <input type="radio" id="avatar17" name="avatar" value="avatar17.jpg">
+          </label>
 
           <button id="showMoreAvatars">Surprise !</button>
 
@@ -145,12 +174,10 @@
 
   <script>
 
-    // Sélectionnez les boutons radio et les images
     var radios = document.querySelectorAll('input[type=radio][name="avatar"]');
     var mobileProfileImage = document.querySelector('.mobile_profile_image');
     var profileImage = document.querySelector('.profile_image');
 
-    // Récupérez l'avatar sélectionné du stockage local, s'il existe
     var selectedAvatar = localStorage.getItem('selectedAvatar');
     if (selectedAvatar) {
         mobileProfileImage.src = selectedAvatar;
@@ -158,6 +185,7 @@
     }
 
   </script>
+
   <script type="text/javascript" src="../../index.js"></script>
 </body>
 </html>

@@ -1,6 +1,5 @@
 <?php
     session_start();
-    echo $_SESSION['nom'];
 
     if (!isset($_SESSION['role']) || ($_SESSION['role'] != 1 )) {
       header('Location: ../../index.php');
@@ -34,8 +33,6 @@
 <body>
 
   <?php
-    session_start();
-
     if (!isset($_SESSION['role']) || ($_SESSION['role'] != 1 )) {
       header('Location: ../../index.php');
       session_destroy();
@@ -51,13 +48,18 @@
 
   <input type="checkbox" id="check">
   <header>
-    <label for="check">
-      <i class="fas fa-bars" id="sidebar_btn"></i>
-    </label>
     <div class="left_area">
       <h3>E11<span>event</span></h3>
     </div>
   </header>
+
+  <label class="switch" for="dark-mode-toggle">
+      <input type="checkbox" id="dark-mode-toggle">
+      <span class="slider round">
+        <i class="far fa-sun sun-icon darkmodetitleSUN"></i>
+        <i class="far fa-moon moon-icon darkmodetitleMOON"></i>
+      </span>
+    </label>
 
   <div class="mobile_nav">
     <div class="nav_bar">
@@ -98,7 +100,7 @@
             <div class="header">
               <h3>Liste des tickets</h3>
             </div>
-            <table id="myTable">
+            <table id="pending">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -110,44 +112,68 @@
                   <th>Prix</th>
                   <th>Description</th>
                   <th>Justificatif</th>
-                  <th>Status</th>
+                  <th class="center-content">Status</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                
                 <?php
-                  $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!'); 
+                  $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+  
+                        $pending_tickets = $db->prepare("
+                            SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                            FROM ticket AS t
+                            INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                            INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                            INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                            WHERE ts.nom_status = 'En attente'
+                        ");
+                    
+                    $pending_tickets->execute();
+                    $pending_data = $pending_tickets->fetchAll();
 
-                  $data = $db->query("
-                      SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
-                      FROM ticket AS t
-                      INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
-                      INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
-                      INNER JOIN ticket_status AS ts ON t.status = ts.id_status
-                  ")->fetchAll();
-
-                  foreach ($data as $row) {
-                    $statusClass = '';
-                    switch ($row['status']) {
-                        case 'Accepté':
-                            $statusClass = 'completed';
-                            break;
-                        case 'En attente':
-                            $statusClass = 'pending';
-                            break;
-                        case 'Refusé':
-                            $statusClass = 'processing';
-                            break;
-                        default:
-                            $statusClass = '';
-                            break;
+                    foreach ($pending_data as $row) {
+                      $justificatifIcon = '';
+                      if (!empty($row['justificatif'])) {
+                        $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                      }
+                      echo "<tr>
+                              <td>".$row['id_ticket']."</td>
+                              <td>".$row['nom']."</td>
+                              <td>".$row['mail']."</td>
+                              <td>".$row['date']."</td>
+                              <td>".$row['lieu']."</td>
+                              <td>".$row['categorie']."</td>
+                              <td>".$row['prix']."</td>
+                              <td>".$row['description']."</td>
+                              <td>".$row['justificatif']." ".$justificatifIcon."</td>
+                              <td class='center-content'><span class='status pending'>".$row['status']."</span></td>
+                              <td class='center-content'><a href='tickets_admin.php?id=".$row['id_ticket']."' class='btn-delete'><i class='fa-solid fa-trash'></i></a></td> 
+                            </tr>";
                     }
-                
-                    // Vérifie si un justificatif existe
-                    $justificatifIcon = '';
-                    if (!empty($row['justificatif'])) {
-                      $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
-                    }
+                    
+                    if(isset($_GET['id'])) {
+                      $id_ticket_to_delete = $_GET['id'];
+                  
+                      $stmt = $db->prepare("SELECT justificatif FROM ticket WHERE id_ticket = :id_ticket");
+                      $stmt->bindParam(':id_ticket', $id_ticket_to_delete);
+                      $stmt->execute();
+                      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                      $justificatif_filename = $row ? $row['justificatif'] : null;
+                  
+                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
+                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
+                      $stmt_delete->execute();                  
+                  
+                      if (!empty($justificatif_filename)) {
+                          $justificatif_path = "../../images/justificatifs/".$justificatif_filename;
+                          if (file_exists($justificatif_path)) {
+                              unlink($justificatif_path);
+                          
+                      }
+                      
+                      header('Location: tickets_admin.php');
+                      exit();
                 
                     echo "<tr>
                             <td>".$row['id_ticket']."</td>
@@ -156,32 +182,126 @@
                             <td>".$row['date']."</td>
                             <td>".$row['lieu']."</td>
                             <td>".$row['categorie']."</td>
-                            <td>".$row['prix']."</td>
+                            <td>".$row['prix']."€</td>
                             <td>".$row['description']."</td>
                             <td>".$row['justificatif']." ".$justificatifIcon."</td>
-                            <td><span class='status ".$statusClass."'>".$row['status']."</span></td>
+                            <td id='status' class='center-content'><span class='status ".$statusClass."'>".$row['status']."</span></td>
                           </tr>";
                   }
-                  ?>
+                }
+                ?>
+              </tbody>
+            </table>
+            <script>
+              $(document).ready(function() {
+                  $('.btn-delete').click(function(e) {
+                    e.preventDefault();
 
+                    var url = $(this).attr('href');
+
+                    $.ajax({
+                      type: 'GET',
+                      url: url,
+                      success: function(data) {
+                        $(e.target).closest('tr').remove();
+
+                      },
+                      error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                      }
+                    });
+                  });
+                });
+            </script>
+          </div>
+        </div>
+      </main>
+    </div>
+    
+    <div class="content">
+      <main>
+        <div class="bottom_data">
+          <div class="orders">
+            <div class="header">
+              <h3>Archive de tickets</h3>
+            </div>
+            <table id="other">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nom</th>
+                  <th>Email</th>
+                  <th>Date</th>
+                  <th>Lieu</th>
+                  <th>Catégorie</th>
+                  <th>Prix</th>
+                  <th>Description</th>
+                  <th>Justificatif</th>
+                  <th class="center-content">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+
+                        $other_tickets = $db->prepare("
+                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              FROM ticket AS t
+                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
+                              INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
+                              INNER JOIN ticket_status AS ts ON t.status = ts.id_status
+                              WHERE ts.nom_status != 'En attente'
+                          ");
+                    
+                      $other_tickets->execute();
+                      $other_data = $other_tickets->fetchAll();
+                  
+                    foreach ($other_data as $row) {
+                      $justificatifIcon = '';
+                      if (!empty($row['justificatif'])) {
+                        $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                      }
+                    
+                      $statusClass = '';
+                      if ($row['status'] == 'Refusé') {
+                        $statusClass = 'status processing';
+                      } elseif ($row['status'] == 'Accepté') {
+                        $statusClass = 'status completed';
+                      }
+                    
+                      echo "<tr>
+                              <td>".$row['id_ticket']."</td>
+                              <td>".$row['nom']."</td>
+                              <td>".$row['mail']."</td>
+                              <td>".$row['date']."</td>
+                              <td>".$row['lieu']."</td>
+                              <td>".$row['categorie']."</td>
+                              <td>".$row['prix']."</td>
+                              <td>".$row['description']."</td>
+                              <td>".$row['justificatif']." ".$justificatifIcon."</td>
+                              <td class='center-content'><span class='status completed processing".$statusClass."'>".$row['status']."</span></td>
+                            </tr>";
+                    }
+                ?>
               </tbody>
             </table>
           </div>
         </div>
       </main>
     </div>
-    <script>
+  </div>
+  <script>
   $(document).ready(function () {
-  $('#myTable').DataTable({
-      "language": {
-          "url": "../../Json/French.json"
-      }
-  });
+    $('#pending, #other').DataTable({
+        "language": {
+            "url": "../../Json/French.json"
+        },
+        "order": [[0, "desc"]]
+    });
 });
-  var mobileProfileImage = document.querySelector('.mobile_profile_image');
+    var mobileProfileImage = document.querySelector('.mobile_profile_image');
     var profileImage = document.querySelector('.profile_image');
 
-    // Récupérez l'avatar sélectionné du stockage local, s'il existe
     var selectedAvatar = localStorage.getItem('selectedAvatar');
     if (selectedAvatar) {
         mobileProfileImage.src = selectedAvatar;

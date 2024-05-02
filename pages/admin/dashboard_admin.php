@@ -28,17 +28,17 @@
     $sql_tickets_attente = "SELECT COUNT(DISTINCT id_ticket) AS total_tickets_attente FROM ticket WHERE status = 3";
     $result_tickets_attente = $db->query($sql_tickets_attente);
 
-    $sql_user_by_number_tickets = "SELECT u.nom, u.prenom, COUNT(t.id_ticket) AS nombre_tickets 
-                               FROM utilisateur u 
-                               LEFT JOIN ticket t ON u.id_utilisateur = t.utilisateur 
+    $sql_user_by_number_tickets = "SELECT u.nom, u.prenom, COUNT(t.id_ticket) AS nombre_tickets
+                               FROM utilisateur u
+                               LEFT JOIN ticket t ON u.id_utilisateur = t.utilisateur
                                WHERE t.status = 1
-                               GROUP BY u.id_utilisateur 
+                               GROUP BY u.id_utilisateur
                                ORDER BY nombre_tickets DESC";
 
     $result_user_by_number_tickets = $db->query($sql_user_by_number_tickets);
 
 
-    if ($result_users !== false && $result_tickets !== false && $result_depense !== false && $result_tickets_attente !== false){
+    if ($result_users !== false && $result_tickets !== false && $result_depense !== false && $result_tickets_attente !== false && $result_user_by_number_tickets !== false){
         $row_users = $result_users->fetch(PDO::FETCH_ASSOC);
         $row_tickets = $result_tickets->fetch(PDO::FETCH_ASSOC);
         $row_depense = $result_depense->fetch(PDO::FETCH_ASSOC);
@@ -104,13 +104,18 @@
     
   <input type="checkbox" id="check">
   <header>
-    <label for="check">
-      <i class="fas fa-bars" id="sidebar_btn"></i>
-    </label>
     <div class="left_area">
       <h3>E11<span>event</span></h3>
     </div>
   </header>
+  
+  <label class="switch" for="dark-mode-toggle">
+      <input type="checkbox" id="dark-mode-toggle">
+      <span class="slider round">
+        <i class="far fa-sun sun-icon darkmodetitleSUN"></i>
+        <i class="far fa-moon moon-icon darkmodetitleMOON"></i>
+      </span>
+    </label>
 
   <div class="mobile_nav">
     <div class="nav_bar">
@@ -172,7 +177,7 @@
           <li>
             <i class="bx bx-dollar-circle"></i>
             <span class="info">
-              <h3><?php echo $total_depense; ?> €</h3>
+              <h3><?php echo number_format($total_depense, 2); ?> €</h3>
               <p>Dépense</p>
             </span>
           </li>
@@ -207,7 +212,7 @@
               <div class="header">
                   <h3>Commerciaux avec le plus de tickets acceptés</h3>
               </div>
-              <table>
+              <table class="user-table">
                 <thead>
                     <tr>
                         <th>Nom</th>
@@ -278,7 +283,6 @@
     var mobileProfileImage = document.querySelector('.mobile_profile_image');
     var profileImage = document.querySelector('.profile_image');
 
-    // Récupérez l'avatar sélectionné du stockage local, s'il existe
     var selectedAvatar = localStorage.getItem('selectedAvatar');
     if (selectedAvatar) {
         mobileProfileImage.src = selectedAvatar;

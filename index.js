@@ -1,6 +1,131 @@
 /* ------------------*/
 /*                   */
 /*                   */
+/*     DARK MODE     */
+/*                   */
+/*                   */
+/*-------------------*/
+
+window.addEventListener('DOMContentLoaded', function() {
+  var avatar = document.querySelector('img[src="../../images/avatar/dancing-toothless-tothless.gif"]');
+  var otherAvatars = document.querySelectorAll('img:not([src="../../images/avatar/dancing-toothless-tothless.gif"])');
+  var isPlaying = localStorage.getItem('isPlaying') === 'true';
+  var audioPath;
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    audioPath = '/Projet_Web/images/music/driftveil.mp3';
+  } else {
+    audioPath = '/images/music/driftveil.mp3';
+  }
+  
+  var audio = new Audio(audioPath);
+  audio.volume = 0.01;
+  audio.loop = true;
+
+  var currentTime = localStorage.getItem('currentTime');
+  if (currentTime) {
+    audio.currentTime = parseFloat(currentTime);
+  }
+
+  if (isPlaying) {
+    audio.play();
+  }
+
+  if (avatar) {
+    document.addEventListener('click', function(event) {
+      if (event.target.src === avatar.src) {
+        if (!isPlaying) {
+          audio.play();
+          isPlaying = true;
+        } else {
+          audio.pause();
+          audio.currentTime = 0;
+          isPlaying = false;
+        }
+        localStorage.setItem('isPlaying', isPlaying);
+      }
+    });
+  }
+
+  otherAvatars.forEach(function(otherAvatar) {
+    otherAvatar.addEventListener('click', function() {
+      if (isPlaying) {
+        audio.pause();
+        audio.currentTime = 0;
+        isPlaying = false;
+        localStorage.setItem('isPlaying', isPlaying);
+      }
+    });
+  });
+
+  window.addEventListener('beforeunload', function() {
+    localStorage.setItem('currentTime', audio.currentTime);
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  function applyDarkModeOnLoad() {
+      const isDarkMode = localStorage.getItem('darkMode') === 'true';
+      const body = document.body;
+
+      const darkModeToggle = document.getElementById('dark-mode-toggle');
+      if (darkModeToggle) {
+          darkModeToggle.checked = isDarkMode;
+      }
+
+      if (isDarkMode) {
+          body.classList.add('dark-mode');
+      } else {
+          body.classList.remove('dark-mode');
+      }
+  }
+
+  applyDarkModeOnLoad();
+
+  function toggleDarkMode() {
+      const body = document.body;
+      const isDarkMode = body.classList.toggle('dark-mode');
+
+      localStorage.setItem('darkMode', isDarkMode);
+  }
+
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  if (darkModeToggle) {
+      darkModeToggle.addEventListener('change', toggleDarkMode);
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  function changeImage() {
+    const logoImage = document.getElementById('logo-image');
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+  
+    if (!logoImage || !darkModeToggle) {
+      return;
+    }
+  
+    const isDarkMode = darkModeToggle.checked;
+  
+    if (isDarkMode) {
+      logoImage.src = "images/Logo-WebDarkmode.jpg";
+    } else {
+      logoImage.src = "images/Logo-Web.png";
+    }
+  }
+
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  if (darkModeToggle) {
+      darkModeToggle.addEventListener('change', changeImage);
+  }
+
+  changeImage();
+});
+
+
+/* ------------------*/
+/*                   */
+/*                   */
 /*      NAVBAR       */
 /*                   */
 /*                   */
@@ -13,54 +138,45 @@ $(document).ready(function(){
   });
 });
 
-/* CHANGEMENT AVATAR NAVBAR */
 var radios = document.querySelectorAll('input[name="avatar"]');
 var mobileProfileImage = document.querySelector('.mobile_profile_image');
 var profileImage = document.querySelector('.profile_image');
 
-// Ajoutez un écouteur d'événements à chaque bouton radio
+var avatarPaths = {
+    'avatar1': '../../images/avatar/avatar1.png',
+    'avatar2': '../../images/avatar/avatar2.png',
+    'avatar3': '../../images/avatar/avatar3.png',
+    'avatar4': '../../images/avatar/avatar4.png',
+    'avatar5': '../../images/avatar/avatar5.png',
+    'avatar6': '../../images/avatar/dancing-toothless-tothless.gif',
+    'avatar7': '../../images/avatar/Donald-Duck.gif',
+    'avatar8': '../../images/avatar/Pedro.gif',
+    'avatar9': '../../images/avatar/PowerRanger.gif',
+    'avatar10': '../../images/avatar/angry-cat.gif',
+    'avatar11': '../../images/avatar/quokka.gif',
+    'avatar12': '../../images/avatar/avatar12.png',
+    'avatar13': '../../images/avatar/avatar13.png',
+    'avatar14': '../../images/avatar/avatar14.png',
+    'avatar15': '../../images/avatar/avatar15.png',
+    'avatar16': '../../images/avatar/avatar16.png',
+    'avatar17': '../../images/avatar/avatar17.png'
+};
+
 radios.forEach(function(radio) {
     radio.addEventListener('change', function() {
-        // Modifiez les attributs src des images lorsque le bouton radio est sélectionné
-        var avatarSrc;
-        if (this.checked) {
-            // Si un bouton radio est coché, mettez à jour les images en conséquence
-            if (this.id === 'avatar1') {
-                avatarSrc = '../../images/avatar/avatar1.png';
-            } else if (this.id === 'avatar2') {
-                avatarSrc = '../../images/avatar/avatar2.png';
-            } else if (this.id === 'avatar3') {
-                avatarSrc = '../../images/avatar/avatar3.png';
-            } else if (this.id === 'avatar4') {
-                avatarSrc = '../../images/avatar/avatar4.png';
-            } else if (this.id === 'avatar5') {
-                avatarSrc = '../../images/avatar/avatar5.png';
-            } else if (this.id === 'avatar6') {
-                avatarSrc = '../../images/avatar/dancing-toothless-tothless.gif';
-            } else if (this.id === 'avatar7') {
-                avatarSrc = '../../images/avatar/Donald-Duck.gif';
-            } else if (this.id === 'avatar8') {
-                avatarSrc = '../../images/avatar/Pedro.gif';
-            } else if (this.id === 'avatar9') {
-                avatarSrc = '../../images/avatar/PowerRanger.gif';
-            } else if (this.id === 'avatar10') {
-                avatarSrc = '../../images/avatar/angry-cat.gif';
-            } else if (this.id === 'avatar11') {
-                avatarSrc = '../../images/avatar/quokka.gif';
-            }
+
+        if (this.checked && avatarPaths.hasOwnProperty(this.id)) {
+            var avatarSrc = avatarPaths[this.id];
             mobileProfileImage.src = avatarSrc;
             profileImage.src = avatarSrc;
 
-            // Enregistrez l'avatar sélectionné dans le stockage local
             localStorage.setItem('selectedAvatar', avatarSrc);
         } else {
-            // Si aucun bouton radio n'est coché, définissez l'image de base
             mobileProfileImage.src = '../../images/user-icon.png';
             profileImage.src = '../../images/user-icon.png';
         }
     });
 });
-
 
 function showMoreAvatars() {
   document.getElementById('hiddenAvatars').style.display = 'flex';
@@ -185,15 +301,16 @@ document.getElementById('month-next').addEventListener('click', () => {
 
 renderCalendar();
 
+console.log(chartData);
 
 /* GRAPHIQUE */
 
 // Données pour le graphique
 const data = {
-  labels: ['septembre', 'Nombre de Tickets', 'Dépense', 'Tickets en Attente'],
+  labels: ['Total Utilisateurs', 'Nombre de Tickets', 'Dépense', 'Tickets en Attente'],
   datasets: [
     {
-      label: 'septembre',
+      label: 'Total Utilisateurs',
       data: [chartData.total_utilisateurs, null, null, null,],
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       borderColor: 'rgba(54, 162, 235, 1)',
@@ -223,53 +340,62 @@ const data = {
   ]
 };
 
-const config = {
-  type: 'bar',
-  data: data,
-  options: {
-    scales: {
-      y: {
-        type: 'logarithmic',
-        ticks: {
-          callback: function (value, index, values) {
-            return Number(value.toString());
-          }
-        }
-      }
-    },
-    barPercentage: 11,
-    categoryPercentage: 0.2,
-  }
-};
-
-// Création du graphique
-const myChart = new Chart(
-  document.getElementById('myChart'),
-  config
-);
-
-// Vérifier si les données sont correctement récupérées
-const dataAvailable = categoryLabels.length > 0 && pricesPerCategory.length > 0;
-
-if (dataAvailable) {
-  const myData = {
-    labels: categoryLabels, 
-    datasets: [{
-      label: 'Dépense total ',
-      data: pricesPerCategory,
-      backgroundColor: [
-        'rgb(254, 205, 211)', 
-        'rgb(207, 232, 255)', 
-        'rgb(187, 247, 208)', 
-        'rgb(252, 252, 174)', 
-        'rgb(140, 162, 245)', 
-        'rgb(252, 201, 146)',  
-        'rgb(250, 175, 217)',
-        'rgba(173, 148, 235)' 
-      ],
-      hoverOffset: 4
-    }]
+  const config = {
+    type: 'bar',
+    data,
+    options: {
+        scales: { 
+            y: { type: 'logarithmic', ticks: { callback: value => Number(value.toString()) } },
+            x: { ticks: { color: labelColor } }
+        },
+        barPercentage: 11,
+        categoryPercentage: 0.2,
+        plugins: { legend: { labels: { color: labelColor } } }
+    }
   };
+
+  const myChart = new Chart(document.getElementById('myChart'), config);
+
+  darkModeSwitch.addEventListener('change', function() {
+    labelColor = this.checked ? 'white' : 'black';
+    
+    myChart.options.plugins.legend.labels.color = labelColor;
+    myChart.options.scales.x.ticks.color = labelColor;
+    
+    myChart.update();
+  });
+
+
+
+/* CAMEMBERT */
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  const darkModeSwitch = document.getElementById('dark-mode-toggle');
+
+  let labelColor = darkModeSwitch.checked ? 'white' : 'black';
+
+  const dataAvailable = categoryLabels.length > 0 && pricesPerCategory.length > 0;
+
+  if (dataAvailable) {
+    const myData = {
+      labels: categoryLabels, 
+      datasets: [{
+        label: 'Dépense total ',
+        data: pricesPerCategory,
+        backgroundColor: [
+          'rgb(254, 205, 211)', 
+          'rgb(207, 232, 255)', 
+          'rgb(187, 247, 208)', 
+          'rgb(252, 252, 174)', 
+          'rgb(140, 162, 245)', 
+          'rgb(252, 201, 146)',  
+          'rgb(250, 175, 217)',
+          'rgba(173, 148, 235)' 
+        ],
+        hoverOffset: 4
+      }]
+    };
 
   if (typeof Chart !== 'undefined') {
     var myChartCAM = new Chart(
@@ -280,56 +406,4 @@ if (dataAvailable) {
     console.error('La bibliothèque Chart.js n\'est pas chargée.');
   }
 } else {
-  console.error('Aucune donnée disponible pour afficher le graphique.');
-}
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-  // Votre code d'initialisation des graphiques ici
-
-    // Graphique des dépenses
-    var ctx1 = document.getElementById('totalExpensesChart').getContext('2d');
-    var totalExpensesChart = new Chart(ctx1, {
-        type: 'line',
-        data: {
-            labels: categoryLabels, // Utilisez les catégories comme étiquettes
-            datasets: [{
-                label: 'Dépenses par catégorie',
-                data: pricesPerCategory, // Utilisez les prix par catégorie comme données
-                borderColor: 'blue',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-        }
-    });
-
-    // Graphique des tickets
-    var ctx2 = document.getElementById('totalTicketsChart').getContext('2d');
-    var totalTicketsChart = new Chart(ctx2, {
-        type: 'bar',
-        data: {
-            labels: Object.keys(chartData), // Utilisez les clés de l'objet chartData comme étiquettes
-            datasets: [{
-                label: 'Nombre total de tickets',
-                data: Object.values(chartData), // Utilisez les valeurs de l'objet chartData comme données
-                backgroundColor: 'green'
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-
-    });
+  console.error('Aucune donnée disponible pour afficher le graphique.');}})

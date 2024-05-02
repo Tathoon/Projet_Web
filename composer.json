@@ -1,0 +1,9 @@
+{
+    "name": "azure/azure-blob-wrapper",
+    "description": "Web Project",
+    "license": "MIT",
+    "require": {
+        "microsoft/azure-storage-blob": "^1.0",
+        "microsoft/azure-storage-common": "^1.0"
+    }
+}

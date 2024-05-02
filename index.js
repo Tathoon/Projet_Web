@@ -301,45 +301,23 @@ document.getElementById('month-next').addEventListener('click', () => {
 
 renderCalendar();
 
-console.log(chartData);
 
-/* GRAPHIQUE */
-
-// Données pour le graphique
+/* GRAPHIQUE EN BARS */
 document.addEventListener('DOMContentLoaded', function() {
-const data = {
-  labels: ['Total Utilisateurs', 'Nombre de Tickets', 'Dépense', 'Tickets en Attente'],
-  datasets: [
-    {
-      label: 'Total Utilisateurs',
-      data: [chartData.total_utilisateurs, null, null, null,],
-      backgroundColor: 'rgba(54, 162, 235, 0.2)',
-      borderColor: 'rgba(54, 162, 235, 1)',
-      borderWidth: 1
-    },
-    {
-      label: 'Nombre de Tickets',
-      data: [null, chartData.total_tickets, null, null],
-      backgroundColor: 'rgba(255, 206, 86, 0.2)',
-      borderColor: 'rgba(255, 206, 86, 1)',
-      borderWidth: 1
-    },
-    {
-      label: 'Dépense',
-      data: [null, null, chartData.total_depense, null],
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderColor: 'rgba(75, 192, 192, 1)',
-      borderWidth: 1
-    },
-    {
-      label: 'Tickets en Attente',
-      data: [null, null, null, chartData.total_tickets_attente],
-      backgroundColor: 'rgba(255, 99, 132, 0.2)',
-      borderColor: 'rgba(255, 99, 132, 1)',
-      borderWidth: 1
-    }
-  ]
-};
+
+  const darkModeSwitch = document.getElementById('dark-mode-toggle');
+
+  let labelColor = darkModeSwitch.checked ? 'white' : 'black';
+
+  const data = {
+    labels: ['Total Utilisateurs', 'Nombre de Tickets', 'Dépense', 'Tickets en Attente'],
+    datasets: [
+        { label: 'Total Utilisateurs', data: [chartData.total_utilisateurs, null, null, null,], backgroundColor: 'rgba(54, 162, 235, 0.2)', borderColor: 'rgba(54, 162, 235, 1)', borderWidth: 1 },
+        { label: 'Nombre de Tickets', data: [null, chartData.total_tickets, null, null], backgroundColor: 'rgba(255, 206, 86, 0.2)', borderColor: 'rgba(255, 206, 86, 1)', borderWidth: 1 },
+        { label: 'Dépense', data: [null, null, chartData.total_depense, null], backgroundColor: 'rgba(75, 192, 192, 0.2)', borderColor: 'rgba(75, 192, 192, 1)', borderWidth: 1 },
+        { label: 'Tickets en Attente', data: [null, null, null, chartData.total_tickets_attente], backgroundColor: 'rgba(255, 99, 132, 0.2)', borderColor: 'rgba(255, 99, 132, 1)', borderWidth: 1 }
+    ]
+  };
 
   const config = {
     type: 'bar',
@@ -365,8 +343,7 @@ const data = {
     
     myChart.update();
   });
-})
-
+});
 
 
 /* CAMEMBERT */
@@ -399,14 +376,40 @@ document.addEventListener('DOMContentLoaded', function() {
       }]
     };
 
-  if (typeof Chart !== 'undefined') {
-    var myChartCAM = new Chart(
-      document.getElementById('camembertChart'),
-      { type: 'pie', data: myData }
-    );
+    if (typeof Chart !== 'undefined') {
+      var myChartCAM = new Chart(
+        document.getElementById('camembertChart'),
+        { 
+          type: 'pie', 
+          data: myData,
+          options: {
+            plugins: {
+              legend: {
+                labels: {
+                  color: labelColor 
+                }
+              }
+            }
+          }
+        }
+      );
+    } else {
+      console.error('La bibliothèque Chart.js n\'est pas chargée.');
+    }
   } else {
-    console.error('La bibliothèque Chart.js n\'est pas chargée.');
+    console.error('Aucune donnée disponible pour afficher le graphique.');
   }
-} else {
-  console.error('Aucune donnée disponible pour afficher le graphique.');
-}})
+
+  darkModeSwitch.addEventListener('change', function() {
+    
+      labelColor = this.checked ? 'white' : 'black';
+      
+      myChartCAM.options.plugins.legend.labels.color = labelColor;
+      
+      myChartCAM.update();
+  });
+});
+
+
+
+

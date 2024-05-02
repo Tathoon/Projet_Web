@@ -216,7 +216,7 @@ $prixParMoisJSON = json_encode($prix_par_mois);
     </div>
   </header>
   
-    <label class="switch" for="dark-mode-toggle">
+  <label class="switch" for="dark-mode-toggle">
       <input type="checkbox" id="dark-mode-toggle">
       <span class="slider round">
         <i class="far fa-sun sun-icon darkmodetitleSUN"></i>
@@ -349,17 +349,19 @@ $prixParMoisJSON = json_encode($prix_par_mois);
  
    
 <script>
+    function updateChartLegendColors(chart, labelColor) {
+    chart.options.plugins.legend.labels.color = labelColor;
+    chart.update();
+}
 
-///////////////////////////////////////////////graphique nombre de ticket en attente et validé par mois/////////////////////////////////////
-
+// Graphique nombre de ticket en attente et validé par mois
 document.addEventListener('DOMContentLoaded', function() {
-    // Récupération des données des derniers mois par ticket pour le statut 1 depuis PHP
-    const monthsPerTicketStatus1 = <?php echo $monthsJSON_status_1; ?>;
+    const darkModeSwitch = document.getElementById('dark-mode-toggle');
+    let labelColor = darkModeSwitch.checked ? 'white' : 'black';
 
-    // Récupération des données des derniers mois par ticket pour le statut 2 depuis PHP
+    const monthsPerTicketStatus1 = <?php echo $monthsJSON_status_1; ?>;
     const monthsPerTicketStatus2 = <?php echo $monthsJSON_status_2; ?>;
 
-    // Fonction pour compter le nombre de tickets par mois pour chaque statut
     function countTicketsByMonth(monthsPerTicket) {
         const ticketsCountByMonth = {};
         for (const ticketId in monthsPerTicket) {
@@ -373,34 +375,29 @@ document.addEventListener('DOMContentLoaded', function() {
         return ticketsCountByMonth;
     }
 
-    // Compter le nombre de tickets par mois pour le statut 1
     const ticketsCountByMonthStatus1 = countTicketsByMonth(monthsPerTicketStatus1);
-    // Compter le nombre de tickets par mois pour le statut 2
     const ticketsCountByMonthStatus2 = countTicketsByMonth(monthsPerTicketStatus2);
 
-    // Préparation des données pour le graphique
-    const months = Object.keys(ticketsCountByMonthStatus1); // Utilisez les mois du statut 1 comme base
+    const months = Object.keys(ticketsCountByMonthStatus1); 
 
-    // Création des données pour chaque statut
     const ticketCountsStatus1 = Object.values(ticketsCountByMonthStatus1);
     const ticketCountsStatus2 = Object.values(ticketsCountByMonthStatus2);
 
-    // Création du graphique
     var ctx = document.getElementById('ticketCountByMonthChart').getContext('2d');
     var ticketCountByMonthChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: months,
             datasets: [{
-                label: 'Nombre de tickets accépté',
+                label: 'Nombre de tickets accepté',
                 data: ticketCountsStatus1,
-                borderColor: 'blue',
+                borderColor: 'rgba(242, 86, 86, 0.8)',
                 borderWidth: 2
             },
             {
                 label: 'Nombre de tickets en attente',
                 data: ticketCountsStatus2,
-                borderColor: 'green',
+                borderColor: 'rgba(63, 187, 255, 0.8)',
                 borderWidth: 2
             }]
         },
@@ -415,21 +412,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    darkModeSwitch.addEventListener('change', function() {
+        labelColor = this.checked ? 'white' : 'black';
+        updateChartLegendColors(ticketCountByMonthChart, labelColor);
+    });
 });
 
-
-
-////////////////////////////////////// graphique dépense totale par mois//////////////////////////////////
-
+// Graphique dépense totale par mois
 document.addEventListener('DOMContentLoaded', function() {
-    // Récupération des données des prix par mois depuis PHP
-    const prixParMois = <?php echo $prixParMoisJSON; ?>;
+    const darkModeSwitch = document.getElementById('dark-mode-toggle');
+    let labelColor = darkModeSwitch.checked ? 'white' : 'black';
 
-    // Préparation des données pour le graphique
+    const prixParMois = <?php echo $prixParMoisJSON; ?>;
     const mois = Object.keys(prixParMois);
     const prixTotal = Object.values(prixParMois);
 
-    // Création du graphique
     var ctx = document.getElementById('prixParMoisChart').getContext('2d');
     var prixParMoisChart = new Chart(ctx, {
         type: 'line',
@@ -438,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 label: 'Prix total par mois',
                 data: prixTotal,
-                borderColor: 'blue',
+                borderColor: 'rgba(39, 245, 92, 0.59)',
                 borderWidth: 2
             }]
         },
@@ -453,23 +451,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    darkModeSwitch.addEventListener('change', function() {
+        labelColor = this.checked ? 'white' : 'black';
+        prixParMoisChart.options.plugins.legend.labels.color = labelColor;
+        prixParMoisChart.update();
+    });
 });
 
-
-
-
-////////////////////////////////////////// pie chart Dépense totale par catégories///////////////////////////////////////////////
-
+// Pie chart Dépense totale par catégories
 document.addEventListener('DOMContentLoaded', function() {
-    // Récupération des données depuis PHP
-    
-    const totalPricePerCategory = <?php echo $totalPricePerCategoryJSON; ?>;
+    const darkModeSwitch = document.getElementById('dark-mode-toggle');
+    let labelColor = darkModeSwitch.checked ? 'white' : 'black';
 
-    // Préparation des données pour le graphique
+    const totalPricePerCategory = <?php echo $totalPricePerCategoryJSON; ?>;
     const categories = Object.keys(totalPricePerCategory);
     const totalPrices = Object.values(totalPricePerCategory);
 
-    // Création du graphique en secteurs (pie chart)
     var ctx = document.getElementById('totalPriceByCategoryChart').getContext('2d');
     var totalPriceByCategoryChart = new Chart(ctx, {
         type: 'polarArea',
@@ -480,13 +478,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 data: totalPrices,
                 backgroundColor: [
                     'rgb(254, 205, 211)', 
-          'rgb(207, 232, 255)', 
-          'rgb(187, 247, 208)', 
-          'rgb(252, 252, 174)', 
-          'rgb(140, 162, 245)', 
-          'rgb(252, 201, 146)',  
-          'rgb(250, 175, 217)',
-          'rgba(173, 148, 235)'
+                    'rgb(207, 232, 255)', 
+                    'rgb(187, 247, 208)', 
+                    'rgb(252, 252, 174)', 
+                    'rgb(140, 162, 245)', 
+                    'rgb(252, 201, 146)',  
+                    'rgb(250, 175, 217)',
+                    'rgba(173, 148, 235)'
                 ],
                 borderWidth: 1
             }]
@@ -494,28 +492,27 @@ document.addEventListener('DOMContentLoaded', function() {
         options: {
             responsive: true,
             legend: {
-                position: 'right' // Position de la légende
+                position: 'right' 
             }
         }
     });
+
+    darkModeSwitch.addEventListener('change', function() {
+        labelColor = this.checked ? 'white' : 'black';
+        totalPriceByCategoryChart.options.plugins.legend.labels.color = labelColor;
+        totalPriceByCategoryChart.update();
+    });
 });
 
-
-
-///////////////////////////////////////////////////pie chart Nombre de tickets par catégories//////////////////////////////////////////////////////////////////
-
+// Pie chart Nombre de tickets par catégories
 document.addEventListener('DOMContentLoaded', function() {
     const darkModeSwitch = document.getElementById('dark-mode-toggle');
+    let labelColor = darkModeSwitch.checked ? 'white' : 'black';
 
-let labelColor = darkModeSwitch.checked ? 'white' : 'black';
-    // Récupération des données depuis PHP
     const ticketCountsPerCategory = <?php echo $ticketCountsPerCategoryJSON; ?>;
-
-    // Préparation des données pour le graphique
     const categories = Object.keys(ticketCountsPerCategory);
     const ticketCounts = Object.values(ticketCountsPerCategory);
 
-    // Création du graphique en secteurs (pie chart)
     var ctx = document.getElementById('ticketCountByCategoryChart').getContext('2d');
     var ticketCountByCategoryChart = new Chart(ctx, {
         type: 'doughnut',
@@ -526,13 +523,13 @@ let labelColor = darkModeSwitch.checked ? 'white' : 'black';
                 data: ticketCounts,
                 backgroundColor: [
                     'rgb(254, 205, 211)', 
-          'rgb(207, 232, 255)', 
-          'rgb(187, 247, 208)', 
-          'rgb(252, 252, 174)', 
-          'rgb(140, 162, 245)', 
-          'rgb(252, 201, 146)',  
-          'rgb(250, 175, 217)',
-          'rgba(173, 148, 235)'
+                    'rgb(207, 232, 255)', 
+                    'rgb(187, 247, 208)', 
+                    'rgb(252, 252, 174)', 
+                    'rgb(140, 162, 245)', 
+                    'rgb(252, 201, 146)',  
+                    'rgb(250, 175, 217)',
+                    'rgba(173, 148, 235)'
                 ],
                 borderWidth: 1
             }]
@@ -540,11 +537,25 @@ let labelColor = darkModeSwitch.checked ? 'white' : 'black';
         options: {
             responsive: true,
             legend: {
-                position: 'right' // Position de la légende
+                position: 'right'
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: labelColor 
+                    }
+                }
             }
         }
     });
+
+    darkModeSwitch.addEventListener('change', function() {
+        labelColor = this.checked ? 'white' : 'black';
+        ticketCountByCategoryChart.options.plugins.legend.labels.color = labelColor;
+        ticketCountByCategoryChart.update();
+    });
 });
+
 
 
 
@@ -557,47 +568,6 @@ const categoryLabels = <?php echo $labelsJSON; ?>;
     const pricesPerCategory = <?php echo $prices_per_category_json; ?>;
     var chartData = <?php echo json_encode($data); ?>;
 
-//     // Graphique des dépenses
-//     var ctx1 = document.getElementById('totalExpensesChart').getContext('2d');
-//     var totalExpensesChart = new Chart(ctx1, {
-//         type: 'line',
-//         data: {
-//             labels: categoryLabels, // Utilisez les catégories comme étiquettes
-//             datasets: [{
-//                 label: 'Dépenses par catégorie',
-//                 data: pricesPerCategory, // Utilisez les prix par catégorie comme données
-//                 borderColor: 'blue',
-//                 borderWidth: 2
-//             }]
-//         },
-//         options: {
-//             responsive: true,
-//         }
-//     });
-
-//     // Graphique des tickets
-//     var ctx2 = document.getElementById('totalTicketsChart').getContext('2d');
-//     var totalTicketsChart = new Chart(ctx2, {
-//         type: 'bar',
-//         data: {
-//             labels: Object.keys(chartData), // Utilisez les clés de l'objet chartData comme étiquettes
-//             datasets: [{
-//                 label: 'Nombre total de tickets',
-//                 data: Object.values(chartData), // Utilisez les valeurs de l'objet chartData comme données
-//                 backgroundColor: 'green'
-//             }]
-//         },
-//         options: {
-//             responsive: true,
-//             scales: {
-//                 yAxes: [{
-//                     ticks: {
-//                         beginAtZero: true
-//                     }
-//                 }]
-//             }
-//         }
-//     });
 
 
 
@@ -605,7 +575,6 @@ const categoryLabels = <?php echo $labelsJSON; ?>;
      var mobileProfileImage = document.querySelector('.mobile_profile_image');
      var profileImage = document.querySelector('.profile_image');
  
-     // Récupérez l'avatar sélectionné du stockage local, s'il existe
      var selectedAvatar = localStorage.getItem('selectedAvatar');
      if (selectedAvatar) {
          mobileProfileImage.src = selectedAvatar;

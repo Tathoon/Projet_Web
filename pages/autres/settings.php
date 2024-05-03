@@ -90,7 +90,7 @@
     <main>
       <div class="avatar_section">
         <div class="header">
-          <h1>Changez votre avatar</h1>
+          <h1 id="showMoreAvatars">Changez votre avatar</h1>
         </div>
         <div class="avatar_options" id="avatarContainer">
           <label for="avatar1">
@@ -137,8 +137,6 @@
             <img src="../../images/avatar/avatar17.png" alt="Avatar 17">
             <input type="radio" id="avatar17" name="avatar" value="avatar17.jpg">
           </label>
-
-          <button id="showMoreAvatars">Surprise !</button>
 
           <div id="hiddenAvatars" class="avatar_options" style="display: none;">
             <label for="avatar6">

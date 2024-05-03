@@ -179,8 +179,12 @@ radios.forEach(function(radio) {
 });
 
 function showMoreAvatars() {
-  document.getElementById('hiddenAvatars').style.display = 'flex';
-  document.getElementById('showMoreAvatars').style.display = 'none';
+  var hiddenAvatars = document.getElementById('hiddenAvatars');
+  if (hiddenAvatars.style.display === 'flex') {
+    hiddenAvatars.style.display = 'none';
+  } else {
+    hiddenAvatars.style.display = 'flex';
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function() {

@@ -392,12 +392,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 label: 'Nombre de tickets accepté',
                 data: ticketCountsStatus1,
                 borderColor: 'rgba(242, 86, 86, 0.8)',
+                backgroundColor: 'rgba(242, 86, 86, 0.2)',
                 borderWidth: 2
             },
             {
                 label: 'Nombre de tickets en attente',
                 data: ticketCountsStatus2,
                 borderColor: 'rgba(63, 187, 255, 0.8)',
+                backgroundColor: 'rgba(63, 187, 255, 0.2)',
                 borderWidth: 2
             }]
         },
@@ -437,6 +439,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 label: 'Prix total par mois',
                 data: prixTotal,
                 borderColor: 'rgba(39, 245, 92, 0.59)',
+                backgroundColor: 'rgba(39, 245, 92, 0.2)',
                 borderWidth: 2
             }]
         },

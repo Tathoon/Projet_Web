@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
     data,
     options: {
         scales: { 
-            y: { type: 'logarithmic', ticks: { callback: value => Number(value.toString()) } },
+            y: { type: 'logarithmic', ticks: { callback: value => Number(value.toString()), color: labelColor} },
             x: { ticks: { color: labelColor } }
         },
         barPercentage: 11,
@@ -340,6 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     myChart.options.plugins.legend.labels.color = labelColor;
     myChart.options.scales.x.ticks.color = labelColor;
+    myChart.options.scales.y.ticks.color = labelColor;
     
     myChart.update();
   });

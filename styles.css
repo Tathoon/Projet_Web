@@ -843,6 +843,11 @@ table.tab td {
   padding: 12px 10px;
 }
 
+.dataTables_wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .tab td#status {
   text-align: center;
 }
@@ -2136,4 +2141,12 @@ main .bottom_data .reminders .task_list {
 .ticket-submit {  
     margin-right: -5% !important;
 }
+}
+
+@media (max-width: 600px) {
+  .box-general {
+    width: 100%;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
 }

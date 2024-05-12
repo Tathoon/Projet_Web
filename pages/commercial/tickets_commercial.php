@@ -302,6 +302,16 @@
                   if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
                     $nom = $_SESSION['nom'];
                     $prenom = $_SESSION['prenom'];
+
+                    if(isset($_GET['id']) && is_numeric($_GET['id'])) {
+                      $id_ticket_to_delete = $_GET['id'];
+                      
+                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
+                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
+                      $stmt_delete->execute();
+                      
+                      echo "Ticket supprimé avec succès";
+                    }
     
                     $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                     $stmt_nom->bindParam(':nom', $nom);

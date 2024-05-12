@@ -114,6 +114,19 @@
               </thead>
               <tbody>
                 <?php
+                  require_once '../../vendor/autoload.php'; 
+
+                  use MicrosoftAzure\Storage\Blob\BlobRestProxy;
+                  use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
+                  use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
+                  use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
+
+                  $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=OVp/sacfyyfrlCyj0SEAl/k8jS6r5G+wQ86UeD5oR6W9i2d395JqqmUEi7ZwVrDU6BYkqh5t6OPW+ASttYtsEg==;EndpointSuffix=core.windows.net";
+                  $blobClient = BlobRestProxy::createBlobService($connectionString);
+                  $containerName = "justificatifs"; 
+                  $justificatifs = "justificatifs";
+                  $accountName = "e11event";
+
                   $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
   
                         $pending_tickets = $db->prepare("
@@ -130,7 +143,7 @@
                     foreach ($pending_data as $row) {
                       $justificatifIcon = '';
                       if (!empty($row['justificatif'])) {
-                        $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                          $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
                       }
                       echo "<tr>
                               <td>".$row['id_ticket']."</td>
@@ -161,10 +174,7 @@
                       $stmt_delete->execute();                  
                   
                       if (!empty($justificatif_filename)) {
-                          $justificatif_path = "../../images/justificatifs/".$justificatif_filename;
-                          if (file_exists($justificatif_path)) {
-                              unlink($justificatif_path);
-                          
+                        $blobClient->deleteBlob($justificatifs, $justificatif_filename);
                       }
                       
                       header('Location: tickets_admin.php');
@@ -183,7 +193,6 @@
                             <td id='status' class='center-content'><span class='status ".$statusClass."'>".$row['status']."</span></td>
                           </tr>";
                   }
-                }
                 ?>
               </tbody>
             </table>
@@ -237,6 +246,12 @@
               </thead>
               <tbody>
                 <?php
+                $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=OVp/sacfyyfrlCyj0SEAl/k8jS6r5G+wQ86UeD5oR6W9i2d395JqqmUEi7ZwVrDU6BYkqh5t6OPW+ASttYtsEg==;EndpointSuffix=core.windows.net";
+                $blobClient = BlobRestProxy::createBlobService($connectionString);
+                $containerName = "justificatifs"; 
+                $justificatifs = "justificatifs";
+                $accountName = "e11event";
+
                 $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
                         $other_tickets = $db->prepare("
@@ -253,7 +268,7 @@
                     foreach ($other_data as $row) {
                       $justificatifIcon = '';
                       if (!empty($row['justificatif'])) {
-                        $justificatifIcon = "<a href='../../images/justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
+                        $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
                       }
                     
                       $statusClass = '';

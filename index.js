@@ -6,62 +6,6 @@
 /*                   */
 /*-------------------*/
 
-window.addEventListener('DOMContentLoaded', function() {
-  var avatar = document.querySelector('img[src="../../images/avatar/dancing-toothless-tothless.gif"]');
-  var otherAvatars = document.querySelectorAll('img:not([src="../../images/avatar/dancing-toothless-tothless.gif"])');
-  var isPlaying = localStorage.getItem('isPlaying') === 'true';
-  var audioPath;
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    audioPath = '/Projet_Web/images/music/driftveil.mp3';
-  } else {
-    audioPath = '/images/music/driftveil.mp3';
-  }
-  
-  var audio = new Audio(audioPath);
-  audio.volume = 0.01;
-  audio.loop = true;
-
-  var currentTime = localStorage.getItem('currentTime');
-  if (currentTime) {
-    audio.currentTime = parseFloat(currentTime);
-  }
-
-  if (isPlaying) {
-    audio.play();
-  }
-
-  if (avatar) {
-    document.addEventListener('click', function(event) {
-      if (event.target.src === avatar.src) {
-        if (!isPlaying) {
-          audio.play();
-          isPlaying = true;
-        } else {
-          audio.pause();
-          audio.currentTime = 0;
-          isPlaying = false;
-        }
-        localStorage.setItem('isPlaying', isPlaying);
-      }
-    });
-  }
-
-  otherAvatars.forEach(function(otherAvatar) {
-    otherAvatar.addEventListener('click', function() {
-      if (isPlaying) {
-        audio.pause();
-        audio.currentTime = 0;
-        isPlaying = false;
-        localStorage.setItem('isPlaying', isPlaying);
-      }
-    });
-  });
-
-  window.addEventListener('beforeunload', function() {
-    localStorage.setItem('currentTime', audio.currentTime);
-  });
-});
-
 document.addEventListener('DOMContentLoaded', function() {
 
   function applyDarkModeOnLoad() {
@@ -120,6 +64,72 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   changeImage();
+});
+
+
+/* ------------------*/
+/*                   */
+/*                   */
+/*      MUSIQUE      */
+/*                   */
+/*                   */
+/*-------------------*/
+
+
+window.addEventListener('DOMContentLoaded', function() {
+  var avatar = document.querySelector('img[src="../../images/avatar/dancing-toothless-tothless.gif"]');
+  var otherAvatars = document.querySelectorAll('img:not([src="../../images/avatar/dancing-toothless-tothless.gif"])');
+  var isPlaying = localStorage.getItem('isPlaying') === 'true';
+  var audioPath;
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    audioPath = '/Projet_Web/images/music/driftveil.mp3';
+  } else {
+    audioPath = '/images/music/driftveil.mp3';
+  }
+  
+  var audio = new Audio(audioPath);
+  audio.volume = 0.01;
+  audio.loop = true;
+
+  var currentTime = localStorage.getItem('currentTime');
+  if (currentTime) {
+    audio.currentTime = parseFloat(currentTime);
+  }
+
+  if (isPlaying) {
+    audio.play();
+  }
+
+  if (avatar) {
+    document.addEventListener('click', function(event) {
+      if (event.target.src === avatar.src) {
+        if (!isPlaying) {
+          audio.play();
+          isPlaying = true;
+        } else {
+          audio.pause();
+          audio.currentTime = 0;
+          isPlaying = false;
+        }
+        localStorage.setItem('isPlaying', isPlaying);
+      }
+    });
+  }
+
+  otherAvatars.forEach(function(otherAvatar) {
+    otherAvatar.addEventListener('click', function() {
+      if (isPlaying) {
+        audio.pause();
+        audio.currentTime = 0;
+        isPlaying = false;
+        localStorage.setItem('isPlaying', isPlaying);
+      }
+    });
+  });
+
+  window.addEventListener('beforeunload', function() {
+    localStorage.setItem('currentTime', audio.currentTime);
+  });
 });
 
 

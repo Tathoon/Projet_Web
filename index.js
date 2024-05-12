@@ -6,6 +6,76 @@
 /*                   */
 /*-------------------*/
 
+document.addEventListener('DOMContentLoaded', function() {
+
+  function applyDarkModeOnLoad() {
+      const isDarkMode = localStorage.getItem('darkMode') === 'true';
+      const body = document.body;
+
+      const darkModeToggle = document.getElementById('dark-mode-toggle');
+      if (darkModeToggle) {
+          darkModeToggle.checked = isDarkMode;
+      }
+
+      if (isDarkMode) {
+          body.classList.add('dark-mode');
+      } else {
+          body.classList.remove('dark-mode');
+      }
+  }
+
+  applyDarkModeOnLoad();
+
+  function toggleDarkMode() {
+      const body = document.body;
+      const isDarkMode = body.classList.toggle('dark-mode');
+
+      localStorage.setItem('darkMode', isDarkMode);
+  }
+
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  if (darkModeToggle) {
+      darkModeToggle.addEventListener('change', toggleDarkMode);
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  function changeImage() {
+    const logoImage = document.getElementById('logo-image');
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+  
+    if (!logoImage || !darkModeToggle) {
+      return;
+    }
+  
+    const isDarkMode = darkModeToggle.checked;
+  
+    if (isDarkMode) {
+      logoImage.src = "images/Logo-WebDarkmode.jpg";
+    } else {
+      logoImage.src = "images/Logo-Web.png";
+    }
+  }
+
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  if (darkModeToggle) {
+      darkModeToggle.addEventListener('change', changeImage);
+  }
+
+  changeImage();
+});
+
+
+/* ------------------*/
+/*                   */
+/*                   */
+/*      MUSIQUE      */
+/*                   */
+/*                   */
+/*-------------------*/
+
+
 window.addEventListener('DOMContentLoaded', function() {
   var avatar = document.querySelector('img[src="../../images/avatar/dancing-toothless-tothless.gif"]');
   var otherAvatars = document.querySelectorAll('img:not([src="../../images/avatar/dancing-toothless-tothless.gif"])');
@@ -60,63 +130,6 @@ window.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('beforeunload', function() {
     localStorage.setItem('currentTime', audio.currentTime);
   });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-
-  function applyDarkModeOnLoad() {
-      const isDarkMode = localStorage.getItem('darkMode') === 'true';
-      const body = document.body;
-
-      const darkModeToggle = document.getElementById('dark-mode-toggle');
-      if (darkModeToggle) {
-          darkModeToggle.checked = isDarkMode;
-      }
-
-      if (isDarkMode) {
-          body.classList.add('dark-mode');
-      } else {
-          body.classList.remove('dark-mode');
-      }
-  }
-
-  applyDarkModeOnLoad();
-
-  function toggleDarkMode() {
-      const body = document.body;
-      const isDarkMode = body.classList.toggle('dark-mode');
-
-      localStorage.setItem('darkMode', isDarkMode);
-  }
-
-  const darkModeToggle = document.getElementById('dark-mode-toggle');
-  if (darkModeToggle) {
-      darkModeToggle.addEventListener('change', toggleDarkMode);
-  }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-
-  function changeImage() {
-      const logoImage = document.getElementById('logo-image');
-      const darkModeToggle = document.getElementById('dark-mode-toggle');
-
-      const isDarkMode = darkModeToggle.checked;
-
-
-      if (isDarkMode) {
-          logoImage.src = "images/Logo-WebDarkmode.jpg";
-      } else {
-          logoImage.src = "images/Logo-Web.png";
-      }
-  }
-
-  const darkModeToggle = document.getElementById('dark-mode-toggle');
-  if (darkModeToggle) {
-      darkModeToggle.addEventListener('change', changeImage);
-  }
-
-  changeImage();
 });
 
 
@@ -176,8 +189,12 @@ radios.forEach(function(radio) {
 });
 
 function showMoreAvatars() {
-  document.getElementById('hiddenAvatars').style.display = 'flex';
-  document.getElementById('showMoreAvatars').style.display = 'none';
+  var hiddenAvatars = document.getElementById('hiddenAvatars');
+  if (hiddenAvatars.style.display === 'flex') {
+    hiddenAvatars.style.display = 'none';
+  } else {
+    hiddenAvatars.style.display = 'flex';
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -321,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
     data,
     options: {
         scales: { 
-            y: { type: 'logarithmic', ticks: { callback: value => Number(value.toString()) } },
+            y: { type: 'logarithmic', ticks: { callback: value => Number(value.toString()), color: labelColor} },
             x: { ticks: { color: labelColor } }
         },
         barPercentage: 11,
@@ -337,6 +354,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     myChart.options.plugins.legend.labels.color = labelColor;
     myChart.options.scales.x.ticks.color = labelColor;
+    myChart.options.scales.y.ticks.color = labelColor;
     
     myChart.update();
   });
@@ -406,3 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
       myChartCAM.update();
   });
 });
+
+
+
+

@@ -16,8 +16,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,7 +69,6 @@
       <a href="dashboard_admin.php"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
       <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
       <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
-      <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
       <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
       <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
     </div>
@@ -85,7 +82,6 @@
     <a href="dashboard_admin.php"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
     <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
     <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
-    <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
     <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
     <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
   </div>
@@ -121,9 +117,8 @@
                   $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
   
                         $pending_tickets = $db->prepare("
-                            SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                            SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                             FROM ticket AS t
-                            INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                             INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                             INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                             WHERE ts.nom_status = 'En attente'
@@ -245,9 +240,8 @@
                 $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
                         $other_tickets = $db->prepare("
-                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                               FROM ticket AS t
-                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                               INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                               INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                               WHERE ts.nom_status != 'En attente'

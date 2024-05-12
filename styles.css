@@ -827,7 +827,7 @@ main .bottom_data .reminders {
 
 
 .center-content {
-  text-align: center;
+  text-align: center !important;
 }
 
 /* ========Utilisateurs Admin =================== */
@@ -841,6 +841,11 @@ table.tab {
 table.tab th,
 table.tab td {
   padding: 12px 10px;
+}
+
+.dataTables_wrapper {
+  width: 100%;
+  overflow-x: auto;
 }
 
 .tab td#status {
@@ -1017,8 +1022,6 @@ body, html {
   display: flex;
   float: right;
 }
-
-
 
 .card-ticket {
   padding: 4%;
@@ -1262,7 +1265,7 @@ textarea {
   font-size: 10px;
   padding: 6px 13px;
   color: var(--light);
-  border-radius: 20px;
+  border-radius: 20pgit x;
   font-weight: 700;
   max-width: 95%;
 }
@@ -1319,7 +1322,36 @@ textarea {
   text-align: center;
 }
 
+/* ------------------*/
+/*                   */
+/*                   */
+/*  PAGE COMPTABLE   */
+/*                   */
+/*                   */
+/*-------------------*/
 
+/* ======== Tickets COMPTABLE =================== */
+
+select[name='status'] {
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.bouton-ticket-status {
+  background-color: #6aa3ff;
+  color: white;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer; 
+  font-size: 16px;
+}
+
+.bouton-ticket-status :hover {
+  background-color: #5395ff;
+}
 
 /* ------------------*/
 /*                   */
@@ -2110,4 +2142,12 @@ main .bottom_data .reminders .task_list {
 .ticket-submit {  
     margin-right: -5% !important;
 }
+}
+
+@media (max-width: 600px) {
+  .box-general {
+    width: 100%;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
 }

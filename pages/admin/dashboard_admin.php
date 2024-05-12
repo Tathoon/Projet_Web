@@ -127,7 +127,6 @@
       <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
       <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
       <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
-      <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
       <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
       <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
     </div>
@@ -141,7 +140,6 @@
       <a href="#" class="active"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
       <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
       <a href="utilisateurs_admin.php"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
-      <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i></i><span>Notifications</span></a>
       <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
       <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
   </div>
@@ -150,7 +148,7 @@
   <div class="content">
       <main>
         <div class="header">
-          <h1><i class="fa-solid fa-gauge"></i> Dashboard</h1>
+          <h1><i class="fa-solid fa-gauge"></i> Dashboard Admin</h1>
         </div>
         <ul class="cards">
           <li>

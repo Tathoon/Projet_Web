@@ -62,7 +62,6 @@ try {
     <div class="mobile_nav_items">
       <a href="dashboard_comptable.php"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
       <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-      <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
       <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
       <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
     </div>
@@ -75,7 +74,6 @@ try {
     </div>
     <a href="dashboard_comptable.php"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
     <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-    <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
     <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
     <a href="../../index.php?logout=true" class="logout-comptable" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
   </div>
@@ -102,13 +100,41 @@ try {
                 <th>Prix</th>
                 <th>Description</th>
                 <th>Justificatif</th>
-                <th id="status">Status</th>
-                <th></th>
+                <th id="status" class="center-content">Status</th>
+                <th class="center-content">Validation</th>
               </tr>
             </thead>
             <tbody>
-              <?php
               
+              <?php
+              // Initialiser la connexion à la base de données
+$db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+
+// Vérifier si le formulaire a été soumis
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ticket_id']) && isset($_POST['status'])) {
+    $ticket_id = $_POST['ticket_id'];
+    $statusMap = [
+        'status1' => 1,
+        'status2' => 2,
+        // etc.
+    ];
+
+    if (array_key_exists($_POST['status'], $statusMap)) {
+        $status = $statusMap[$_POST['status']];
+
+        // Préparer la requête SQL pour mettre à jour le statut du ticket
+        $stmt = $db->prepare("UPDATE ticket SET status = ? WHERE id_ticket = ?");
+        $stmt->execute([$status, $ticket_id]);
+
+        // Optionnel: Ajouter un message de confirmation
+        $_SESSION['message'] = "Statut du ticket mis à jour avec succès.";
+    }
+
+    // Rediriger pour éviter le rechargement du formulaire
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+
               if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
                 $nom = $_SESSION['nom'];
                 $prenom = $_SESSION['prenom'];
@@ -163,9 +189,8 @@ try {
                 $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
 
                 $pending_tickets = $db->prepare("
-                SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                 FROM ticket AS t
-                INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                 INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                 INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                 WHERE ts.nom_status = 'En attente'
@@ -186,14 +211,25 @@ try {
                 $statusClass = 'status completed';
               }
 
-              $statusMap = [
+            $statusMap = [
                 'status1' => 1,
                 'status2' => 2,
                 // etc.
             ];
             
-            $status = $statusMap[$_POST['status']];
-            // code pour exécuter la requête SQL
+            if (isset($_POST['status']) && array_key_exists($_POST['status'], $statusMap)) {
+              $status = $statusMap[$_POST['status']];
+              
+              // Préparez la requête SQL
+              $stmt = $db->prepare("UPDATE ticket SET status = ? WHERE id_ticket = ?");
+              
+              // Exécutez la requête avec les paramètres appropriés
+              $stmt->execute([$status, $_POST['ticket_id']]);
+          } else {
+              // code à exécuter si le formulaire n'a pas été soumis ou si le statut soumis n'est pas valide
+          }
+
+            $status = null; // Initialisez la variable avant le bloc if
 
               echo "<tr>
                       <td>".$row['id_ticket']."</td>
@@ -207,30 +243,30 @@ try {
                       <td>".$row['justificatif']." ".$justificatifIcon."</td>
                       <td>
                       <form action='tickets_comptable.php' method='post'>
-                          <select name='status'>
-                              <option value='status1'>Status 1</option>
-                              <option value='status2'>Status 2</option>
-                              <!-- Add more options as needed -->
-                          </select>
-                          <input type='hidden' name='ticket_id' value='".$row['id_ticket']."'/>
-                          <input type='submit' value='Update Status'/>
-                      </form>
-                  </td>
+                      <select name='status'>
+                          <option value='status1'>Accepter</option>
+                          <option value='status2'>Refuser</option>
+                      </select>
+                      </td>
+                      <td class='center-content'>
+                      <input type='hidden' name='ticket_id' value='".$row['id_ticket']."'/>
+                      <input class='bouton-ticket-status' type='submit' value='Valider'/>
+                      </td>
+                  </form>
                           </tr>";
             }
 
-            
+                              // Connect to the database
+              $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
-            
-            // Connect to the database
-            $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-            
-            // Update the ticket status
-            $update = $db->prepare("UPDATE ticket SET status = ? WHERE id_ticket = ?");
-            $update->execute([$status, $ticket_id]);
-            
-            // Redirect back to the tickets page
-            header("Location: tickets_comptable.php");
+              $ticket_id = null; // Initialisez la variable avant de l'utiliser
+
+              // Check if form was submitted
+              if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                  // Update the ticket status
+                  $update = $db->prepare("UPDATE ticket SET status = ? WHERE id_ticket = ?");
+                  $update->execute([$status, $ticket_id]);  
+              }
 
             // Connexion à la base de données
             $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
@@ -271,7 +307,7 @@ try {
                   <th>Prix</th>
                   <th>Description</th>
                   <th>Justificatif</th>
-                  <th>Status</th>
+                  <th class="center-content">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -313,18 +349,16 @@ try {
                     $role = $stmt_user->fetch()['role']; 
 
                         $other_tickets = $db->prepare("
-                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                               FROM ticket AS t
-                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                               INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                               INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                               WHERE ts.nom_status != 'En attente'
                           ");
                     } else {
                         $other_tickets = $db->prepare("
-                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                               FROM ticket AS t
-                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                               INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                               INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                               WHERE t.utilisateur = :id_utilisateur AND ts.nom_status != 'En attente'

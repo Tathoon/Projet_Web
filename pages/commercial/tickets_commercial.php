@@ -53,7 +53,6 @@
     </div>
     <div class="mobile_nav_items">
       <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-      <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
       <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
       <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
     </div>
@@ -65,7 +64,6 @@
       <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
     </div>
     <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-    <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
     <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
     <a href="../../index.php?logout=true" class="logout-commercial" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
   </div>
@@ -376,18 +374,16 @@
                     
                     if ($role == '1') {
                         $pending_tickets = $db->prepare("
-                            SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                            SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                             FROM ticket AS t
-                            INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                             INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                             INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                             WHERE ts.nom_status = 'En attente'
                         ");
                     } else {
                         $pending_tickets = $db->prepare("
-                            SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                            SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                             FROM ticket AS t
-                            INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                             INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                             INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                             WHERE t.utilisateur = :id_utilisateur AND ts.nom_status = 'En attente'
@@ -545,18 +541,16 @@
 
                      if ($role == '1') {
                           $other_tickets = $db->prepare("
-                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                               FROM ticket AS t
-                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                               INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                               INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                               WHERE ts.nom_status != 'En attente'
                           ");
                       } else {
                           $other_tickets = $db->prepare("
-                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                               FROM ticket AS t
-                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                               INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                               INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                               WHERE t.utilisateur = :id_utilisateur AND ts.nom_status != 'En attente'

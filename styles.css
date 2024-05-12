@@ -992,9 +992,7 @@ body, html {
 }
 
 .ticket-container {
-  display: flex;
   margin-top: 16px;
-  align-items: center;
   margin-left: 14%;
   width: 25%;
   float: left;
@@ -1138,17 +1136,18 @@ textarea {
   background-color: #f0a5a5;
 }
 
-.ticket-container button[type="submit"] {
-  display: inline-block; 
+.btn-ticket {
   margin-top: 30px;
-  width: 100%;
+  width: 100%; /* Vous pouvez ajuster cette valeur en fonction de vos besoins */
   padding: 10px 20px;
   background-color: #6aa3ff;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  align-self: center;
+  display: inline-block !important; /* Assurez-vous que le bouton est un bloc */
+  margin-left: auto !important;
+  margin-right: auto !important;
   transition: background-color 0.3s ease-in-out;
 }
 
@@ -2012,7 +2011,9 @@ main .bottom_data .reminders .task_list {
 
 .ticket-card button[type="submit"] {
     margin-top: 20px;
-    align-self: center;
+    margin-left: auto; 
+    margin-right: auto;
+    display: block;
 }
 
 .ticket-pending {

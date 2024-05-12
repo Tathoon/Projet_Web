@@ -100,8 +100,8 @@ try {
                 <th>Prix</th>
                 <th>Description</th>
                 <th>Justificatif</th>
-                <th id="status">Status</th>
-                <th>Validation</th>
+                <th id="status" class="center-content">Status</th>
+                <th class="center-content">Validation</th>
               </tr>
             </thead>
             <tbody>
@@ -248,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ticket_id']) && isset
                           <option value='status2'>Refuser</option>
                       </select>
                       </td>
-                      <td>
+                      <td class='center-content'>
                       <input type='hidden' name='ticket_id' value='".$row['id_ticket']."'/>
                       <input class='bouton-ticket-status' type='submit' value='Valider'/>
                       </td>
@@ -307,7 +307,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ticket_id']) && isset
                   <th>Prix</th>
                   <th>Description</th>
                   <th>Justificatif</th>
-                  <th>Status</th>
+                  <th class="center-content">Status</th>
                 </tr>
               </thead>
               <tbody>

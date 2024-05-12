@@ -44,13 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
                                 <strong>Erreur</strong> le mail ou le mot de passe est incorrect.
                             </div>';
-            error_log("Login error: $errorMessage");  // Log the error message
+            error_log("Login error: $errorMessage"); 
         }
     } catch (PDOException $e) {
         $errorMessage = '<div class="error-alert" role="alert" style="color:white;">
                             <strong>Erreur de connexion à la base de données :</strong> ' . $e->getMessage() . '
                         </div>';
-        error_log("Database error: " . $e->getMessage());  // Log the database error
+        error_log("Database error: " . $e->getMessage());
     }
 }
 ?>

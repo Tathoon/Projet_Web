@@ -189,9 +189,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ticket_id']) && isset
                 $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
 
                 $pending_tickets = $db->prepare("
-                SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                 FROM ticket AS t
-                INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                 INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                 INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                 WHERE ts.nom_status = 'En attente'
@@ -350,18 +349,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ticket_id']) && isset
                     $role = $stmt_user->fetch()['role']; 
 
                         $other_tickets = $db->prepare("
-                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                               FROM ticket AS t
-                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                               INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                               INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                               WHERE ts.nom_status != 'En attente'
                           ");
                     } else {
                         $other_tickets = $db->prepare("
-                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                               FROM ticket AS t
-                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                               INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                               INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                               WHERE t.utilisateur = :id_utilisateur AND ts.nom_status != 'En attente'

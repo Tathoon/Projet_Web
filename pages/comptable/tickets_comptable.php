@@ -129,7 +129,7 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] != 3 && $_SESSION['role'] !=
                       $_SESSION['message'] = "Statut du ticket mis à jour avec succès.";
                   }
               
-                  header("Location: " . $_SERVER['PHP_SELF']);
+                  echo "<script>setTimeout(function(){ window.location.href = window.location.href; }, 1000);</script>";
                   exit;
               }
             if (isset($_POST['ticket_id'])) {

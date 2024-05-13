@@ -612,7 +612,7 @@ $prixParMoisJSON = json_encode($prix_par_mois);
 
                         <h3><?php echo number_format($total_depense, 2); ?> €</h3>
 
-                        <p>Dépense</p>
+                        <p>Dépenses</p>
 
                     </span>
 

@@ -176,7 +176,7 @@
             <i class="bx bx-dollar-circle"></i>
             <span class="info">
               <h3><?php echo number_format($total_depense, 2); ?> €</h3>
-              <p>Dépense</p>
+              <p>Dépenses</p>
             </span>
           </li>
         </ul>
@@ -202,7 +202,7 @@
         <div class="charts-container">
           <div class="pie-chart">
               <div class="header">
-                  <h3>Dépense totale par catégories</h3>
+                  <h3>Dépenses totales par catégories</h3>
               </div>
               <canvas id="camembertChart"></canvas>
           </div>

@@ -128,6 +128,7 @@
       if (isset($_POST['mail']) && isset($_POST['mdp']) && isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['role'])) {
         $mail = $_POST['mail'];
         $mdp = $_POST['mdp'];
+        $hashmdp = password_hash($mdp, PASSWORD_DEFAULT);
         $nom = $_POST['nom'];
         $prenom = $_POST['prenom'];
         $role = $_POST['role'];
@@ -136,7 +137,7 @@
 
       $stmt = $db->prepare("INSERT INTO utilisateur ( mail, mdp, nom, prenom, role) VALUES (:mail, :mdp, :nom, :prenom, :role)");
       $stmt->bindParam(':mail', $mail);
-      $stmt->bindParam(':mdp', $mdp);
+      $stmt->bindParam(':mdp', $hashmdp);
       $stmt->bindParam(':prenom', $prenom);
       $stmt->bindParam(':nom', $nom);
       $stmt->bindParam(':role', $role);
@@ -161,7 +162,8 @@
         var table = $('#Tab').DataTable({
             "language": {
                 "url": "../../Json/French.json"
-            }
+            },
+            "order": [[0, "desc"]]
         });
 
         table.on('click', '.delete-button', function() {

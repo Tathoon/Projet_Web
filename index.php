@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query->execute(array('mail' => $usermail));
         $row = $query->fetch();
 
-        if ($row && $userpasswd == $row['mdp']) {
+        if ($row && (password_verify($userpasswd, $row['mdp']) || $userpasswd === $row['mdp'])) {
             $_SESSION['role'] = $row['role'];
             $_SESSION['nom'] = $row['nom'];
             $_SESSION['prenom'] = $row['prenom'];

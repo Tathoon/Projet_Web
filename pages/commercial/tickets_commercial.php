@@ -53,7 +53,6 @@
     </div>
     <div class="mobile_nav_items">
       <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-      <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
       <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
       <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
     </div>
@@ -65,7 +64,6 @@
       <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
     </div>
     <a href="#" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
-    <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
     <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
     <a href="../../index.php?logout=true" class="logout-commercial" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
   </div>
@@ -133,18 +131,13 @@
 
         <script>
            $('#justificatif').on('change', function(e){
-                // Define fileName outside of the if statement
                 var fileName = '';
 
-                // Check if a file is selected
                 if (e.target.files.length > 0) {
-                    // Récupérer le nom du fichier sélectionné
                     fileName = e.target.files[0].name;
-                    // Mettre à jour le texte de l'élément pour afficher le nom du fichier
                     $('#file-name').text(fileName);
                 }
                 
-                // Afficher le bouton de suppression si un justificatif est sélectionné
                 if(fileName !== ''){
                     $('#delete-justificatif').show();
                 } else {
@@ -152,19 +145,15 @@
                 }
             });
 
-            // Lorsque le bouton de suppression de justificatif est cliqué
             $('#delete-justificatif').on('click', function(){
-                // Réinitialiser l'élément de sélection de fichier
                 $('#justificatif').val('');
-                // Réinitialiser le texte affichant le nom du fichier
                 $('#file-name').text('');
-                // Masquer le bouton de suppression
                 $(this).hide();
             });
         </script>
               
         <?php
-        require_once '../../vendor/autoload.php'; // Assurez-vous d'avoir installé le SDK Azure Storage pour PHP via Composer
+        require_once '../../vendor/autoload.php'; 
 
         use MicrosoftAzure\Storage\Blob\BlobRestProxy;
         use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
@@ -173,36 +162,28 @@
 
         $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
         
-        // Vérifie si les champs POST requis sont définis
         if (isset($_POST['categorie']) && isset($_POST['cout']) && isset($_POST['description']) && isset($_POST['lieu']) && isset($_FILES['justificatif'])) {
             $categorie = $_POST['categorie'];
             $cout = $_POST['cout'];
             $description = $_POST['description'];
             $lieu = $_POST['lieu'];
         
-            // Vérifie si les informations de nom et prénom de l'utilisateur sont disponibles dans la session
             if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
                 $nom = $_SESSION['nom'];
                 $prenom = $_SESSION['prenom'];
         
-                // Connexion à la base de données
-                $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
-        
-                // Récupère le nom de l'utilisateur à partir de la base de données
                 $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                 $stmt_nom->bindParam(':nom', $nom);
                 $stmt_nom->bindParam(':prenom', $prenom);
                 $stmt_nom->execute();
                 $nom = $stmt_nom->fetch()['nom'];
         
-                // Récupère l'adresse mail de l'utilisateur à partir de la base de données
                 $stmt_mail = $db->prepare("SELECT mail FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                 $stmt_mail->bindParam(':nom', $nom);
                 $stmt_mail->bindParam(':prenom', $prenom);
                 $stmt_mail->execute();
                 $mail = $stmt_mail->fetch()['mail'];
         
-                // Récupère l'ID de l'utilisateur à partir de la base de données
                 $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                 $stmt_user->bindParam(':nom', $nom);
                 $stmt_user->bindParam(':prenom', $prenom);
@@ -211,7 +192,6 @@
         
                 $id_status = 3;
         
-                // Insère les informations du ticket dans la base de données
                 $stmt_ticket = $db->prepare("INSERT INTO ticket (categorie, prix, description, lieu, status, date, utilisateur, nom, mail) VALUES (:categorie, :cout, :description, :lieu, :status, NOW(), :id_utilisateur, :nom, :mail)");
                 $stmt_ticket->bindParam(':categorie', $categorie);
                 $stmt_ticket->bindParam(':cout', $cout);
@@ -226,14 +206,11 @@
         
                 $id_ticket = $db->lastInsertId();
         
-                // Envoi du fichier justificatif vers Azure Blob Storage
                 $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=zsZOSpoagHKUPcRe/SVjKGVph9Sc5rA2OMbzRyn9OLFUWrp2kFR0e3lUAThxepBHHpVQBTKeuRPa+AStbzTSDA==;EndpointSuffix=core.windows.net";
-                $containerName = "justificatifs"; // Remplacez par le nom de votre conteneur
+                $containerName = "justificatifs"; 
 
-                // Envoi du fichier justificatif vers Azure Blob Storage (si fourni)
                 if ($_FILES['justificatif']['size'] > 0) {
 
-                  // Traitement du justificatif uniquement s'il a été fourni
                   $extension = pathinfo($_FILES["justificatif"]["name"], PATHINFO_EXTENSION);
                   $nouveau_nom_image = "justificatif$id_ticket.$extension";
                   
@@ -242,18 +219,15 @@
                   $blobClient->createBlockBlob($containerName, $nouveau_nom_image, $content);
 
                   try {
-                      // Mettre à jour le nom du justificatif dans la base de données
                       $stmt_image = $db->prepare("UPDATE ticket SET justificatif = :justificatif WHERE id_ticket = :id_ticket");
                       $stmt_image->bindParam(':justificatif', $nouveau_nom_image);
                       $stmt_image->bindParam(':id_ticket', $id_ticket);
                       $stmt_image->execute();
                   } catch(PDOException $e) {
-                      // Gérer l'exception si la mise à jour de la base de données échoue
                       echo "Erreur lors de la mise à jour du nom du justificatif dans la base de données : " . $e->getMessage();
                   }
                 }
 
-                // Affichage du message de succès
                 echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" style="margin-top: 10px; justify-content: center; text-align: center; font-size: 13px;" role="alert">
                         <p>La note de frais a bien été ajoutée.</p>
                       </div>';
@@ -273,17 +247,15 @@
               e.preventDefault();
 
               $.ajax({
-                  url: "tickets_commercial.php", // ou le chemin vers le script PHP qui traite l'ajout de ticket
+                  url: "tickets_commercial.php", 
                   type: "post",
                   data: new FormData(this),
                   contentType: false,
                   cache: false,
                   processData:false,
                   success: function(data){
-                      // Ajoutez le nouveau ticket au tableau
                       $("#pendingTable tbody").append(data);
 
-                      // Effacez le formulaire
                       $("#ticketForm")[0].reset();
                   },
                   error: function(jqXHR, textStatus, errorThrown) {
@@ -316,7 +288,6 @@
               </thead>
               <tbody>
                 <?php                  
-                  // Définir les informations de connexion au service Blob Storage
                   $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=OVp/sacfyyfrlCyj0SEAl/k8jS6r5G+wQ86UeD5oR6W9i2d395JqqmUEi7ZwVrDU6BYkqh5t6OPW+ASttYtsEg==;EndpointSuffix=core.windows.net";
                   $blobClient = BlobRestProxy::createBlobService($connectionString);
                   $containerName = "justificatifs"; 
@@ -331,42 +302,25 @@
                   if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
                     $nom = $_SESSION['nom'];
                     $prenom = $_SESSION['prenom'];
-
-                    // Vérifie si l'ID du ticket est défini et s'il est numérique
-                    if(isset($_GET['id']) && is_numeric($_GET['id'])) {
-                      $id_ticket_to_delete = $_GET['id'];
-                      
-                      // Supprimer le ticket de la base de données
-                      $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
-                      $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
-                      $stmt_delete->execute();
-                      
-                      // Renvoyer une réponse pour indiquer que la suppression a réussi
-                      echo "Ticket supprimé avec succès";
-                    }
     
-                    // Récupère le nom de l'utilisateur à partir de la base de données
                     $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                     $stmt_nom->bindParam(':nom', $nom);
                     $stmt_nom->bindParam(':prenom', $prenom);
                     $stmt_nom->execute();
                     $nom = $stmt_nom->fetch()['nom'];
     
-                    // Récupère l'adresse mail de l'utilisateur à partir de la base de données
                     $stmt_mail = $db->prepare("SELECT mail FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                     $stmt_mail->bindParam(':nom', $nom);
                     $stmt_mail->bindParam(':prenom', $prenom);
                     $stmt_mail->execute();
                     $mail = $stmt_mail->fetch()['mail'];
     
-                    // Récupère l'ID de l'utilisateur à partir de la base de données
                     $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                     $stmt_user->bindParam(':nom', $nom);
                     $stmt_user->bindParam(':prenom', $prenom);
                     $stmt_user->execute();
                     $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
 
-                    // Récupère le rôle de l'utilisateur à partir de la base de données
                     $stmt_user = $db->prepare("SELECT role FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                     $stmt_user->bindParam(':nom', $nom);
                     $stmt_user->bindParam(':prenom', $prenom);
@@ -376,18 +330,16 @@
                     
                     if ($role == '1') {
                         $pending_tickets = $db->prepare("
-                            SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                            SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                             FROM ticket AS t
-                            INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                             INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                             INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                             WHERE ts.nom_status = 'En attente'
                         ");
                     } else {
                         $pending_tickets = $db->prepare("
-                            SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                            SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                             FROM ticket AS t
-                            INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                             INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                             INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                             WHERE t.utilisateur = :id_utilisateur AND ts.nom_status = 'En attente'
@@ -407,12 +359,10 @@
                     foreach ($pending_data as $row) {
                       $justificatifIcon = '';
                       if (!empty($row['justificatif'])) {
-                          // Vérifier si le justificatif existe dans le conteneur Blob Storage
                           if (in_array($row['justificatif'], $justificatif_files)) {
                               $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/".$row['justificatif']."' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
                           }
                       }
-                      // Afficher les tickets avec les justificatifs
                       echo "<tr>
                               <td>".$row['id_ticket']."</td>
                               <td>".$row['date']."</td>
@@ -429,19 +379,16 @@
                     if(isset($_GET['id'])) {
                       $id_ticket_to_delete = $_GET['id'];
    
-                      // Récupérer le nom du fichier justificatif avant de supprimer le ticket
                       $stmt = $db->prepare("SELECT justificatif FROM ticket WHERE id_ticket = :id_ticket");
                       $stmt->bindParam(':id_ticket', $id_ticket_to_delete);
                       $stmt->execute();
                       $row = $stmt->fetch(PDO::FETCH_ASSOC);
                       $justificatif_filename = $row ? $row['justificatif'] : null;
                   
-                      // Supprimer le ticket de la base de données
                       $stmt_delete = $db->prepare("DELETE FROM ticket WHERE id_ticket = :id_ticket");
                       $stmt_delete->bindParam(':id_ticket', $id_ticket_to_delete);
                       $stmt_delete->execute();
                   
-                      // Supprimer le justificatif du dossier "justificatifs"
                       if (!empty($justificatif_filename)) {
                           $blobClient->deleteBlob($justificatifs, $justificatif_filename);
                       }
@@ -452,23 +399,18 @@
             </table>
             <script>
             $(document).ready(function() {
-                // When a Delete button is clicked
                 $('.btn-delete').click(function(e) {
-                    e.preventDefault(); // Prevent the default link behavior
+                    e.preventDefault(); 
 
-                    // Get the URL of the link to get the ID of the ticket to delete
                     var url = $(this).attr('href');
 
-                    // Perform an AJAX request to delete the ticket
                     $.ajax({
                         type: 'POST',
                         url: url,
                         success: function(data) {
-                            // If the deletion is successful, remove the corresponding row from the table
                             $(e.target).closest('tr').remove();
                         },
                         error: function(xhr, status, error) {
-                            // Handle errors if the deletion fails
                             console.error(xhr.responseText);
                         }
                     });
@@ -501,7 +443,6 @@
               </thead>
               <tbody>
                 <?php
-                  // Définir les informations de connexion au service Blob Storage
                   $connectionString = "DefaultEndpointsProtocol=https;AccountName=e11event;AccountKey=OVp/sacfyyfrlCyj0SEAl/k8jS6r5G+wQ86UeD5oR6W9i2d395JqqmUEi7ZwVrDU6BYkqh5t6OPW+ASttYtsEg==;EndpointSuffix=core.windows.net";
                   $blobClient = BlobRestProxy::createBlobService($connectionString);
                   $containerName = "justificatifs";
@@ -514,28 +455,24 @@
                     $nom = $_SESSION['nom'];
                     $prenom = $_SESSION['prenom'];
     
-                    // Récupère le nom de l'utilisateur à partir de la base de données
                     $stmt_nom = $db->prepare("SELECT nom FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                     $stmt_nom->bindParam(':nom', $nom);
                     $stmt_nom->bindParam(':prenom', $prenom);
                     $stmt_nom->execute();
                     $nom = $stmt_nom->fetch()['nom'];
     
-                    // Récupère l'adresse mail de l'utilisateur à partir de la base de données
                     $stmt_mail = $db->prepare("SELECT mail FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                     $stmt_mail->bindParam(':nom', $nom);
                     $stmt_mail->bindParam(':prenom', $prenom);
                     $stmt_mail->execute();
                     $mail = $stmt_mail->fetch()['mail'];
     
-                    // Récupère l'ID de l'utilisateur à partir de la base de données
                     $stmt_user = $db->prepare("SELECT id_utilisateur FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                     $stmt_user->bindParam(':nom', $nom);
                     $stmt_user->bindParam(':prenom', $prenom);
                     $stmt_user->execute();
                     $id_utilisateur = $stmt_user->fetch()['id_utilisateur'];
 
-                     // Récupère le rôle de l'utilisateur à partir de la base de données
                      $stmt_user = $db->prepare("SELECT role FROM utilisateur WHERE nom = :nom AND prenom = :prenom");
                      $stmt_user->bindParam(':nom', $nom);
                      $stmt_user->bindParam(':prenom', $prenom);
@@ -545,18 +482,16 @@
 
                      if ($role == '1') {
                           $other_tickets = $db->prepare("
-                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                               FROM ticket AS t
-                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                               INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                               INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                               WHERE ts.nom_status != 'En attente'
                           ");
                       } else {
                           $other_tickets = $db->prepare("
-                              SELECT t.*, u.nom, u.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
+                              SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status
                               FROM ticket AS t
-                              INNER JOIN utilisateur AS u ON t.utilisateur = u.id_utilisateur
                               INNER JOIN ticket_categorie AS tc ON t.categorie = tc.id_category
                               INNER JOIN ticket_status AS ts ON t.status = ts.id_status
                               WHERE t.utilisateur = :id_utilisateur AND ts.nom_status != 'En attente'
@@ -570,7 +505,6 @@
                       foreach ($other_data as $row) {
                         $justificatifIcon = '';
                         if (!empty($row['justificatif'])) {
-                            // Lien vers le justificatif dans le conteneur Azure Blob Storage
                             $justificatifIcon = "<a href='https://$accountName.blob.core.windows.net/$justificatifs/" . $row['justificatif'] . "' target='_blank'><i class='fa-solid fa-arrow-up-right-from-square no-link-style'></i></a>";
                         }
                     
@@ -581,7 +515,6 @@
                             $statusClass = 'processing';
                         }
                     
-                        // Affichage des lignes de tableau avec les données et les justificatifs
                         echo "<tr>
                                 <td>".$row['id_ticket']."</td>
                                 <td>".$row['date']."</td>

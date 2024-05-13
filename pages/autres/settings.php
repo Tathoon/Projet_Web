@@ -50,10 +50,9 @@
       <i class="fa fa-bars nav_btn"></i>
     </div>
     <div class="mobile_nav_items">
-      <a href="notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
-      <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+      <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
       <a href="javascript:goBack()" class=""><i class="fa-solid fa-arrow-left"></i><span>Retour</span></a>
-      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+      <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
     </div>
   </div>
 
@@ -62,7 +61,6 @@
       <img src="../../images/user-icon.png" class="profile_image" alt="">
       <h4><?php echo ucfirst($_SESSION['nom']) . " " . ucfirst($_SESSION['prenom']) ; ?></h4>
     </div>
-    <a href="notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
     <a href="#" class="active"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
     <a href="javascript:goBack()" class="back"><i class="fa-solid fa-arrow-left"></i><span>Retour</span></a>
     <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
@@ -90,7 +88,7 @@
     <main>
       <div class="avatar_section">
         <div class="header">
-          <h1>Changez votre avatar</h1>
+          <h1 id="showMoreAvatars">Changez votre avatar</h1>
         </div>
         <div class="avatar_options" id="avatarContainer">
           <label for="avatar1">
@@ -137,8 +135,6 @@
             <img src="../../images/avatar/avatar17.png" alt="Avatar 17">
             <input type="radio" id="avatar17" name="avatar" value="avatar17.jpg">
           </label>
-
-          <button id="showMoreAvatars">Surprise !</button>
 
           <div id="hiddenAvatars" class="avatar_options" style="display: none;">
             <label for="avatar6">

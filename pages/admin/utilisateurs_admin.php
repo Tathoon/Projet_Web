@@ -55,7 +55,6 @@
       <a href="dashboard_admin.php"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
       <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
       <a href="#" class="active"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
-      <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
       <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
       <a href="../../index.php?logout=true" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
     </div>
@@ -69,14 +68,13 @@
     <a href="dashboard_admin.php"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
     <a href="tickets_admin.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
     <a href="#" class="active"><i class="fas fa-table"></i><span>Utilisateurs</span></a>
-    <a href="../autres/notifications.php"><i class="fa-solid fa-bell"></i><span>Notifications</span></a>
     <a href="../autres/settings.php"><i class="fas fa-sliders-h"></i><span>Paramètres</span></a>
     <a href="../../index.php?logout=true" class="logout" ><i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span></a>
   </div>
 
-   <div class="title">
-      <h1>Gestion d'utilisateurs</h1>
-   </div>
+  <div class="title">
+    <h1>Gestion d'utilisateurs</h1>
+  </div>
 
   <div class="box-general">
 
@@ -105,6 +103,7 @@
     <div>
     <label for="role" class="">Role</label>
     <select name="role" class="" id="role">
+
      <?php
         $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
         $role = $db->query("SELECT * FROM role")->fetchAll();
@@ -112,6 +111,7 @@
           echo "<option value=".$row['id_role'].">".$row['nom_role']."</option>";
         }
      ?>
+     
     </select>
     </div>
     
@@ -186,7 +186,7 @@
         echo "</tbody>";
         echo "</table>";
 
-        if (isset($_GET['id_utilisateur'])) {  //supprime un utilisateur
+        if (isset($_GET['id_utilisateur'])) {
             $id = $_GET['id_utilisateur'];
             try {
                 $db->beginTransaction();
@@ -197,7 +197,6 @@
 
                 $db->commit();
 
-                // Si la requête est une requête AJAX, renvoyer une réponse HTTP appropriée
                 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
                     echo "Utilisateur supprimé";
                     exit;
@@ -208,7 +207,6 @@
             }
         }
         
-        // permet de supprimer un utilisateur sans recharger la page (l'utilisateur est supprimé de la base de données et du tableau sans avoir à la recharger)
         echo "<script type='text/javascript'> 
         var deleteButtons = document.querySelectorAll('.delete-button');
         deleteButtons.forEach(function(button) {
@@ -246,9 +244,7 @@
 
   </script>
 
-  </div>
-
-<script type="text/javascript" src="../../index.js"></script>
+  <script type="text/javascript" src="../../index.js"></script>
 
 </body>
 </html>

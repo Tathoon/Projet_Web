@@ -557,34 +557,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
-
-
-
-
-
-
-
 const categoryLabels = <?php echo $labelsJSON; ?>;
-    const pricesPerCategory = <?php echo $prices_per_category_json; ?>;
-    var chartData = <?php echo json_encode($data); ?>;
+const pricesPerCategory = <?php echo $prices_per_category_json; ?>;
+var chartData = <?php echo json_encode($data); ?>;
 
+    var mobileProfileImage = document.querySelector('.mobile_profile_image');
+    var profileImage = document.querySelector('.profile_image');
 
-
-
- 
-     var mobileProfileImage = document.querySelector('.mobile_profile_image');
-     var profileImage = document.querySelector('.profile_image');
- 
-     var selectedAvatar = localStorage.getItem('selectedAvatar');
-     if (selectedAvatar) {
-         mobileProfileImage.src = selectedAvatar;
-         profileImage.src = selectedAvatar;
-     }
-     
-
-
-
+    var selectedAvatar = localStorage.getItem('selectedAvatar');
+    if (selectedAvatar) {
+        mobileProfileImage.src = selectedAvatar;
+        profileImage.src = selectedAvatar;
+    }
      
    </script>
    <script type="text/javascript" src="../../index.js"></script>

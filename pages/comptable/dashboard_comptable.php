@@ -662,7 +662,7 @@ $prixParMoisJSON = json_encode($prix_par_mois);
 
                     <div class="header">
 
-                    <h3>Dépense totale par catégories</h3>
+                    <h3>Dépenses totales par catégories</h3>
 
                     </div>
 

@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
     datasets: [
         { label: 'Total Utilisateurs', data: [chartData.total_utilisateurs, null, null, null,], backgroundColor: 'rgba(54, 162, 235, 0.2)', borderColor: 'rgba(54, 162, 235, 1)', borderWidth: 1 },
         { label: 'Nombre de Tickets', data: [null, chartData.total_tickets, null, null], backgroundColor: 'rgba(255, 206, 86, 0.2)', borderColor: 'rgba(255, 206, 86, 1)', borderWidth: 1 },
-        { label: 'Dépense', data: [null, null, chartData.total_depense, null], backgroundColor: 'rgba(75, 192, 192, 0.2)', borderColor: 'rgba(75, 192, 192, 1)', borderWidth: 1 },
+        { label: 'Dépenses', data: [null, null, chartData.total_depense, null], backgroundColor: 'rgba(75, 192, 192, 0.2)', borderColor: 'rgba(75, 192, 192, 1)', borderWidth: 1 },
         { label: 'Tickets en Attente', data: [null, null, null, chartData.total_tickets_attente], backgroundColor: 'rgba(255, 99, 132, 0.2)', borderColor: 'rgba(255, 99, 132, 1)', borderWidth: 1 }
     ]
   };
@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const myData = {
       labels: categoryLabels, 
       datasets: [{
-        label: 'Dépense total ',
+        label: 'Dépenses total ',
         data: pricesPerCategory,
         backgroundColor: [
           'rgb(254, 205, 211)', 

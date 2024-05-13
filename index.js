@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let labelColor = darkModeSwitch.checked ? 'white' : 'black';
 
   const data = {
-    labels: ['Total Utilisateurs', 'Nombre de Tickets', 'Dépense', 'Tickets en Attente'],
+    labels: ['Total Utilisateurs', 'Nombre de Tickets', 'Dépenses', 'Tickets en Attente'],
     datasets: [
         { label: 'Total Utilisateurs', data: [chartData.total_utilisateurs, null, null, null,], backgroundColor: 'rgba(54, 162, 235, 0.2)', borderColor: 'rgba(54, 162, 235, 1)', borderWidth: 1 },
         { label: 'Nombre de Tickets', data: [null, chartData.total_tickets, null, null], backgroundColor: 'rgba(255, 206, 86, 0.2)', borderColor: 'rgba(255, 206, 86, 1)', borderWidth: 1 },

@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const myData = {
       labels: categoryLabels, 
       datasets: [{
-        label: 'Dépenses total ',
+        label: 'Dépenses totales ',
         data: pricesPerCategory,
         backgroundColor: [
           'rgb(254, 205, 211)', 

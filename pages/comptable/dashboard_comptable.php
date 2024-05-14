@@ -570,7 +570,7 @@ $prixParMoisJSON = json_encode($prix_par_mois);
 
                         <h3><?php echo $total_utilisateurs; ?></h3>
 
-                        <p>Nombre de comptable</p>
+                        <p>Nombre de comptables</p>
 
                     </span>
 

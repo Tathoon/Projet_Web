@@ -88,7 +88,7 @@ window.addEventListener('DOMContentLoaded', function() {
   }
   
   var audio = new Audio(audioPath);
-  audio.volume = 0.01;
+  audio.volume = 0.03;
   audio.loop = true;
 
   var currentTime = localStorage.getItem('currentTime');
@@ -424,7 +424,3 @@ document.addEventListener('DOMContentLoaded', function() {
       myChartCAM.update();
   });
 });
-
-
-
-

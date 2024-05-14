@@ -44,7 +44,6 @@
      }
   ?>
 
-  <input type="checkbox" id="check">
   <header>
     <div class="left_area">
       <h3>E11<span>event</span></h3>

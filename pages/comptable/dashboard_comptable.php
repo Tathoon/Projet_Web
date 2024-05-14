@@ -85,7 +85,7 @@ $prixParMoisJSON = json_encode($prix_par_mois);
 
     $totalPricePerCategoryJSON = json_encode($totalPricePerCategory);
 
-     $sql_number_users = "SELECT COUNT(DISTINCT id_utilisateur) AS total_utilisateurs FROM utilisateur WHERE role = 2";
+     $sql_number_users = "SELECT COUNT(DISTINCT id_utilisateur) AS total_utilisateurs FROM utilisateur WHERE role = 3";
      $result_users = $db->query($sql_number_users);
 
      $sql_number_tickets = "SELECT COUNT(DISTINCT id_ticket) AS total_tickets FROM ticket WHERE MONTH(date) = (SELECT MAX(MONTH(date)) FROM ticket)";

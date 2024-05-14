@@ -110,7 +110,11 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] != 3 && $_SESSION['role'] !=
               $justificatifs = "justificatifs";
               $accountName = "e11event";
               
-                $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+              $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+              $dotenv->load();
+      
+                $db = new PDO("mysql:host=".$_ENV['DB_HOST'].";dbname=".$_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS']);
+                
                 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ticket_id']) && isset($_POST['status'])) {
                   $ticket_id = $_POST['ticket_id'];
                   $statusMap = [
@@ -246,7 +250,10 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] != 3 && $_SESSION['role'] !=
                 $justificatifs = "justificatifs";
                 $accountName = "e11event";
 
-                  $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+                $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+                $dotenv->load();
+        
+                $db = new PDO("mysql:host=".$_ENV['DB_HOST'].";dbname=".$_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS']);
 
                         $other_tickets = $db->prepare("
                               SELECT t.*, t.nom, t.mail, tc.nom_categorie AS categorie, ts.nom_status AS status

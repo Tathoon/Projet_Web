@@ -4,6 +4,7 @@
     "license": "MIT",
     "require": {
         "microsoft/azure-storage-blob": "^1.0",
-        "microsoft/azure-storage-common": "^1.0"
+        "microsoft/azure-storage-common": "^1.0",
+        "vlucas/phpdotenv": "^5.6"
     }
 }

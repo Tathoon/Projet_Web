@@ -171,13 +171,40 @@
               <p>Tickets en attente</p>
             </span>
           </li>
-          <li>
-            <i class="bx bx-dollar-circle"></i>
-            <span class="info">
+
+      <?php
+
+          $current_month = date('m');
+
+          if (isset($_POST['month'])) {
+              $current_month = $_POST['month'];
+          }
+
+          $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+          $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+          $sql_depense = "SELECT COALESCE(SUM(prix), 0) AS total_depense FROM ticket WHERE status = 1 AND MONTH(date) = :month";
+          $stmt = $db->prepare($sql_depense);
+          $stmt->bindParam(':month', $current_month);
+          $stmt->execute();
+          $expenses = $stmt->fetch(PDO::FETCH_ASSOC);
+          $total_depense = $expenses['total_depense'];
+
+          if (isset($_POST['month'])) {
+              echo number_format($total_depense, 2); 
+              exit;
+          }
+          
+      ?>
+
+      <li>
+          <i class="bx bx-dollar-circle"></i>
+          <span class="info">
               <h3><?php echo number_format($total_depense, 2); ?> €</h3>
-              <p>Dépenses</p>
-            </span>
-          </li>
+              <p>Dépenses du mois</p>
+          </span>
+      </li>
+
         </ul>
         <div class="bottom_data">
           <div class="orders">

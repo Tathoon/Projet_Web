@@ -84,14 +84,11 @@
             <select name="categorie" id="categorie" required>
                 <option value="" style="color: gray;">Renseignez le type de frais</option>
               <?php 
-                $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-                $dotenv->load();
-              
-                $db = new PDO("mysql:host=".$_ENV['DB_HOST'].";dbname=".$_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS']);
-                $ticket_categorie = $db->query("SELECT * FROM ticket_categorie")->fetchAll();
-                foreach ($ticket_categorie as $row) {
-                  echo "<option value=".$row['id_category'].">".$row['nom_categorie']."</option>";
-                }
+              $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
+              $ticket_categorie = $db->query("SELECT * FROM ticket_categorie")->fetchAll();
+              foreach ($ticket_categorie as $row) {
+                echo "<option value=".$row['id_category'].">".$row['nom_categorie']."</option>";
+              }
               ?>
             </select>
           </div>
@@ -162,10 +159,7 @@
         use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
         use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
 
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-        $dotenv->load();
-
-        $db = new PDO("mysql:host=".$_ENV['DB_HOST'].";dbname=".$_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS']);
+        $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
         
         if (isset($_POST['categorie']) && isset($_POST['cout']) && isset($_POST['description']) && isset($_POST['lieu']) && isset($_FILES['justificatif'])) {
             $categorie = $_POST['categorie'];
@@ -302,10 +296,7 @@
                   error_reporting(E_ALL);
                   ini_set('display_errors', 1);
                   
-                  $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-                  $dotenv->load();
-          
-                  $db = new PDO("mysql:host=".$_ENV['DB_HOST'].";dbname=".$_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS']);
+                  $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
                   if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
                     $nom = $_SESSION['nom'];
@@ -467,10 +458,7 @@
                   $justificatifs = "justificatifs";
                   $accountName = "e11event";
                   
-                  $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-                  $dotenv->load();
-          
-                  $db = new PDO("mysql:host=".$_ENV['DB_HOST'].";dbname=".$_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS']);
+                  $db = new PDO("mysql:host=e11event.mysql.database.azure.com;dbname=e11event_bdd", 'Tathoon', '*7d7K7yt&Q8t#!');
 
                   if (isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {
                     $nom = $_SESSION['nom'];

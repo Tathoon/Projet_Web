@@ -337,14 +337,24 @@ document.addEventListener('DOMContentLoaded', function() {
     type: 'bar',
     data,
     options: {
-        scales: { 
-            y: { type: 'logarithmic', ticks: { callback: value => Number(value.toString()), color: labelColor} },
-            x: { ticks: { color: labelColor } }
-        },
-        barPercentage: 11,
-        categoryPercentage: 0.2,
-        plugins: { legend: { labels: { color: labelColor } } }
-    }
+      scales: { 
+          y: { 
+              type: 'logarithmic', 
+              min: 1,
+              ticks: { 
+                  display: true,
+                  callback: function(value, index, values) {
+                      return (value % 1 === 0) ? value : '';
+                  },
+                  color: labelColor
+              }
+          },
+          x: { ticks: { color: labelColor } }
+      },
+      barPercentage: 11,
+      categoryPercentage: 0.2,
+      plugins: { legend: { labels: { color: labelColor } } }
+  }
   };
 
   const myChart = new Chart(document.getElementById('myChart'), config);

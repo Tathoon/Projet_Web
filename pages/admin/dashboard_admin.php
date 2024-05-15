@@ -182,7 +182,7 @@
         <div class="bottom_data">
           <div class="orders">
             <div class="header">
-              <h3>Graphique</h3>
+              <h3>Informations générales</h3>
             </div>
             <canvas id="myChart" class="graph"></canvas>
           </div>
